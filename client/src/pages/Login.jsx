@@ -8,43 +8,68 @@ function Login() {
     password: "",
   });
 
-  useEffect(() => {
-    fetch("http://localhost:3000/users")
-      .then((r) => r.json())
-      .then((userData) => {
-        setUsers(userData);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:3000/users")
+  //     .then((r) => r.json())
+  //     .then((userData) => {
+  //       setUsers(userData);
+  //     });
+  // }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (users.length === 0) {
-      // User data is still loading
-      return;
+    let payload = {
+      email: formData.username,
+      password: formData.password
     }
 
-    const user = users.find((user) => user.username === formData.username);
+    console.log(JSON.stringify(payload))
+    try {
+        const response = await fetch("http://localhost:5054/login?useCookies=true", {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
 
-    if (!user) {
-      // user not found
-      // show error message
-      return;
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error('Error during fetch:', error);
     }
-    if (user.password !== formData.password) {
-      // incorrect pssword
-      // show error message
-      return;
-    }
+    // if (users.length === 0) {
+    //   // User data is still loading
+    //   return;
+    // }
+
+    // const user = users.find((user) => user.username === formData.username);
+
+    // if (!user) {
+    //   // user not found
+    //   // show error message
+    //   return;
+    // }
+    // if (user.password !== formData.password) {
+    //   // incorrect pssword
+    //   // show error message
+    //   return;
+    // }
 
     // Login successful
     //navigate to user page / homepage
   };
 
-  const handleChange = (e) => {};
+
   return (
     <div>
-      <form className="loginForm">
+      <form className="loginForm" onSubmit={handleSubmit}>
         <h1>Log in</h1>
         <label>Username:</label>
         <input
@@ -52,7 +77,10 @@ function Login() {
           name="username"
           className="unInput"
           value={FormData.username}
-          onChange={handleChange}
+          onChange={(e) => {
+            e.preventDefault();
+            setFormData({username: e.target.value, password: formData.password})
+          }}
           required
         ></input>
         <label>Password:</label>
@@ -61,7 +89,10 @@ function Login() {
           name="password"
           className="pasInput"
           value={FormData.password}
-          onChange={handleChange}
+          onChange={(e) => {
+            e.preventDefault();
+            setFormData({username: formData.username, password: e.target.value})
+          }}
           required
         ></input>
         <input type="submit" value="Login" className="loginBtn" />
