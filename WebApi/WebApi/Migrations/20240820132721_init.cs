@@ -156,6 +156,32 @@ namespace WebApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PostModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnimalType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnimalBreed = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    IsAdoptionReady = table.Column<bool>(type: "bit", nullable: false),
+                    EarliestDelivery = table.Column<DateOnly>(type: "date", nullable: true),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostModel", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PostModel_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -194,6 +220,11 @@ namespace WebApi.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostModel_ApplicationUserId",
+                table: "PostModel",
+                column: "ApplicationUserId");
         }
 
         /// <inheritdoc />
@@ -213,6 +244,9 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "PostModel");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
