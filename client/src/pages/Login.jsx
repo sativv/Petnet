@@ -26,7 +26,7 @@ function Login() {
 
     console.log(JSON.stringify(payload))
     try {
-        const response = await fetch("https://localhost:7072/login", {
+        const response = await fetch("http://localhost:5054/login?useCookies=true", {
             method: 'POST',
             credentials: 'include',
             headers: {
