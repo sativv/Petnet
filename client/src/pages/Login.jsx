@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
-  const [users, setUsers] = useState([]);
+function Login({ setIsAuthenticated }) {
+  const nav = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -16,56 +18,49 @@ function Login() {
   //     });
   // }, []);
 
+  const getInfo = async () => {
+    try {
+      const response = await fetch("http://localhost:5054/manage/info", {
+        method: "GET",
+        credentials: "include",
+      }).then((res) => res.json().then((json) => console.log(json)));
+    } catch {
+      <></>;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     let payload = {
       email: formData.username,
-      password: formData.password
-    }
+      password: formData.password,
+    };
 
-    console.log(JSON.stringify(payload))
+    console.log(JSON.stringify(payload));
     try {
-        const response = await fetch("http://localhost:5054/login?useCookies=true", {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+      const response = await fetch(
+        "http://localhost:5054/login?useCookies=true",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
         }
+      );
 
-        const data = await response.json();
-        console.log(data);
+      if (response.ok) {
+        setIsAuthenticated(true);
+        nav("/profile");
+
+        document.cookie = "loggedIn=true; path=/";
+      }
     } catch (error) {
-        console.error('Error during fetch:', error);
+      console.error("Error during fetch:", error);
     }
-    // if (users.length === 0) {
-    //   // User data is still loading
-    //   return;
-    // }
-
-    // const user = users.find((user) => user.username === formData.username);
-
-    // if (!user) {
-    //   // user not found
-    //   // show error message
-    //   return;
-    // }
-    // if (user.password !== formData.password) {
-    //   // incorrect pssword
-    //   // show error message
-    //   return;
-    // }
-
-    // Login successful
-    //navigate to user page / homepage
   };
-
 
   return (
     <div>
@@ -79,7 +74,10 @@ function Login() {
           value={FormData.username}
           onChange={(e) => {
             e.preventDefault();
-            setFormData({username: e.target.value, password: formData.password})
+            setFormData({
+              username: e.target.value,
+              password: formData.password,
+            });
           }}
           required
         ></input>
@@ -91,7 +89,10 @@ function Login() {
           value={FormData.password}
           onChange={(e) => {
             e.preventDefault();
-            setFormData({username: formData.username, password: e.target.value})
+            setFormData({
+              username: formData.username,
+              password: e.target.value,
+            });
           }}
           required
         ></input>
