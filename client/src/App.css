@@ -36,3 +36,77 @@
     transform: rotate(360deg);
   }
 }
+
+.navbarContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #e7f0dc;
+  color: #729762;
+  height: 60px;
+}
+
+.navbarBrand {
+  display: flex;
+  align-items: center;
+}
+
+.navbarBrand h2 {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 24px;
+  color: #729762;
+}
+
+.navbarMenu {
+  display: flex;
+  gap: 20px;
+}
+
+.navbarMenu a {
+  text-decoration: none;
+  color: #729762;
+}
+
+.burgerIcon {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.burgerIcon div {
+  width: 25px;
+  height: 3px;
+  background-color: #729762;
+}
+
+.navLogo {
+  height: 40px;
+  width: auto;
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .navbarMenu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #e7f0dc;
+    flex-direction: column;
+    width: 100%;
+    max-width: 200px;
+    display: none;
+    padding: 10px;
+    border-radius: 0 0 5px 5px;
+  }
+
+  .navbarMenu.active {
+    display: flex;
+  }
+
+  .burgerIcon {
+    display: flex;
+  }
+}

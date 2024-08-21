@@ -64,8 +64,8 @@ function Login() {
   return (
     <div>
       <form className="loginForm" onSubmit={handleSubmit}>
-        <h1>Log in</h1>
-        <label>Username:</label>
+        <h1>Logga in</h1>
+        <label>Email:</label>
         <input
           type="text"
           name="username"
@@ -80,7 +80,7 @@ function Login() {
           }}
           required
         ></input>
-        <label>Password:</label>
+        <label>Lösenord:</label>
         <input
           type="password"
           name="password"
@@ -98,8 +98,8 @@ function Login() {
         <input type="submit" value="Login" className="loginBtn" />
       </form>
 
-      <Link to={"/profile"} className="returnLink">
-        profile
+      <Link to={"/register"} className="returnLink">
+        Är du inte registrerad? Klicka här!
       </Link>
     </div>
   );
