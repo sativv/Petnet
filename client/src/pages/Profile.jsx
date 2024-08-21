@@ -1,5 +1,15 @@
+import { useNavigate } from "react-router-dom";
+
 function Profile() {
-  const Logout = () => {};
+  const nav = useNavigate();
+  const Logout = () => {
+    const response = fetch("http://localhost:5054/api/account/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    nav("/");
+  };
 
   return (
     <div>
