@@ -2,6 +2,10 @@ import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../App";
+import "../App.css"
+
+
+//TODO: Add forgotten password link
 
 function Login() {
   const { currentUser, setCurrentUser } = useContext(userContext);
@@ -62,14 +66,15 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="login-wrapper">
       <form className="loginForm" onSubmit={handleSubmit}>
-        <h1>Log in</h1>
+        <h3>Logga in</h3>
         <label>Username:</label>
         <input
           type="text"
           name="username"
-          className="unInput"
+          placeholder="Email"
+          className="login-input"
           value={FormData.username}
           onChange={(e) => {
             e.preventDefault();
@@ -84,7 +89,8 @@ function Login() {
         <input
           type="password"
           name="password"
-          className="pasInput"
+          className="login-input"
+          placeholder="Password"
           value={FormData.password}
           onChange={(e) => {
             e.preventDefault();
@@ -95,7 +101,8 @@ function Login() {
           }}
           required
         ></input>
-        <input type="submit" value="Login" className="loginBtn" />
+        <Link>Jag har glömt mitt lösenord</Link>
+        <input type="submit" value="Logga in" className="login-button" />
       </form>
 
       <Link to={"/profile"} className="returnLink">
