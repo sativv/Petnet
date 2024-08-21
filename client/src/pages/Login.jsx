@@ -68,8 +68,13 @@ function Login() {
   return (
     <div className="login-wrapper">
       <form className="loginForm" onSubmit={handleSubmit}>
+<<<<<<< HEAD
         <h3>Logga in</h3>
         <label>Username:</label>
+=======
+        <h1>Logga in</h1>
+        <label>Email:</label>
+>>>>>>> c22ddd00cb2661033052f9882c5c52815381b827
         <input
           type="text"
           name="username"
@@ -85,7 +90,7 @@ function Login() {
           }}
           required
         ></input>
-        <label>Password:</label>
+        <label>Lösenord:</label>
         <input
           type="password"
           name="password"
@@ -105,8 +110,8 @@ function Login() {
         <input type="submit" value="Logga in" className="login-button" />
       </form>
 
-      <Link to={"/profile"} className="returnLink">
-        profile
+      <Link to={"/register"} className="returnLink">
+        Är du inte registrerad? Klicka här!
       </Link>
     </div>
   );

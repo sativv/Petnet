@@ -4,9 +4,9 @@ function Home() {
   const nav = useNavigate();
   return (
     <div>
-      <h2>Hej</h2>
-
-      <button onClick={() => nav("/login")}>Press me to Login</button>
+      <button onClick={() => nav("/login")}>
+        Klicka på mig för att logga in
+      </button>
     </div>
   );
 }
