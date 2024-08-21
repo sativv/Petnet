@@ -33,6 +33,7 @@ function Footer() {
         <h3>Hemsida</h3>
         <h3>Hemsida</h3>
       </div>
+      <img className="footerLogo" src="/images/Logo.png" alt="" />
     </div>
   );
 }
