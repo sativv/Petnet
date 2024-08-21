@@ -1,22 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { userContext } from "../App";
 
-function Login({ setIsAuthenticated }) {
+function Login() {
+  const { currentUser, setCurrentUser } = useContext(userContext);
   const nav = useNavigate();
 
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-
-  // useEffect(() => {
-  //   fetch("http://localhost:3000/users")
-  //     .then((r) => r.json())
-  //     .then((userData) => {
-  //       setUsers(userData);
-  //     });
-  // }, []);
 
   const getInfo = async () => {
     try {
@@ -52,14 +46,19 @@ function Login({ setIsAuthenticated }) {
       );
 
       if (response.ok) {
-        setIsAuthenticated(true);
-        nav("/profile");
-
-        document.cookie = "loggedIn=true; path=/";
       }
     } catch (error) {
       console.error("Error during fetch:", error);
     }
+
+    const response = await fetch("http://localhost:5054/api/Account/me", {
+      method: "GET",
+      credentials: "include",
+    });
+    const userData = await response.json();
+    console.log(userData);
+    setCurrentUser(userData);
+    nav("/profile");
   };
 
   return (
@@ -99,8 +98,8 @@ function Login({ setIsAuthenticated }) {
         <input type="submit" value="Login" className="loginBtn" />
       </form>
 
-      <Link to={"/register"} className="returnLink">
-        Don't have an account? Press here to sign up!
+      <Link to={"/profile"} className="returnLink">
+        profile
       </Link>
     </div>
   );

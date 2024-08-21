@@ -1,5 +1,6 @@
 function Profile() {
   const Logout = () => {};
+
   return (
     <div>
       <h2>Hej du är inloggad</h2>

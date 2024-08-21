@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,44 +10,58 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+// create user context
+export const userContext = createContext();
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-  };
+  // create function to pass onto login page to set current user
+  const [currentUser, setCurrentUser] = useState(null);
 
-  function PrivateRoute({ isAuthenticated, children }) {
-    return isAuthenticated ? children : <Navigate to="/login" />;
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:5054/api/Account/me", {
+        method: "GET",
+        credentials: "include",
+      });
+      if (!response.ok) {
+        setCurrentUser(null);
+        return;
+      }
+
+      const userData = await response.json();
+
+      console.log(userData);
+      setCurrentUser(userData);
+    };
+
+    fetchData();
+  }, []);
 
   return (
-    <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/login"
-            element={<Login setIsAuthenticated={setIsAuthenticated} />}
-          />
-          <Route path="/register" element={<Register />} />
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute isAuthenticated={isAuthenticated}>
-                <Profile />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
-      </Router>
-    </div>
+    <>
+      <userContext.Provider value={{ currentUser, setCurrentUser }}>
+        <div className="App">
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/login"
+                element={<Login setIsAuthenticated={setIsAuthenticated} />}
+              />
+              <Route path="/register" element={<Register />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="/profile" element={<Profile />} />
+              </Route>
+            </Routes>
+          </Router>
+        </div>
+      </userContext.Provider>
+    </>
   );
-}
-
-function PrivateRoute({ isAuthenticated, children }) {
-  return isAuthenticated ? children : <Navigate to="/login" />;
 }
 
 export default App;
