@@ -1,71 +1,65 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { userContext } from "../App";
 
 function Login() {
-  const [users, setUsers] = useState([]);
+  const { currentUser, setCurrentUser } = useContext(userContext);
+  const nav = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
 
-  // useEffect(() => {
-  //   fetch("http://localhost:3000/users")
-  //     .then((r) => r.json())
-  //     .then((userData) => {
-  //       setUsers(userData);
-  //     });
-  // }, []);
+  const getInfo = async () => {
+    try {
+      const response = await fetch("http://localhost:5054/manage/info", {
+        method: "GET",
+        credentials: "include",
+      }).then((res) => res.json().then((json) => console.log(json)));
+    } catch {
+      <></>;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     let payload = {
       email: formData.username,
-      password: formData.password
-    }
+      password: formData.password,
+    };
 
-    console.log(JSON.stringify(payload))
+    console.log(JSON.stringify(payload));
     try {
-        const response = await fetch("http://localhost:5054/login?useCookies=true", {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+      const response = await fetch(
+        "http://localhost:5054/login?useCookies=true",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
         }
+      );
 
-        const data = await response.json();
-        console.log(data);
+      if (response.ok) {
+      }
     } catch (error) {
-        console.error('Error during fetch:', error);
+      console.error("Error during fetch:", error);
     }
-    // if (users.length === 0) {
-    //   // User data is still loading
-    //   return;
-    // }
 
-    // const user = users.find((user) => user.username === formData.username);
-
-    // if (!user) {
-    //   // user not found
-    //   // show error message
-    //   return;
-    // }
-    // if (user.password !== formData.password) {
-    //   // incorrect pssword
-    //   // show error message
-    //   return;
-    // }
-
-    // Login successful
-    //navigate to user page / homepage
+    const response = await fetch("http://localhost:5054/api/Account/me", {
+      method: "GET",
+      credentials: "include",
+    });
+    const userData = await response.json();
+    console.log(userData);
+    setCurrentUser(userData);
+    nav("/profile");
   };
-
 
   return (
     <div>
@@ -79,7 +73,10 @@ function Login() {
           value={FormData.username}
           onChange={(e) => {
             e.preventDefault();
-            setFormData({username: e.target.value, password: formData.password})
+            setFormData({
+              username: e.target.value,
+              password: formData.password,
+            });
           }}
           required
         ></input>
@@ -91,15 +88,18 @@ function Login() {
           value={FormData.password}
           onChange={(e) => {
             e.preventDefault();
-            setFormData({username: formData.username, password: e.target.value})
+            setFormData({
+              username: formData.username,
+              password: e.target.value,
+            });
           }}
           required
         ></input>
         <input type="submit" value="Login" className="loginBtn" />
       </form>
 
-      <Link to={"/register"} className="returnLink">
-        Don't have an account? Press here to sign up!
+      <Link to={"/profile"} className="returnLink">
+        profile
       </Link>
     </div>
   );
