@@ -68,13 +68,10 @@ function Login() {
   return (
     <div className="login-wrapper">
       <form className="loginForm" onSubmit={handleSubmit}>
-<<<<<<< HEAD
-        <h3>Logga in</h3>
-        <label>Username:</label>
-=======
+
         <h1>Logga in</h1>
         <label>Email:</label>
->>>>>>> c22ddd00cb2661033052f9882c5c52815381b827
+
         <input
           type="text"
           name="username"
