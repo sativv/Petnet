@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/Navbar";
 
 // create user context
 export const userContext = createContext();
@@ -44,6 +45,7 @@ function App() {
   return (
     <>
       <userContext.Provider value={{ currentUser, setCurrentUser }}>
+        <Navbar />
         <div className="App">
           <Router>
             <Routes>
