@@ -38,12 +38,12 @@
   }
 }
 
-a{
+a {
   text-decoration: none;
-  color: #1C5C00;
+  color: #1c5c00;
 }
 
-.login-wrapper{
+.login-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -59,7 +59,7 @@ a{
   width: 80%;
   min-height: 60vh;
   justify-content: space-between;
-  background-color: #E7F0DC;
+  background-color: #e7f0dc;
   padding: 20px;
   /* position: fixed;
   top: 50%;
@@ -70,28 +70,28 @@ a{
   color: #729762;
 }
 
-.login-input{
+.login-input {
   border-radius: 10px;
   box-shadow: none;
   inset: none;
   border: none;
-  background-color: #fff  ;
+  background-color: #fff;
   font-size: 24px;
   padding: 5px;
 }
 
-.login-button{
+.login-button {
   border-radius: 20px;
   text-align: center;
   color: white;
   background-color: #729762;
   font-size: 24px;
-  width:100%;
-  padding:15px ;
+  width: 100%;
+  padding: 15px;
   border: none;
 }
 
-.login-text-wrapper{
+.login-text-wrapper {
   display: flex;
   justify-content: space-between;
 }
@@ -133,7 +133,6 @@ a{
   cursor: pointer;
   flex-direction: column;
   gap: 5px;
- 
 }
 
 .burgerIcon div {
@@ -146,6 +145,56 @@ a{
   height: 40px;
   width: auto;
   margin-right: 10px;
+}
+
+.footerContainer {
+  background-color: #729762;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: white;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: fixed;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.footerLeftColumn,
+.footerRightColumn {
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  font-size: 15px;
+}
+
+.footerLeftColumn h3,
+.footerRightColumn h3 {
+  margin: 5px 0;
+}
+
+.brandDiv {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.brandIcon {
+  margin-right: 10px;
+  height: 25px;
+}
+
+.footerLogo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.3;
+  z-index: 1;
+  height: auto;
+  width: 45%;
 }
 
 @media (max-width: 768px) {
@@ -171,4 +220,3 @@ a{
     display: flex;
   }
 }
-
