@@ -37,7 +37,7 @@ function Login() {
 
     console.log(JSON.stringify(payload));
     try {
-      const response = await fetch(
+      const loginResponse = await fetch(
         "http://localhost:5054/login?useCookies=true",
         {
           method: "POST",
@@ -49,20 +49,32 @@ function Login() {
         }
       );
 
-      if (response.ok) {
+      if (loginResponse.ok) {
+        const meResponse = await fetch("http://localhost:5054/api/Account/me", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      
+        if (!meResponse.ok) {
+          throw new Error(`HTTP error! status: ${meResponse.status}`);
+        }
+      
+        const data = await meResponse.json();
+        console.log(data);
+        await setCurrentUser(data);
+        nav("/profile")
       }
     } catch (error) {
       console.error("Error during fetch:", error);
     }
-
-    const response = await fetch("http://localhost:5054/api/Account/me", {
-      method: "GET",
-      credentials: "include",
-    });
-    const userData = await response.json();
-    console.log(userData);
-    setCurrentUser(userData);
-    nav("/profile");
+    
+    // const userData = await response.json();
+    // console.log(userData);
+    // setCurrentUser(userData);
+    // nav("/profile");
   };
 
   return (
