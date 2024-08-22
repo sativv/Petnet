@@ -15,7 +15,7 @@ namespace WebApi.Models
         public int Age { get; set; }
         public bool IsAdoptionReady { get; set; }
         public DateOnly? EarliestDelivery { get; set; }
-
+        public List<InterestModel> Interests { get; set; } = new List<InterestModel>();
         // Varje post har en user som har postat den 
         public ApplicationUser ApplicationUser { get; set; } = null!;
         public string ApplicationUserId { get; set; } // Use string to match ApplicationUser's primary key type

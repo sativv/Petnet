@@ -2,6 +2,8 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
@@ -29,9 +31,6 @@ namespace WebApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ApplicationUserId = table.Column<int>(type: "int", nullable: false),
-                    ApplicationUserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ApplicationUserEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsPrivateSeller = table.Column<bool>(type: "bit", nullable: false),
                     IsVerified = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -182,7 +181,8 @@ namespace WebApi.Migrations
                         name: "FK_Posts_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -203,12 +203,14 @@ namespace WebApi.Migrations
                         name: "FK_Reviews_AspNetUsers_ReviewedSellerId",
                         column: x => x.ReviewedSellerId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Reviews_AspNetUsers_ReviewerId",
                         column: x => x.ReviewerId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -225,12 +227,50 @@ namespace WebApi.Migrations
                         name: "FK_Interests_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Interests_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "user1", 0, "f3529ca7-912b-4d98-8cef-a77d1b2dfe86", "user1@example.com", false, true, true, false, null, null, null, null, null, false, "a0e4e989-7851-497b-a5a6-e80586c9bd22", false, "user1@example.com" },
+                    { "user2", 0, "0273fc7a-f45e-45ed-9799-5ad7a8a36dc4", "user2@example.com", false, false, false, false, null, null, null, null, null, false, "fdabb7e9-2e5e-4dc1-b4e1-bbdb85d34074", false, "user2@example.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Posts",
+                columns: new[] { "Id", "Age", "AnimalBreed", "AnimalType", "ApplicationUserId", "Description", "EarliestDelivery", "IsAdoptionReady", "Title" },
+                values: new object[,]
+                {
+                    { 1, 2, "Labrador", "Dog", "user1", "Description for post 1", new DateOnly(2024, 9, 1), true, "Post 1" },
+                    { 2, 1, "Siamese", "Cat", "user2", "Description for post 2", new DateOnly(2024, 10, 1), false, "Post 2" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Reviews",
+                columns: new[] { "ReviewId", "Content", "Rating", "ReviewedSellerId", "ReviewerId" },
+                values: new object[,]
+                {
+                    { 1, "Great post!", 5, "user2", "user1" },
+                    { 2, "Very helpful.", 4, "user1", "user2" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Interests",
+                columns: new[] { "ApplicationUserId", "PostId" },
+                values: new object[,]
+                {
+                    { "user1", 1 },
+                    { "user2", 2 }
                 });
 
             migrationBuilder.CreateIndex(

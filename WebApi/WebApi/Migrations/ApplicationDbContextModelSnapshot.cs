@@ -163,17 +163,6 @@ namespace WebApi.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ApplicationUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -235,6 +224,38 @@ namespace WebApi.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "user1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f3529ca7-912b-4d98-8cef-a77d1b2dfe86",
+                            Email = "user1@example.com",
+                            EmailConfirmed = false,
+                            IsPrivateSeller = true,
+                            IsVerified = true,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a0e4e989-7851-497b-a5a6-e80586c9bd22",
+                            TwoFactorEnabled = false,
+                            UserName = "user1@example.com"
+                        },
+                        new
+                        {
+                            Id = "user2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "0273fc7a-f45e-45ed-9799-5ad7a8a36dc4",
+                            Email = "user2@example.com",
+                            EmailConfirmed = false,
+                            IsPrivateSeller = false,
+                            IsVerified = false,
+                            LockoutEnabled = false,
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "fdabb7e9-2e5e-4dc1-b4e1-bbdb85d34074",
+                            TwoFactorEnabled = false,
+                            UserName = "user2@example.com"
+                        });
                 });
 
             modelBuilder.Entity("WebApi.Models.InterestModel", b =>
@@ -250,6 +271,18 @@ namespace WebApi.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("Interests");
+
+                    b.HasData(
+                        new
+                        {
+                            ApplicationUserId = "user1",
+                            PostId = 1
+                        },
+                        new
+                        {
+                            ApplicationUserId = "user2",
+                            PostId = 2
+                        });
                 });
 
             modelBuilder.Entity("WebApi.Models.PostModel", b =>
@@ -294,6 +327,32 @@ namespace WebApi.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Posts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Age = 2,
+                            AnimalBreed = "Labrador",
+                            AnimalType = "Dog",
+                            ApplicationUserId = "user1",
+                            Description = "Description for post 1",
+                            EarliestDelivery = new DateOnly(2024, 9, 1),
+                            IsAdoptionReady = true,
+                            Title = "Post 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Age = 1,
+                            AnimalBreed = "Siamese",
+                            AnimalType = "Cat",
+                            ApplicationUserId = "user2",
+                            Description = "Description for post 2",
+                            EarliestDelivery = new DateOnly(2024, 10, 1),
+                            IsAdoptionReady = false,
+                            Title = "Post 2"
+                        });
                 });
 
             modelBuilder.Entity("WebApi.Models.ReviewModel", b =>
@@ -326,6 +385,24 @@ namespace WebApi.Migrations
                     b.HasIndex("ReviewerId");
 
                     b.ToTable("Reviews");
+
+                    b.HasData(
+                        new
+                        {
+                            ReviewId = 1,
+                            Content = "Great post!",
+                            Rating = 5,
+                            ReviewedSellerId = "user2",
+                            ReviewerId = "user1"
+                        },
+                        new
+                        {
+                            ReviewId = 2,
+                            Content = "Very helpful.",
+                            Rating = 4,
+                            ReviewedSellerId = "user1",
+                            ReviewerId = "user2"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -384,13 +461,13 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Data.ApplicationUser", "User")
                         .WithMany("Interests")
                         .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("WebApi.Models.PostModel", "PostModel")
-                        .WithMany()
+                        .WithMany("Interests")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("PostModel");
@@ -403,7 +480,7 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Data.ApplicationUser", "ApplicationUser")
                         .WithMany("Posts")
                         .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
@@ -414,13 +491,13 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Data.ApplicationUser", "ReviewedSeller")
                         .WithMany("ReviewsRecieved")
                         .HasForeignKey("ReviewedSellerId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("WebApi.Data.ApplicationUser", "Reviewer")
                         .WithMany("ReviewsWritten")
                         .HasForeignKey("ReviewerId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ReviewedSeller");
@@ -437,6 +514,11 @@ namespace WebApi.Migrations
                     b.Navigation("ReviewsRecieved");
 
                     b.Navigation("ReviewsWritten");
+                });
+
+            modelBuilder.Entity("WebApi.Models.PostModel", b =>
+                {
+                    b.Navigation("Interests");
                 });
 #pragma warning restore 612, 618
         }
