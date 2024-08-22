@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240820132721_init")]
-    partial class init
+    [Migration("20240822095957_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,6 +166,17 @@ namespace WebApi.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("ApplicationUserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicationUserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -175,6 +186,12 @@ namespace WebApi.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPrivateSeller")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVerified")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -223,6 +240,21 @@ namespace WebApi.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("WebApi.Models.InterestModel", b =>
+                {
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ApplicationUserId", "PostId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Interests");
+                });
+
             modelBuilder.Entity("WebApi.Models.PostModel", b =>
                 {
                     b.Property<int>("Id")
@@ -264,7 +296,39 @@ namespace WebApi.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("PostModel");
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("WebApi.Models.ReviewModel", b =>
+                {
+                    b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReviewedSellerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ReviewerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ReviewId");
+
+                    b.HasIndex("ReviewedSellerId");
+
+                    b.HasIndex("ReviewerId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -318,20 +382,64 @@ namespace WebApi.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WebApi.Models.InterestModel", b =>
+                {
+                    b.HasOne("WebApi.Data.ApplicationUser", "User")
+                        .WithMany("Interests")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.PostModel", "PostModel")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("PostModel");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WebApi.Models.PostModel", b =>
                 {
                     b.HasOne("WebApi.Data.ApplicationUser", "ApplicationUser")
                         .WithMany("Posts")
                         .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
                 });
 
+            modelBuilder.Entity("WebApi.Models.ReviewModel", b =>
+                {
+                    b.HasOne("WebApi.Data.ApplicationUser", "ReviewedSeller")
+                        .WithMany("ReviewsRecieved")
+                        .HasForeignKey("ReviewedSellerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Data.ApplicationUser", "Reviewer")
+                        .WithMany("ReviewsWritten")
+                        .HasForeignKey("ReviewerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ReviewedSeller");
+
+                    b.Navigation("Reviewer");
+                });
+
             modelBuilder.Entity("WebApi.Data.ApplicationUser", b =>
                 {
+                    b.Navigation("Interests");
+
                     b.Navigation("Posts");
+
+                    b.Navigation("ReviewsRecieved");
+
+                    b.Navigation("ReviewsWritten");
                 });
 #pragma warning restore 612, 618
         }
