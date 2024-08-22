@@ -20,7 +20,7 @@ namespace WebApi.Data
             base.OnModelCreating(modelBuilder);
 
 
-            // Seed ApplicationUser
+            // Seed ApplicationUser...
             modelBuilder.Entity<ApplicationUser>().HasData(
                 new ApplicationUser
                 {
@@ -40,7 +40,7 @@ namespace WebApi.Data
                 }
             );
 
-            // Seed PostModel
+            // Seed PostModel...
             modelBuilder.Entity<PostModel>().HasData(
                 new PostModel
                 {
@@ -68,7 +68,7 @@ namespace WebApi.Data
                 }
             );
 
-            // Seed InterestModel
+            // Seed InterestModel...
             modelBuilder.Entity<InterestModel>().HasData(
                 new InterestModel
                 {
@@ -82,7 +82,7 @@ namespace WebApi.Data
                 }
             );
 
-            // Seed ReviewModel
+            // Seed ReviewModel...
             modelBuilder.Entity<ReviewModel>().HasData(
                 new ReviewModel
                 {
