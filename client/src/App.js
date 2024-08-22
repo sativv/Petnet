@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 // create user context
 export const userContext = createContext();
@@ -61,6 +62,7 @@ function App() {
             </Routes>
           </Router>
         </div>
+        <Footer />
       </userContext.Provider>
     </>
   );
