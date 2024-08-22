@@ -35,8 +35,8 @@ namespace WebApi.Controllers
             var userDTO = new
             {
                 user.Id,
-                user.UserName,
                 user.Email,
+                user.UserName
             };
 
             return Ok(userDTO);
