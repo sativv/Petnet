@@ -5,8 +5,7 @@ namespace WebApi.Data
 {
     public class ApplicationUser : IdentityUser
     {
-
-
+        public string? QuizResult { get; set; }
         public bool IsPrivateSeller { get; set; }
         public bool IsVerified { get; set; }
         public List<PostModel> Posts { get; set; } = new List<PostModel>();
