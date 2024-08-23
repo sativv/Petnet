@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   min-height: 100vh;
+  font-family: "Kadwa", serif;
 }
 
 .App-logo {
@@ -42,6 +43,10 @@ a {
   text-decoration: none;
   color: #1c5c00;
 }
+
+/* =======================================
+   Login page 
+   ======================================= */
 
 .login-wrapper {
   display: flex;
@@ -96,6 +101,10 @@ a {
   justify-content: space-between;
 }
 
+/* =======================================
+   Navbar 
+   ======================================= */
+
 .navbarContainer {
   display: flex;
   justify-content: space-between;
@@ -146,6 +155,10 @@ a {
   width: auto;
   margin-right: 10px;
 }
+
+/* =======================================
+   Footer 
+   ======================================= */
 
 .footerContainer {
   background-color: #729762;
@@ -219,4 +232,112 @@ a {
   .burgerIcon {
     display: flex;
   }
+}
+
+/* =======================================
+   Register page 
+   ======================================= */
+
+.register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+}
+
+.register-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e7f0dc;
+  width: 90vw;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 20px;
+  padding: 0px;
+}
+
+.register-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.info-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-title label {
+  color: #729762;
+  font-size: 2.8rem;
+  font-weight: 650;
+  margin-top: 30px;
+}
+
+.info-title span {
+  color: #729762;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.info-title span a {
+  color: #1c5c00;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.info-check-breeder {
+  font-size: 1.2rem;
+  color: #1c5c00;
+  font-weight: 600;
+  margin-top: 40px;
+}
+
+.register-input {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-input form {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-input form label {
+  align-self: baseline;
+  margin-left: 20px;
+  font-size: 1.2rem;
+  color: #282c34;
+}
+
+.register-input form input {
+  border-radius: 50px;
+  border: none;
+  padding: 10px;
+  padding-left: 20px;
+  margin-bottom: 20px;
+  width: 70vw;
+  font-size: 1.2rem;
+}
+
+.register-input form input:focus {
+  outline: none;
+}
+
+#register-btn {
+  height: 80px;
+  width: 100%;
+  color: #e7f0dc;
+  background-color: #1c5c00;
+  border-radius: 10px;
+  margin-top: 60px;
+  font-size: 2rem;
 }
