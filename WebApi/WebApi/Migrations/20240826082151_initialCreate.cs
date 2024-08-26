@@ -7,7 +7,7 @@
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class initialcreate : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -297,8 +297,8 @@ namespace WebApi.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "user1", 0, "9d3113ad-63b3-4c17-b728-b7a1d56fa7ef", "user1@example.com", false, true, true, false, null, null, null, null, null, false, null, "0169ddb7-ce00-4b23-a087-522e60b14174", false, "user1@example.com" },
-                    { "user2", 0, "94ea65b9-364d-4f0c-82a7-111ccc04a8bd", "user2@example.com", false, false, false, false, null, null, null, null, null, false, null, "0ccb746f-4d0d-4418-8b21-aad6021c6cf8", false, "user2@example.com" }
+                    { "user1", 0, "0658b177-4bb8-48e2-8de8-9ed100c6748f", "user1@example.com", false, true, true, false, null, null, null, "AQAAAAIAAYagAAAAEJeLUP6RpKorzfcpiz/UPMffbjDoZZ6NK9hnUlXNyIun3Q4pbJTUbB1JFI+48TCXiA==", null, false, null, "2c1a7345-db68-42d7-b662-a57529bdc8f3", false, "user1@example.com" },
+                    { "user2", 0, "5114030a-3253-4c80-a01a-0686806a612f", "user2@example.com", false, false, false, false, null, null, null, "AQAAAAIAAYagAAAAEHg0fqVttrk5azHmC5Mj9cdCxWBV3FWqoXrUQl60h5I75raW2dJGMFwSYdnxK9Q6ZQ==", null, false, null, "fd6dea4e-6ec6-4d42-ae31-a93524706efa", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(
