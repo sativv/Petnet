@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using WebApi.Data;
 
 namespace WebApi.Controllers
@@ -20,11 +17,12 @@ namespace WebApi.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
         [HttpGet("me")]
         [Authorize]
+        [HttpGet("me")]
         public async Task<IActionResult> GetCurrentUser()
         {
+
             var user = await _userManager.GetUserAsync(User);
 
             if (user == null)
