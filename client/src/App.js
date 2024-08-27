@@ -13,6 +13,7 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Post from "./components/Post";
 
 // create user context
 export const userContext = createContext();
@@ -51,6 +52,7 @@ function App() {
           <Router>
             <Routes>
               <Route path="/" element={<Home />} />
+
               <Route
                 path="/login"
                 element={<Login setIsAuthenticated={setIsAuthenticated} />}
