@@ -303,6 +303,61 @@ a {
     display: flex;
   }
 }
+/* =======================================
+   PostDetails Page
+   ======================================= */
+
+.postCard {
+  max-width: 600px;
+  margin: 2rem auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.postImage img {
+  width: 100%;
+  height: auto;
+}
+
+.postContent {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.postInfo {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.postDetails {
+  text-align: center;
+}
+
+.postTitle {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.postDescription {
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+.contactButton {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #729762;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+}
 
 /* =======================================
    Register page 
