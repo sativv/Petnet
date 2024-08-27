@@ -27,7 +27,7 @@ function Home() {
       <div className="post-container">
         {loading && <p>Loading posts..</p>}
         {posts.map((post) => (
-          <Post Post={post} />
+          <Post Post={post} key={post.id} />
         ))}
       </div>
     </div>
