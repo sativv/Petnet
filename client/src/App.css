@@ -210,6 +210,46 @@ a {
   width: 45%;
 }
 
+.adContainer {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-bottom: 5%;
+}
+
+.adImgContainer {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.adImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.adBottom {
+  padding: 1px 16px 4px 16px;
+  text-align: left;
+  background-color: #e7f0dc;
+}
+
+.adBottom h3 {
+  margin-bottom: 8px;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.adBottom p {
+  margin: 4px 0;
+  color: #666;
+  font-size: 1em;
+}
+
 @media (max-width: 768px) {
   .navbarMenu {
     position: absolute;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Post from "../components/Post";
 
 function Home() {
   const nav = useNavigate();
@@ -7,7 +8,6 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    
     var response = fetch("http://localhost:5054/api/post", {
       method: "GET",
       credentials: "include",
@@ -15,22 +15,20 @@ function Home() {
         "Content-Type": "application/json",
       },
     })
-    .then(response => response.json())
-    .then(result => setPosts(result))
-    .then(setLoading(false));
+      .then((response) => response.json())
+      .then((result) => setPosts(result))
+      .then(setLoading(false));
 
-    //console.log(posts);
-  }, [])
-
-  
+    console.log(posts);
+  }, []);
 
   return (
     <div>
       <div className="post-container">
         {loading && <p>Loading posts..</p>}
-        {posts.map((post) => {
-          //<Post />
-        }) }
+        {posts.map((post) => (
+          <Post Post={post} />
+        ))}
       </div>
     </div>
   );
