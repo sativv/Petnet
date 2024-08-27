@@ -19,7 +19,7 @@ function Home() {
     .then(result => setPosts(result))
     .then(setLoading(false));
 
-    console.log(posts);
+    //console.log(posts);
   }, [])
 
   
