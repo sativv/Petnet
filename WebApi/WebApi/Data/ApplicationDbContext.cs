@@ -12,6 +12,8 @@ namespace WebApi.Data
         public DbSet<QuestionModel> Questions { get; set; }
         public DbSet<QuizModel> Quiz { get; set; }
         public DbSet<OptionModel> Options { get; set; }
+        public DbSet<FileModel> File { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -26,7 +28,8 @@ namespace WebApi.Data
          new QuizModel
          {
              QuizId = 1,
-             Title = "Vilket djur passar dig bäst?"
+             Title = "Vilket djur passar dig bäst?",
+             Info = "Välkommen till vårt husdjursquiz! Att välja rätt husdjur är ett stort beslut som bör baseras på din livsstil, personlighet och preferenser. I det här testet kommer du att besvara 15 frågor som hjälper dig att upptäcka vilket djur som passar bäst för just dig. Oavsett om du är en aktiv person som älskar att vara utomhus eller om du föredrar en lugn och stillsam miljö, så finns det ett husdjur som passar din vardag perfekt. Svara ärligt på frågorna, så får du snart veta vilken typ av husdjur som skulle bli din bästa vän!"
          }
           );
 

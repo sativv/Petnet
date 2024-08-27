@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Data;
 
@@ -11,9 +12,11 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240826082821_addModels")]
+    partial class addModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,7 +251,7 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bc54ad18-cfae-4ffb-9973-e9279d5c5071",
+                            ConcurrencyStamp = "412a70d5-59f0-4638-8733-321246ad1bc0",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
@@ -258,7 +261,7 @@ namespace WebApi.Migrations
                             OrganizationNumber = 0,
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "b4247a16-9d7f-4bb5-b6f5-268598be4500",
+                            SecurityStamp = "37722e1b-ead4-4754-bb4c-145781c9c3c1",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -266,7 +269,7 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f8870b93-2508-4f5f-9bd1-1af6c703f138",
+                            ConcurrencyStamp = "20b02e04-4223-4807-ac07-d7d498342be4",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
@@ -276,7 +279,7 @@ namespace WebApi.Migrations
                             OrganizationNumber = 0,
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "857a4d9a-0ad7-48f2-997b-5954ef9dab4d",
+                            SecurityStamp = "0290a5e5-7cb4-447f-826f-940c954d3c27",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         });
@@ -1192,10 +1195,6 @@ namespace WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuizId"));
 
-                    b.Property<string>("Info")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1208,7 +1207,6 @@ namespace WebApi.Migrations
                         new
                         {
                             QuizId = 1,
-                            Info = "Välkommen till vårt husdjursquiz! Att välja rätt husdjur är ett stort beslut som bör baseras på din livsstil, personlighet och preferenser. I det här testet kommer du att besvara 15 frågor som hjälper dig att upptäcka vilket djur som passar bäst för just dig. Oavsett om du är en aktiv person som älskar att vara utomhus eller om du föredrar en lugn och stillsam miljö, så finns det ett husdjur som passar din vardag perfekt. Svara ärligt på frågorna, så får du snart veta vilken typ av husdjur som skulle bli din bästa vän!",
                             Title = "Vilket djur passar dig bäst?"
                         });
                 });

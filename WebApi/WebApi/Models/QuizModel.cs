@@ -8,6 +8,8 @@ namespace WebApi.Models
         public int QuizId { get; set; }
 
         public string Title { get; set; } = null!;
+        public string Info { get; set; } = null!;
+
 
         public List<QuestionModel> Questions { get; set; } = null!;
     }
