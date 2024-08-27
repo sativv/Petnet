@@ -19,7 +19,7 @@ namespace WebApi.Controllers
         }
         [HttpGet("me")]
         [Authorize]
-        [HttpGet("me")]
+        
         public async Task<IActionResult> GetCurrentUser()
         {
 
