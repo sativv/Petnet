@@ -24,10 +24,24 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 //    .AddEntityFrameworkStores<ApplicationDbContext>()
 //    .AddDefaultTokenProviders();
 
-builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.Name = "MyAuthCookie";
+    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+
+});
+
+
+builder.Services.AddAuthorization();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -54,12 +68,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     
 }
-app.MapIdentityApi<ApplicationUser>();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapIdentityApi<ApplicationUser>();
 app.MapControllers();
 
 app.Run();

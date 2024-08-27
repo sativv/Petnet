@@ -19,7 +19,7 @@ namespace WebApi.Controllers
         }
 
         [Authorize]
-        [HttpGet("me")]
+        
         public async Task<IActionResult> GetCurrentUser()
         {
 
@@ -33,8 +33,8 @@ namespace WebApi.Controllers
             var userDTO = new
             {
                 user.Id,
-                user.UserName,
                 user.Email,
+                user.UserName
             };
 
             return Ok(userDTO);
