@@ -217,7 +217,14 @@ namespace WebApi.Data
                     Age = 2,
                     IsAdoptionReady = true,
                     EarliestDelivery = DateOnly.Parse("2024-09-01"),
-                    ApplicationUserId = "user1" // FK to ApplicationUser
+                    ApplicationUserId = "user1", // FK to ApplicationUser
+                    Gender = "Male",
+                    DateOfBirth = DateOnly.Parse("2020-11-01"),
+                    Images = new List<string>
+                    {
+                        "https://www.marthastewart.com/thmb/Ki1fnPkHDxYQv_kAN2HtBxwOELY=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/happy-labrador-retriever-getty-0322-2000-eb585d9e672e47da8b1b7e9d3215a5cb.jpg"
+                    }
+
                 },
                 new PostModel
                 {
@@ -229,7 +236,13 @@ namespace WebApi.Data
                     Age = 1,
                     IsAdoptionReady = false,
                     EarliestDelivery = DateOnly.Parse("2024-10-01"),
-                    ApplicationUserId = "user2" // FK to ApplicationUser
+                    ApplicationUserId = "user2", // FK to ApplicationUser
+                    Gender = "Female",
+                    DateOfBirth = DateOnly.Parse("2021-11-01"),
+                    Images = new List<string>
+                    {
+                        "https://www.purina.co.uk/sites/default/files/styles/square_medium_440x440/public/2022-06/Siamese-Cat_0.jpg?itok=Qy1J6ZDS"
+                    }
                 }
             );
 
