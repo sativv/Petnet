@@ -19,6 +19,8 @@ function Navbar() {
 
       <div className={`navbarMenu ${isToggled ? "active" : ""}`}>
         <a href="/">Hemsida</a>
+        {/* Lägg till länkar till nya sidor!  */}
+        <a href="/addpost">Ny annons</a>
         <a href="/Profile">Profil</a>
         <a href="/register">Registrering</a>
         <a href="/login">Logga in</a>

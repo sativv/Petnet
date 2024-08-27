@@ -44,6 +44,36 @@ a {
   color: #1c5c00;
 }
 
+.text-center{
+  text-align: center;
+}
+
+/* =======================================
+   Home-page
+   ======================================= */
+
+.post-container{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5%;
+}
+
+
+/* =======================================
+   Add post page
+   ======================================= */
+
+
+   .add-post-form{
+    display: flex;
+    flex-direction: column;
+    margin: 5%;
+    background-color: #e7f0dc;
+    border-radius: 25px;
+    padding: 5%;
+   }
+
 /* =======================================
    Login page 
    ======================================= */
