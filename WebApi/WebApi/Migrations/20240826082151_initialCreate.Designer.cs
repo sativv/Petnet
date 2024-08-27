@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240823092425_initialcreate")]
-    partial class initialcreate
+    [Migration("20240826082151_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -236,14 +236,15 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9d3113ad-63b3-4c17-b728-b7a1d56fa7ef",
+                            ConcurrencyStamp = "0658b177-4bb8-48e2-8de8-9ed100c6748f",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
                             IsVerified = true,
                             LockoutEnabled = false,
+                            PasswordHash = "AQAAAAIAAYagAAAAEJeLUP6RpKorzfcpiz/UPMffbjDoZZ6NK9hnUlXNyIun3Q4pbJTUbB1JFI+48TCXiA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0169ddb7-ce00-4b23-a087-522e60b14174",
+                            SecurityStamp = "2c1a7345-db68-42d7-b662-a57529bdc8f3",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -251,14 +252,15 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "94ea65b9-364d-4f0c-82a7-111ccc04a8bd",
+                            ConcurrencyStamp = "5114030a-3253-4c80-a01a-0686806a612f",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
                             IsVerified = false,
                             LockoutEnabled = false,
+                            PasswordHash = "AQAAAAIAAYagAAAAEHg0fqVttrk5azHmC5Mj9cdCxWBV3FWqoXrUQl60h5I75raW2dJGMFwSYdnxK9Q6ZQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0ccb746f-4d0d-4418-8b21-aad6021c6cf8",
+                            SecurityStamp = "fd6dea4e-6ec6-4d42-ae31-a93524706efa",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         });

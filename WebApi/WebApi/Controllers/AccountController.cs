@@ -17,7 +17,7 @@ namespace WebApi.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-        [HttpGet("me")]
+
         [Authorize]
         
         public async Task<IActionResult> GetCurrentUser()
