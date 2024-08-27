@@ -14,6 +14,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Post from "./components/Post";
+import AddPost from "./components/AddPost";
 
 // create user context
 export const userContext = createContext();
@@ -60,6 +61,9 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<Profile />} />
+              </Route>
+              <Route element={<ProtectedRoute />}>
+                <Route path="/addpost" element={<AddPost />} />
               </Route>
             </Routes>
           </Router>
