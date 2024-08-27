@@ -40,7 +40,7 @@ namespace WebApi.Controllers
         }
 
         // Get all posts
-        [HttpGet("Posts")]
+        [HttpGet]
         public async Task<IActionResult> GetAllPostsAsync()
         {
             List<PostModel> allPosts = await _postRepo.GetAllPostsAsync();

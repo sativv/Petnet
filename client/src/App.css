@@ -211,17 +211,13 @@ a {
 }
 
 .adContainer {
-  width: 300px; /* Adjust the width of the card */
+  width: 300px;
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  transition: transform 0.2s ease-in-out;
-}
-
-.adContainer:hover {
-  transform: scale(1.05);
+  margin-bottom: 5%;
 }
 
 .adImgContainer {
@@ -237,8 +233,9 @@ a {
 }
 
 .adBottom {
-  padding: 16px;
-  text-align: center;
+  padding: 1px 16px 4px 16px;
+  text-align: left;
+  background-color: #e7f0dc;
 }
 
 .adBottom h3 {
