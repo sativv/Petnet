@@ -233,19 +233,15 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-
-                            ConcurrencyStamp = "08da5993-5ea1-46c6-9f38-88cef453ce15",
-
+                            ConcurrencyStamp = "7dae4332-ef96-4e07-b5e0-81447ef33d83",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
                             IsVerified = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEJeLUP6RpKorzfcpiz/UPMffbjDoZZ6NK9hnUlXNyIun3Q4pbJTUbB1JFI+48TCXiA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEATVsgv76GBq5kd5y01U8EXpOAv0Ayi7EU5kSasdkshXhXylcVvUtsq5Anpn8jQjxA==",
                             PhoneNumberConfirmed = false,
-
-                            SecurityStamp = "dfc299b3-798f-46f6-bc81-3b6e469be5e8",
-
+                            SecurityStamp = "23475818-f242-4f2d-ae5f-df97f1371d14",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -253,19 +249,15 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-
-                            ConcurrencyStamp = "df20386d-0eff-44aa-ac8a-058483bf1f2a",
-
+                            ConcurrencyStamp = "bcea9183-542b-4c78-b44f-ec6148f0d995",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
                             IsVerified = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEHg0fqVttrk5azHmC5Mj9cdCxWBV3FWqoXrUQl60h5I75raW2dJGMFwSYdnxK9Q6ZQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL1qMPpgmM0LtvUkVUhmsIMH1bFJbHLw5mJ2q0cuLD7WIyFiTYk8kPIP5xSr/UBTBA==",
                             PhoneNumberConfirmed = false,
-
-                            SecurityStamp = "45a98cee-121a-4af7-bbb6-1b556708c756",
-
+                            SecurityStamp = "c13f2776-d1a3-4213-85e9-a4b8a22b3b5c",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         });
