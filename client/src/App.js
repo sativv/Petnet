@@ -13,6 +13,7 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Quiz from "./pages/Quiz";
 
 // create user context
 export const userContext = createContext();
@@ -58,6 +59,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<Profile />} />
+                {/* <Route path="/quiz" element={<Quiz />} /> */}
               </Route>
             </Routes>
           </Router>
