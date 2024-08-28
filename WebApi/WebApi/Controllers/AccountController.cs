@@ -47,6 +47,13 @@ namespace WebApi.Controllers
             return Ok();
         }
 
+        [HttpGet("quiz")]
+        [Authorize]
+        public async Task<IActionResult> GetQuiz()
+        {
+            return Ok();
+        }
+
 
     }
 }
