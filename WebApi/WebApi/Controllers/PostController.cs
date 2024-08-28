@@ -71,7 +71,7 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
-            await _postRepo.SaveChangesAsync();  
+            await _postRepo.SaveChangesAsync();
 
             return Ok(updatedPost);
         }
@@ -107,9 +107,9 @@ namespace WebApi.Controllers
             }
 
             _postRepo.RemovePostAsync(postToRemove);
-            await _postRepo.SaveChangesAsync(); 
+            await _postRepo.SaveChangesAsync();
 
-            return NoContent(); 
+            return NoContent();
         }
 
     }

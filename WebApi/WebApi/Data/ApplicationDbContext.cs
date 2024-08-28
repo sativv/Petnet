@@ -303,7 +303,7 @@ namespace WebApi.Data
                 .HasMany(p => p.Interests)
                 .WithOne(i => i.PostModel)
                 .HasForeignKey(i => i.PostId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             // ApplicationUser to ReviewModel (Written Reviews) (1 to Many)
             modelBuilder.Entity<ApplicationUser>()
