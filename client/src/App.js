@@ -14,9 +14,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Quiz from "./pages/Quiz";
+import AddPost from "./components/AddPost";
 
 import PostDetails from "./pages/PostDetails";
-
 
 // create user context
 export const userContext = createContext();
@@ -64,7 +64,7 @@ function App() {
               <Route path="/post/:postId" element={<PostDetails />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<Profile />} />
-                {/* <Route path="/quiz" element={<Quiz />} /> */}
+                <Route path="/quiz" element={<Quiz />} />
               </Route>
               <Route element={<ProtectedRoute />}>
                 <Route path="/addpost" element={<AddPost />} />
