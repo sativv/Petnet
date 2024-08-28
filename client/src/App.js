@@ -64,9 +64,10 @@ function App() {
               <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<Profile />} />
               </Route>
-              <Route element={<ProtectedRoute />}>
+                {/*   <Route element={<ProtectedRoute />}>
                 <Route path="/addpost" element={<AddPost />} />
-              </Route>
+              </Route> */}
+            
             </Routes>
           </Router>
         </div>
