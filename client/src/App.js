@@ -15,6 +15,9 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Quiz from "./pages/Quiz";
 
+import PostDetails from "./pages/PostDetails";
+
+
 // create user context
 export const userContext = createContext();
 
@@ -52,14 +55,19 @@ function App() {
           <Router>
             <Routes>
               <Route path="/" element={<Home />} />
+
               <Route
                 path="/login"
                 element={<Login setIsAuthenticated={setIsAuthenticated} />}
               />
               <Route path="/register" element={<Register />} />
+              <Route path="/post/:postId" element={<PostDetails />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<Profile />} />
                 {/* <Route path="/quiz" element={<Quiz />} /> */}
+              </Route>
+              <Route element={<ProtectedRoute />}>
+                <Route path="/addpost" element={<AddPost />} />
               </Route>
             </Routes>
           </Router>

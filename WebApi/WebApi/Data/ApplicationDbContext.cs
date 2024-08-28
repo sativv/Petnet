@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 
@@ -20,9 +21,39 @@ namespace WebApi.Data
 
         }
 
+        private void SeedUsers(ModelBuilder builder)
+        {
+
+            ApplicationUser user1 = new ApplicationUser
+            {
+                Id = "user1",
+                UserName = "user1@example.com",
+                Email = "user1@example.com",
+                IsPrivateSeller = true,
+                IsVerified = true
+            };
+
+            ApplicationUser user2 = new ApplicationUser
+            {
+                Id = "user2",
+                UserName = "user2@example.com",
+                Email = "user2@example.com",
+                IsPrivateSeller = false,
+                IsVerified = false
+            };
+
+
+            PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
+            user1.PasswordHash = passwordHasher.HashPassword(user1, "user1*123");
+            user2.PasswordHash = passwordHasher.HashPassword(user2, "user2*123");
+            builder.Entity<ApplicationUser>().HasData(user1, user2);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            SeedUsers(modelBuilder);
             base.OnModelCreating(modelBuilder);
+
 
             modelBuilder.Entity<QuizModel>().HasData(
          new QuizModel
@@ -173,25 +204,9 @@ namespace WebApi.Data
 );
 
 
-            // Seed ApplicationUser...
-            modelBuilder.Entity<ApplicationUser>().HasData(
-                new ApplicationUser
-                {
-                    Id = "user1",
-                    UserName = "user1@example.com",
-                    Email = "user1@example.com",
-                    IsPrivateSeller = true,
-                    IsVerified = true
-                },
-                new ApplicationUser
-                {
-                    Id = "user2",
-                    UserName = "user2@example.com",
-                    Email = "user2@example.com",
-                    IsPrivateSeller = false,
-                    IsVerified = false
-                }
-            );
+
+
+
 
             // Seed PostModel...
             modelBuilder.Entity<PostModel>().HasData(
@@ -205,7 +220,14 @@ namespace WebApi.Data
                     Age = 2,
                     IsAdoptionReady = true,
                     EarliestDelivery = DateOnly.Parse("2024-09-01"),
-                    ApplicationUserId = "user1" // FK to ApplicationUser
+                    ApplicationUserId = "user1", // FK to ApplicationUser
+                    Gender = "Male",
+                    DateOfBirth = DateOnly.Parse("2020-11-01"),
+                    Images = new List<string>
+                    {
+                        "https://www.marthastewart.com/thmb/Ki1fnPkHDxYQv_kAN2HtBxwOELY=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/happy-labrador-retriever-getty-0322-2000-eb585d9e672e47da8b1b7e9d3215a5cb.jpg"
+                    }
+
                 },
                 new PostModel
                 {
@@ -217,7 +239,13 @@ namespace WebApi.Data
                     Age = 1,
                     IsAdoptionReady = false,
                     EarliestDelivery = DateOnly.Parse("2024-10-01"),
-                    ApplicationUserId = "user2" // FK to ApplicationUser
+                    ApplicationUserId = "user2", // FK to ApplicationUser
+                    Gender = "Female",
+                    DateOfBirth = DateOnly.Parse("2021-11-01"),
+                    Images = new List<string>
+                    {
+                        "https://www.purina.co.uk/sites/default/files/styles/square_medium_440x440/public/2022-06/Siamese-Cat_0.jpg?itok=Qy1J6ZDS"
+                    }
                 }
             );
 

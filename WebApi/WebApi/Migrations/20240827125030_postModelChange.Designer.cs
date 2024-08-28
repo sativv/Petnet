@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Data;
 
@@ -11,9 +12,11 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240827125030_postModelChange")]
+    partial class postModelChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,12 +166,6 @@ namespace WebApi.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Adress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BuisnessContact")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -200,12 +197,6 @@ namespace WebApi.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("OrganizationName")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrganizationNumber")
-                        .HasColumnType("int");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -214,9 +205,6 @@ namespace WebApi.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Postcode")
-                        .HasColumnType("int");
 
                     b.Property<string>("QuizResult")
                         .HasColumnType("nvarchar(max)");
@@ -248,27 +236,15 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-<<<<<<< HEAD
-                            ConcurrencyStamp = "bc54ad18-cfae-4ffb-9973-e9279d5c5071",
-=======
-                            ConcurrencyStamp = "d545a560-b755-4516-9a24-6d9d91133cca",
->>>>>>> 14f22e22294e29e846399d746faaa647e5d044a0
+                            ConcurrencyStamp = "e8428ddc-4977-4428-880d-354c202bb6f5",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
                             IsVerified = true,
                             LockoutEnabled = false,
-<<<<<<< HEAD
-                            OrganizationName = 0,
-                            OrganizationNumber = 0,
+                            PasswordHash = "AQAAAAIAAYagAAAAEI5l+1W4UtcFg2AfbxtrAQIXzoYFBXCwiixXfno3s04an4y6wOiao2S4tDjFFVSYIg==",
                             PhoneNumberConfirmed = false,
-                            Postcode = 0,
-                            SecurityStamp = "b4247a16-9d7f-4bb5-b6f5-268598be4500",
-=======
-                            PasswordHash = "AQAAAAIAAYagAAAAEHud2qhXiHHQI5+FIXO/Xr+cj5cs2g1ysvXXDPl/VOO1EDpRK2BanUhmHXEvmmmNrQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "431706fc-7d8b-442f-9a6f-5d1a3b3f82c9",
->>>>>>> 14f22e22294e29e846399d746faaa647e5d044a0
+                            SecurityStamp = "382160b9-9d1f-472e-91e0-05f96d114978",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -276,63 +252,18 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-<<<<<<< HEAD
-                            ConcurrencyStamp = "f8870b93-2508-4f5f-9bd1-1af6c703f138",
-=======
-                            ConcurrencyStamp = "ad7cc6dd-9c1b-4e77-811b-743685610bcd",
->>>>>>> 14f22e22294e29e846399d746faaa647e5d044a0
+                            ConcurrencyStamp = "248fd294-b541-40be-b759-c5a34762a037",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
                             IsVerified = false,
                             LockoutEnabled = false,
-<<<<<<< HEAD
-                            OrganizationName = 0,
-                            OrganizationNumber = 0,
+                            PasswordHash = "AQAAAAIAAYagAAAAEEAn6ONOmquYIeiwpLfbfnGJSD2OW5oapprGQV8axSDZQZ8u+/KKRRVYFJ1Vs3hHNg==",
                             PhoneNumberConfirmed = false,
-                            Postcode = 0,
-                            SecurityStamp = "857a4d9a-0ad7-48f2-997b-5954ef9dab4d",
-=======
-                            PasswordHash = "AQAAAAIAAYagAAAAELPYhmO0bsWdXX47qh73eelwYX4O8Khd8OBHO3fJ3x32JWGpxKerYCZn0GX741W3+Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "11f77d9f-a955-4e26-91e1-127a7945b6eb",
->>>>>>> 14f22e22294e29e846399d746faaa647e5d044a0
+                            SecurityStamp = "c32c325b-cfb4-41b0-99cd-940b05775d1c",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         });
-                });
-
-            modelBuilder.Entity("WebApi.Models.FileModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UploadDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("File");
                 });
 
             modelBuilder.Entity("WebApi.Models.InterestModel", b =>
@@ -1086,7 +1017,7 @@ namespace WebApi.Migrations
                             Description = "Description for post 1",
                             EarliestDelivery = new DateOnly(2024, 9, 1),
                             Gender = "Male",
-                            Images = "[\"https://www.marthastewart.com/thmb/Ki1fnPkHDxYQv_kAN2HtBxwOELY=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/happy-labrador-retriever-getty-0322-2000-eb585d9e672e47da8b1b7e9d3215a5cb.jpg\"]",
+                            Images = "[\"https://www.marthastewart.com/8243168/american-kennel-club-labrador-retriever-most-popular-dog-breed-2022\"]",
                             IsAdoptionReady = true,
                             Title = "Post 1"
                         },
@@ -1101,7 +1032,7 @@ namespace WebApi.Migrations
                             Description = "Description for post 2",
                             EarliestDelivery = new DateOnly(2024, 10, 1),
                             Gender = "Female",
-                            Images = "[\"https://www.purina.co.uk/sites/default/files/styles/square_medium_440x440/public/2022-06/Siamese-Cat_0.jpg?itok=Qy1J6ZDS\"]",
+                            Images = "[\"https://www.purina.co.uk/find-a-pet/cat-breeds/siamese\"]",
                             IsAdoptionReady = false,
                             Title = "Post 2"
                         });
@@ -1229,10 +1160,6 @@ namespace WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuizId"));
 
-                    b.Property<string>("Info")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1245,7 +1172,6 @@ namespace WebApi.Migrations
                         new
                         {
                             QuizId = 1,
-                            Info = "Välkommen till vårt husdjursquiz! Att välja rätt husdjur är ett stort beslut som bör baseras på din livsstil, personlighet och preferenser. I det här testet kommer du att besvara 15 frågor som hjälper dig att upptäcka vilket djur som passar bäst för just dig. Oavsett om du är en aktiv person som älskar att vara utomhus eller om du föredrar en lugn och stillsam miljö, så finns det ett husdjur som passar din vardag perfekt. Svara ärligt på frågorna, så får du snart veta vilken typ av husdjur som skulle bli din bästa vän!",
                             Title = "Vilket djur passar dig bäst?"
                         });
                 });
@@ -1351,13 +1277,6 @@ namespace WebApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebApi.Models.FileModel", b =>
-                {
-                    b.HasOne("WebApi.Data.ApplicationUser", null)
-                        .WithMany("MyFiles")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
             modelBuilder.Entity("WebApi.Models.InterestModel", b =>
                 {
                     b.HasOne("WebApi.Data.ApplicationUser", "User")
@@ -1432,8 +1351,6 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Data.ApplicationUser", b =>
                 {
                     b.Navigation("Interests");
-
-                    b.Navigation("MyFiles");
 
                     b.Navigation("Posts");
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,7 +8,7 @@
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class initialcreate : Migration
+    public partial class initmig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -297,8 +298,8 @@ namespace WebApi.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "user1", 0, "9d3113ad-63b3-4c17-b728-b7a1d56fa7ef", "user1@example.com", false, true, true, false, null, null, null, null, null, false, null, "0169ddb7-ce00-4b23-a087-522e60b14174", false, "user1@example.com" },
-                    { "user2", 0, "94ea65b9-364d-4f0c-82a7-111ccc04a8bd", "user2@example.com", false, false, false, false, null, null, null, null, null, false, null, "0ccb746f-4d0d-4418-8b21-aad6021c6cf8", false, "user2@example.com" }
+                    { "user1", 0, "7dae4332-ef96-4e07-b5e0-81447ef33d83", "user1@example.com", false, true, true, false, null, null, null, "AQAAAAIAAYagAAAAEATVsgv76GBq5kd5y01U8EXpOAv0Ayi7EU5kSasdkshXhXylcVvUtsq5Anpn8jQjxA==", null, false, null, "23475818-f242-4f2d-ae5f-df97f1371d14", false, "user1@example.com" },
+                    { "user2", 0, "bcea9183-542b-4c78-b44f-ec6148f0d995", "user2@example.com", false, false, false, false, null, null, null, "AQAAAAIAAYagAAAAEL1qMPpgmM0LtvUkVUhmsIMH1bFJbHLw5mJ2q0cuLD7WIyFiTYk8kPIP5xSr/UBTBA==", null, false, null, "c13f2776-d1a3-4213-85e9-a4b8a22b3b5c", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(
