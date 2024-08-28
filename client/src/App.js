@@ -13,8 +13,9 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Post from "./components/Post";
-import AddPost from "./components/AddPost";
+
+import PostDetails from "./pages/PostDetails";
+
 
 // create user context
 export const userContext = createContext();
@@ -59,6 +60,7 @@ function App() {
                 element={<Login setIsAuthenticated={setIsAuthenticated} />}
               />
               <Route path="/register" element={<Register />} />
+              <Route path="/post/:postId" element={<PostDetails />} />
               <Route element={<ProtectedRoute />}>
                 <Route path="/profile" element={<Profile />} />
               </Route>
