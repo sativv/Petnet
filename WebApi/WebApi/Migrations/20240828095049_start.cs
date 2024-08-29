@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class initmig : Migration
+    public partial class start : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,6 +35,11 @@ namespace WebApi.Migrations
                     QuizResult = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsPrivateSeller = table.Column<bool>(type: "bit", nullable: false),
                     IsVerified = table.Column<bool>(type: "bit", nullable: false),
+                    OrganizationNumber = table.Column<int>(type: "int", nullable: false),
+                    OrganizationName = table.Column<int>(type: "int", nullable: false),
+                    BuisnessContact = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Postcode = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -56,16 +61,17 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Quiz",
+                name: "Quizzes",
                 columns: table => new
                 {
                     QuizId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Info = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Quiz", x => x.QuizId);
+                    table.PrimaryKey("PK_Quizzes", x => x.QuizId);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,6 +181,28 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Files",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UploadDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Files", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Files_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Posts",
                 columns: table => new
                 {
@@ -182,6 +210,9 @@ namespace WebApi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Images = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: true),
                     AnimalType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AnimalBreed = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
@@ -241,9 +272,9 @@ namespace WebApi.Migrations
                 {
                     table.PrimaryKey("PK_Questions", x => x.QuestionId);
                     table.ForeignKey(
-                        name: "FK_Questions_Quiz_QuizId",
+                        name: "FK_Questions_Quizzes_QuizId",
                         column: x => x.QuizId,
-                        principalTable: "Quiz",
+                        principalTable: "Quizzes",
                         principalColumn: "QuizId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -295,25 +326,25 @@ namespace WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "Adress", "BuisnessContact", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "user1", 0, "7dae4332-ef96-4e07-b5e0-81447ef33d83", "user1@example.com", false, true, true, false, null, null, null, "AQAAAAIAAYagAAAAEATVsgv76GBq5kd5y01U8EXpOAv0Ayi7EU5kSasdkshXhXylcVvUtsq5Anpn8jQjxA==", null, false, null, "23475818-f242-4f2d-ae5f-df97f1371d14", false, "user1@example.com" },
-                    { "user2", 0, "bcea9183-542b-4c78-b44f-ec6148f0d995", "user2@example.com", false, false, false, false, null, null, null, "AQAAAAIAAYagAAAAEL1qMPpgmM0LtvUkVUhmsIMH1bFJbHLw5mJ2q0cuLD7WIyFiTYk8kPIP5xSr/UBTBA==", null, false, null, "c13f2776-d1a3-4213-85e9-a4b8a22b3b5c", false, "user2@example.com" }
+                    { "user1", 0, null, null, "d41018d8-fb36-4255-93be-5c403b90bfc4", "user1@example.com", false, true, true, false, null, null, null, 0, 0, "AQAAAAIAAYagAAAAEGppqjH8+t7MZFMi7V+rI7i8PAbvMWh9lbISyg8RU7V6Sieht0DFt+uqs76B2QJDmQ==", null, false, 0, null, "94226289-f28d-4e09-9297-4fa06b5a0f4f", false, "user1@example.com" },
+                    { "user2", 0, null, null, "d4f8b481-df5e-4efd-a56e-df21e97745ea", "user2@example.com", false, false, false, false, null, null, null, 0, 0, "AQAAAAIAAYagAAAAEMlx8RWOB+H2fE3T3KwCdzl2OSnxvi1fcvcJaY6piczv85MS30bUTpuh1ydRSQXsiQ==", null, false, 0, null, "83fb2045-9c89-404a-b6c2-b96cb0f7b277", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(
-                table: "Quiz",
-                columns: new[] { "QuizId", "Title" },
-                values: new object[] { 1, "Vilket djur passar dig bäst?" });
+                table: "Quizzes",
+                columns: new[] { "QuizId", "Info", "Title" },
+                values: new object[] { 1, "Välkommen till vårt husdjursquiz! Att välja rätt husdjur är ett stort beslut som bör baseras på din livsstil, personlighet och preferenser. I det här testet kommer du att besvara 15 frågor som hjälper dig att upptäcka vilket djur som passar bäst för just dig. Oavsett om du är en aktiv person som älskar att vara utomhus eller om du föredrar en lugn och stillsam miljö, så finns det ett husdjur som passar din vardag perfekt. Svara ärligt på frågorna, så får du snart veta vilken typ av husdjur som skulle bli din bästa vän!", "Vilket djur passar dig bäst?" });
 
             migrationBuilder.InsertData(
                 table: "Posts",
-                columns: new[] { "Id", "Age", "AnimalBreed", "AnimalType", "ApplicationUserId", "Description", "EarliestDelivery", "IsAdoptionReady", "Title" },
+                columns: new[] { "Id", "Age", "AnimalBreed", "AnimalType", "ApplicationUserId", "DateOfBirth", "Description", "EarliestDelivery", "Gender", "Images", "IsAdoptionReady", "Title" },
                 values: new object[,]
                 {
-                    { 1, 2, "Labrador", "Dog", "user1", "Description for post 1", new DateOnly(2024, 9, 1), true, "Post 1" },
-                    { 2, 1, "Siamese", "Cat", "user2", "Description for post 2", new DateOnly(2024, 10, 1), false, "Post 2" }
+                    { 1, 2, "Labrador", "Dog", "user1", new DateOnly(2020, 11, 1), "Description for post 1", new DateOnly(2024, 9, 1), "Male", "[\"https://www.marthastewart.com/thmb/Ki1fnPkHDxYQv_kAN2HtBxwOELY=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/happy-labrador-retriever-getty-0322-2000-eb585d9e672e47da8b1b7e9d3215a5cb.jpg\"]", true, "Post 1" },
+                    { 2, 1, "Siamese", "Cat", "user2", new DateOnly(2021, 11, 1), "Description for post 2", new DateOnly(2024, 10, 1), "Female", "[\"https://www.purina.co.uk/sites/default/files/styles/square_medium_440x440/public/2022-06/Siamese-Cat_0.jpg?itok=Qy1J6ZDS\"]", false, "Post 2" }
                 });
 
             migrationBuilder.InsertData(
@@ -493,6 +524,11 @@ namespace WebApi.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Files_ApplicationUserId",
+                table: "Files",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Interests_PostId",
                 table: "Interests",
                 column: "PostId");
@@ -542,6 +578,9 @@ namespace WebApi.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Files");
+
+            migrationBuilder.DropTable(
                 name: "Interests");
 
             migrationBuilder.DropTable(
@@ -563,7 +602,7 @@ namespace WebApi.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Quiz");
+                name: "Quizzes");
         }
     }
 }

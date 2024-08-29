@@ -519,3 +519,58 @@ a {
   margin-top: 60px;
   font-size: 2rem;
 }
+
+/* =======================================
+ Profile page 
+======================================= */
+
+.profile-wrapper
+{
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-introduction-wrapper
+{
+  display: flex;
+  width: 60vw;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5%;
+  border-top: 1px solid #729762;
+  margin: 0 auto;
+  padding-bottom: 2%;
+
+}
+
+.pen-img
+{
+  width: 50px;
+  margin: 3%;
+}
+
+.profile-img
+{
+  margin-top: 5%;
+   width: 30%;
+  border-radius: 50%;
+}
+
+.profile-header-wrapper
+{
+  display: flex;
+  margin: 0 auto;
+  justify-content: flex-start;
+  width: 60vw;
+  color: #729762;
+}
+
+.profile-aboutme-wrapper
+{
+
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  margin: 0 auto;
+  align-items: flex-start;
+}

@@ -5,7 +5,8 @@ using WebApi.Data;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/" +
+        "[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -18,8 +19,8 @@ namespace WebApi.Controllers
             _signInManager = signInManager;
         }
 
-        [Authorize]
         [HttpGet("me")]
+        [Authorize]
         public async Task<IActionResult> GetCurrentUser()
         {
 
