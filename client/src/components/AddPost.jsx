@@ -1,7 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { userContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 function AddPost() {
 
+    const nav = useNavigate();
+
+    const { currentUser, setCurrentUser } = useContext(userContext);
     const [title, setTitle] = useState("");
     const [type, setType] = useState("");
     const [breed, setBreed] = useState("");
@@ -10,9 +15,51 @@ function AddPost() {
     const [desc, setDesc] = useState("");
 
 
-    const submitPost = (e) => {
+    
+
+
+    const submitPost = async (e) => {
         e.preventDefault();
         console.log(e);
+
+        const payload = {
+            "title": title,
+            "description": desc,
+            "images": [
+              img
+            ],
+            "gender": gender,
+            "dateOfBirth": null,
+            "animalType": type,
+            "animalBreed": breed,
+            "age": 0,
+            "isAdoptionReady": true,
+            "earliestDelivery": null,
+            "applicationUser": {},
+            "applicationUserId": currentUser.id
+        }
+        try{
+
+            const response = await fetch('http://localhost:5054/api/Post/AddPost', {
+                method: "POST",
+                credentials: "include",
+                headers:{
+                            "Content-Type": "application/json"
+                        },
+                body: JSON.stringify(payload)
+            })
+
+            if(response.ok ){
+                const responseBody = await response.json();
+
+                nav(`/post/${responseBody.id}`)
+            }
+        }
+        catch(err)
+        {
+            console.log(err)
+        }
+
     }
 
 

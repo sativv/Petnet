@@ -27,6 +27,8 @@ function Quiz() {
   }, []);
 
   useEffect(() => {
+    console.log("");
+
     if (quizData.QuizId) {
       console.log("question fetch started");
 

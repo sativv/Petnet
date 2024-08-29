@@ -332,13 +332,49 @@ a {
   margin-bottom: 1rem;
 }
 
+.postInfo label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.postInfo strong {
+  min-width: 80px;
+}
+
+.postInput {
+  flex: 1;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  border: none;
+  background-color: transparent;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.postInput:disabled {
+  opacity: 1;
+  color: #000;
+}
+
+.postInput:enabled {
+  border: 1px solid black;
+}
+
 .postDetails {
   text-align: center;
 }
 
-.postTitle {
+.postTitleInput {
+  width: 100%;
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
+}
+
+.postDescriptionInput {
+  width: 100%;
+  height: 80px;
+  margin-top: 0.5rem;
 }
 
 .postDescription {
@@ -357,6 +393,24 @@ a {
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
+}
+
+.postBtn {
+  width: 50%;
+  border-radius: 15px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.editButton {
+  background-color: #729762;
+}
+
+.deleteButton {
+  background-color: #729762;
 }
 
 /* =======================================
@@ -465,4 +519,59 @@ a {
   border-radius: 10px;
   margin-top: 60px;
   font-size: 2rem;
+}
+
+/* =======================================
+ Profile page 
+======================================= */
+
+.profile-wrapper
+{
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-introduction-wrapper
+{
+  display: flex;
+  width: 60vw;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5%;
+  border-top: 1px solid #729762;
+  margin: 0 auto;
+  padding-bottom: 2%;
+
+}
+
+.pen-img
+{
+  width: 50px;
+  margin: 3%;
+}
+
+.profile-img
+{
+  margin-top: 5%;
+   width: 30%;
+  border-radius: 50%;
+}
+
+.profile-header-wrapper
+{
+  display: flex;
+  margin: 0 auto;
+  justify-content: flex-start;
+  width: 60vw;
+  color: #729762;
+}
+
+.profile-aboutme-wrapper
+{
+
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  margin: 0 auto;
+  align-items: flex-start;
 }
