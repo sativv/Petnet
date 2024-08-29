@@ -35,7 +35,7 @@ function Quiz() {
       const getQuestions = async () => {
         try {
           const res = await fetch(
-            `https://localhost:7072/Quiz/questions by quiz/${quizData.QuizId}`
+            `https://localhost:7072/Quiz/questionsbyquiz/${quizData.QuizId}`
           );
           if (!res.ok) throw new Error("Failed to fetch questions");
           const data = await res.json();
@@ -43,7 +43,7 @@ function Quiz() {
 
           const options = data.map((q) =>
             fetch(
-              `https://localhost:7072/Quiz/options by question/${q.QuestionId}`
+              `https://localhost:7072/Quiz/optionsbyquestion/${q.QuestionId}`
             ).then((res) => res.json())
           );
           const optionsResults = await Promise.all(options);

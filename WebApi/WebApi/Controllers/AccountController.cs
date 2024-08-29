@@ -5,8 +5,7 @@ using WebApi.Data;
 
 namespace WebApi.Controllers
 {
-    [Route("api/" +
-        "[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
