@@ -4,22 +4,21 @@ import { useNavigate, useParams } from "react-router-dom";
 function PostDetails() {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
-  const [isEditable, setIsEditable] = useState(false); // State to track if the form is editable
+  const [isEditable, setIsEditable] = useState(false);
 
   const nav = useNavigate();
 
   const unlockEdit = () => {
-    setIsEditable(true); // toggles/enables form fields
+    setIsEditable(true);
   };
 
-  const deletePost = () => {
-    // ask user to confirm before executing deletion
+  const deletePost = async () => {
     const isConfirmed = window.confirm(
       "Är du säker på att du vill ta bort annonsen?"
     );
 
     if (isConfirmed) {
-      const response = fetch(
+      const response = await fetch(
         `https://localhost:7072/api/Post/RemovePost/${post.id}`,
         {
           method: "DELETE",
@@ -27,7 +26,6 @@ function PostDetails() {
       );
 
       if (response.ok) {
-        // post was deleted, send user to homepage
         nav("/");
       }
     }
@@ -54,6 +52,48 @@ function PostDetails() {
     fetchPost();
   }, [postId]);
 
+  const handleSaveChanges = async (e) => {
+    e.preventDefault();
+
+    // Validation check
+    if (
+      post.title != "" ||
+      post.description != "" ||
+      post.animalBreed != "" ||
+      post.gender != "" ||
+      post.age != "" ||
+      post.title != ""
+    ) {
+      alert("Alla fält måste vara ifyllda!");
+      return;
+    }
+
+    post.applicationUser = {};
+
+    try {
+      const response = await fetch(
+        `https://localhost:7072/api/Post/UpdatePost/${post.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(post),
+        }
+      );
+
+      if (response.ok) {
+        setIsEditable(false); // Disable editing after saving
+        alert("Annonsen har uppdaterats!");
+      } else {
+        alert("Något gick fel vid uppdateringen av annonsen.");
+        console.log(post);
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   if (!post) {
     return <div>Loading...</div>;
   }
@@ -64,7 +104,7 @@ function PostDetails() {
         <img src={post.images[0]} alt={post.title} />
       </div>
       <div className="postContent">
-        <form>
+        <form onSubmit={handleSaveChanges}>
           <div className="postInfo">
             <label>
               <strong>Breed:</strong>
@@ -80,13 +120,17 @@ function PostDetails() {
             </label>
             <label>
               <strong>Gender:</strong>
-              <input
-                type="text"
+              <select
                 value={post.gender}
                 disabled={!isEditable}
                 onChange={(e) => setPost({ ...post, gender: e.target.value })}
                 className="postInput"
-              />
+              >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Mixed">Mixed</option>
+                <option value="N/A">N/A</option>
+              </select>
             </label>
             <label>
               <strong>Age:</strong>
