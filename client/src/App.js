@@ -13,10 +13,7 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-<<<<<<< HEAD
 import Quiz from "./pages/Quiz";
-=======
->>>>>>> b8a5ed4d073049d15271dedea6d3210a666594c1
 import AddPost from "./components/AddPost";
 
 import PostDetails from "./pages/PostDetails";
