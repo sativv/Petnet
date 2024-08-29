@@ -71,7 +71,7 @@ function Profile() {
           <p>{aboutMe || "Ingen information tillgänglig."}</p>
         )}
       </div>
-   
+     <button onClick={Logout}>Logout</button>
     </div>
   );
 }
