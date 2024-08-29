@@ -5,7 +5,8 @@ using WebApi.Data;
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/" +
+        "[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -45,13 +46,6 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return Ok();
-        }
-
-        [HttpGet("quiz")]
-        [Authorize]
-        public async Task<IActionResult> GetQuiz()
-        {
             return Ok();
         }
 

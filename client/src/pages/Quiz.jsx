@@ -28,6 +28,8 @@ function Quiz() {
 
   useEffect(() => {
     if (quizData.QuizId) {
+      console.log("question fetch started");
+
       const getQuestions = async () => {
         try {
           const res = await fetch(
@@ -49,6 +51,8 @@ function Quiz() {
         }
       };
       getQuestions();
+
+      console.log(questionsData);
     }
   }, [quizData]);
 
@@ -71,8 +75,8 @@ function Quiz() {
       {counter === 0 ? (
         <div className="quiz-cont">
           <h1>QUIZ</h1>
-          <h2>{quizData.Title}</h2>
-          <h5>{quizData.Info}</h5>
+          <h2>{quizData.title}</h2>
+          <h5>{quizData.info}</h5>
           <button onClick={() => setCounter(counter + 1)}>Starta Quizet</button>
         </div>
       ) : counter > questionsData.length && questionsData.length !== 0 ? (
@@ -88,7 +92,7 @@ function Quiz() {
         </div>
       ) : (
         <form className="quiz-cont" onSubmit={HandleSubmit}>
-          <h1>{questionsData[counter].Text}</h1>
+          <h1>{questionsData[counter].text}</h1>
           {optionsData.map((o) => (
             <button
               key={`${o.QuestionId}.${o.OptionId}`}

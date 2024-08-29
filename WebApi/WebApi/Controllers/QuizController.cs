@@ -25,7 +25,7 @@ namespace WebApi.Controllers
                 return NotFound("No quizzes found.");
             }
 
-            return Ok();
+            return Ok(quizzes);
         }
 
 
@@ -34,7 +34,12 @@ namespace WebApi.Controllers
         {
             QuizModel quiz = await quizRepo.GetQuizByIdAsync(id);
 
-            return Ok();
+            if (quiz == null)
+            {
+                return NotFound("No quiz found.");
+            }
+
+            return Ok(quiz);
         }
 
         [HttpGet("questions by quiz/{id}")]
@@ -42,7 +47,12 @@ namespace WebApi.Controllers
         {
             IEnumerable<QuestionModel> questions = await quizRepo.GetQuestionsByIdAsync(id);
 
-            return Ok();
+            if (questions == null || !questions.Any())
+            {
+                return NotFound("No quizzes found.");
+            }
+
+            return Ok(questions);
         }
 
         [HttpGet("options by question/{id}")]
@@ -50,7 +60,12 @@ namespace WebApi.Controllers
         {
             IEnumerable<OptionModel> options = await quizRepo.GetOptionsByIdAsync(id);
 
-            return Ok();
+            if (options == null || !options.Any())
+            {
+                return NotFound("No quizzes found.");
+            }
+
+            return Ok(options);
         }
 
     }
