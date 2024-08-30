@@ -31,8 +31,8 @@ namespace WebApi.Controllers
             _logger = logger;
         }
 
-        [Authorize]
         [HttpGet("me")]
+        [Authorize]
         public async Task<IActionResult> GetCurrentUser()
         {
 

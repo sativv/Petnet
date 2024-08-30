@@ -40,7 +40,7 @@ namespace WebApi.Controllers
         }
 
         // Get all posts
-        [HttpGet("Posts")]
+        [HttpGet]
         public async Task<IActionResult> GetAllPostsAsync()
         {
             List<PostModel> allPosts = await _postRepo.GetAllPostsAsync();
@@ -71,7 +71,7 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
-            await _postRepo.SaveChangesAsync();  
+            await _postRepo.SaveChangesAsync();
 
             return Ok(updatedPost);
         }
@@ -107,9 +107,9 @@ namespace WebApi.Controllers
             }
 
             _postRepo.RemovePostAsync(postToRemove);
-            await _postRepo.SaveChangesAsync(); 
+            await _postRepo.SaveChangesAsync();
 
-            return NoContent(); 
+            return NoContent();
         }
 
     }

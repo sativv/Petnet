@@ -163,6 +163,12 @@ namespace WebApi.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Adress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BuisnessContact")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -194,6 +200,12 @@ namespace WebApi.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int>("OrganizationName")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrganizationNumber")
+                        .HasColumnType("int");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -202,6 +214,9 @@ namespace WebApi.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int>("Postcode")
+                        .HasColumnType("int");
 
                     b.Property<string>("QuizResult")
                         .HasColumnType("nvarchar(max)");
@@ -233,19 +248,18 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-
-                            ConcurrencyStamp = "08da5993-5ea1-46c6-9f38-88cef453ce15",
-
+                            ConcurrencyStamp = "1d48aa15-3e20-4c16-960b-a713a2a1b216",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
                             IsVerified = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEJeLUP6RpKorzfcpiz/UPMffbjDoZZ6NK9hnUlXNyIun3Q4pbJTUbB1JFI+48TCXiA==",
+                            OrganizationName = 0,
+                            OrganizationNumber = 0,
+                            PasswordHash = "AQAAAAIAAYagAAAAEGrNgp/8WsbqIXkBvF7PiVKJgg7uvBBG+V/l0kl73SbFT/CquYKf/ZJ6xEtTqC3/NA==",
                             PhoneNumberConfirmed = false,
-
-                            SecurityStamp = "dfc299b3-798f-46f6-bc81-3b6e469be5e8",
-
+                            Postcode = 0,
+                            SecurityStamp = "a6e79bf9-8e09-40f0-8626-9579d99f05f4",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -253,22 +267,54 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-
-                            ConcurrencyStamp = "df20386d-0eff-44aa-ac8a-058483bf1f2a",
-
+                            ConcurrencyStamp = "c02f26b1-c081-4bcc-bf8b-a0a71e94964c",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
                             IsVerified = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEHg0fqVttrk5azHmC5Mj9cdCxWBV3FWqoXrUQl60h5I75raW2dJGMFwSYdnxK9Q6ZQ==",
+                            OrganizationName = 0,
+                            OrganizationNumber = 0,
+                            PasswordHash = "AQAAAAIAAYagAAAAELIfds6FIQHZ6AL3uJ9wuxhqnKcehiTOVG9Afj+IDdT01waJnMnnWpiOiTiPp43wNg==",
                             PhoneNumberConfirmed = false,
-
-                            SecurityStamp = "45a98cee-121a-4af7-bbb6-1b556708c756",
-
+                            Postcode = 0,
+                            SecurityStamp = "32e800c0-b2ba-455d-ae0d-02bc2c802858",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         });
+                });
+
+            modelBuilder.Entity("WebApi.Models.FileModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UploadDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Files");
                 });
 
             modelBuilder.Entity("WebApi.Models.InterestModel", b =>
@@ -327,630 +373,630 @@ namespace WebApi.Migrations
                         new
                         {
                             OptionId = 1,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Jag älskar att vara ute och vara aktiv",
                             QuestionId = 1
                         },
                         new
                         {
                             OptionId = 2,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Ligga i soffan och mysa med en bra film",
                             QuestionId = 1
                         },
                         new
                         {
                             OptionId = 3,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Läsa en bok eller pyssla i trädgården",
                             QuestionId = 1
                         },
                         new
                         {
                             OptionId = 4,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Organisera och dekorera hemmet",
                             QuestionId = 1
                         },
                         new
                         {
                             OptionId = 5,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Njuta av ett lugnt och stilla hem",
                             QuestionId = 1
                         },
                         new
                         {
                             OptionId = 6,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Upptäcka nya intressen och hobbyer",
                             QuestionId = 1
                         },
                         new
                         {
                             OptionId = 7,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Ute i naturen, kanske i en park eller skog",
                             QuestionId = 2
                         },
                         new
                         {
                             OptionId = 8,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Inomhus, där jag kan ta det lugnt",
                             QuestionId = 2
                         },
                         new
                         {
                             OptionId = 9,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Ett tyst och stilla rum",
                             QuestionId = 2
                         },
                         new
                         {
                             OptionId = 10,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Ett hem fyllt med ljud och färg",
                             QuestionId = 2
                         },
                         new
                         {
                             OptionId = 11,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Ett hem som känns som ett akvarium, lugnt och fridfullt",
                             QuestionId = 2
                         },
                         new
                         {
                             OptionId = 12,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "I en miljö som är lite annorlunda och exotisk",
                             QuestionId = 2
                         },
                         new
                         {
                             OptionId = 13,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Jag gillar att spendera mycket tid utomhus och vara aktiv",
                             QuestionId = 3
                         },
                         new
                         {
                             OptionId = 14,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Jag vill ha sällskap men utan att behöva vara aktiv hela tiden",
                             QuestionId = 3
                         },
                         new
                         {
                             OptionId = 15,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Jag vill ha ett djur som kräver lite mindre tid och uppmärksamhet",
                             QuestionId = 3
                         },
                         new
                         {
                             OptionId = 16,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Jag gillar att pyssla och sköta om ett utrymme i mitt hem",
                             QuestionId = 3
                         },
                         new
                         {
                             OptionId = 17,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Jag vill ha något som är nästan självständigt",
                             QuestionId = 3
                         },
                         new
                         {
                             OptionId = 18,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Jag gillar att skapa och underhålla en unik miljö",
                             QuestionId = 3
                         },
                         new
                         {
                             OptionId = 19,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Sport och träning",
                             QuestionId = 4
                         },
                         new
                         {
                             OptionId = 20,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Läsa eller titta på film",
                             QuestionId = 4
                         },
                         new
                         {
                             OptionId = 21,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Pyssla eller hantverka",
                             QuestionId = 4
                         },
                         new
                         {
                             OptionId = 22,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Dekorera och designa",
                             QuestionId = 4
                         },
                         new
                         {
                             OptionId = 23,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Meditation eller stilla reflektion",
                             QuestionId = 4
                         },
                         new
                         {
                             OptionId = 24,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Experimentera och lära mig nya saker",
                             QuestionId = 4
                         },
                         new
                         {
                             OptionId = 25,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Jag går ut och rör på mig för att slappna av",
                             QuestionId = 5
                         },
                         new
                         {
                             OptionId = 26,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Jag myser gärna med något varmt och mjukt",
                             QuestionId = 5
                         },
                         new
                         {
                             OptionId = 27,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Jag finner lugn i att pyssla eller göra något kreativt",
                             QuestionId = 5
                         },
                         new
                         {
                             OptionId = 28,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Jag städar och organiserar för att rensa tankarna",
                             QuestionId = 5
                         },
                         new
                         {
                             OptionId = 29,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Jag tittar på något som ger mig frid, som fiskar som simmar",
                             QuestionId = 5
                         },
                         new
                         {
                             OptionId = 30,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Jag utforskar något nytt och spännande för att distrahera mig",
                             QuestionId = 5
                         },
                         new
                         {
                             OptionId = 31,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Jag vill ha en kompis att spendera mycket tid med",
                             QuestionId = 6
                         },
                         new
                         {
                             OptionId = 32,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Jag vill ha ett djur som är självständigt men ändå socialt",
                             QuestionId = 6
                         },
                         new
                         {
                             OptionId = 33,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Jag gillar små och lugna djur som inte kräver så mycket",
                             QuestionId = 6
                         },
                         new
                         {
                             OptionId = 34,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Jag gillar att ta hand om och underhålla ett vackert utrymme",
                             QuestionId = 6
                         },
                         new
                         {
                             OptionId = 35,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Jag vill ha något som är lätt att sköta",
                             QuestionId = 6
                         },
                         new
                         {
                             OptionId = 36,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Jag vill ha något ovanligt och lärorikt att ta hand om",
                             QuestionId = 6
                         },
                         new
                         {
                             OptionId = 37,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Jag är flexibel och gillar att anpassa mig",
                             QuestionId = 7
                         },
                         new
                         {
                             OptionId = 38,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Jag tycker om ett hem där allt har sin plats men är inte överdrivet noggrann",
                             QuestionId = 7
                         },
                         new
                         {
                             OptionId = 39,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Jag uppskattar ordning men med en touch av personlighet",
                             QuestionId = 7
                         },
                         new
                         {
                             OptionId = 40,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Jag älskar att ha ett perfekt organiserat och dekorerat hem",
                             QuestionId = 7
                         },
                         new
                         {
                             OptionId = 41,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Jag föredrar ett minimalistiskt och lugnt hem",
                             QuestionId = 7
                         },
                         new
                         {
                             OptionId = 42,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Jag gillar att ha specifika utrymmen som är välplanerade",
                             QuestionId = 7
                         },
                         new
                         {
                             OptionId = 43,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Jag är mycket social och älskar att vara med andra",
                             QuestionId = 8
                         },
                         new
                         {
                             OptionId = 44,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Jag är social men uppskattar också min egen tid",
                             QuestionId = 8
                         },
                         new
                         {
                             OptionId = 45,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Jag gillar att vara ensam men också att ha ett lugnt sällskap ibland",
                             QuestionId = 8
                         },
                         new
                         {
                             OptionId = 46,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Jag tycker om att prata och interagera med andra men på mitt eget sätt",
                             QuestionId = 8
                         },
                         new
                         {
                             OptionId = 47,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Jag trivs bäst i min egen värld, men kan njuta av att titta på andra",
                             QuestionId = 8
                         },
                         new
                         {
                             OptionId = 48,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Jag är mer intresserad av att observera än att delta",
                             QuestionId = 8
                         },
                         new
                         {
                             OptionId = 49,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Jag gillar att motionera och vara aktiv varje dag",
                             QuestionId = 9
                         },
                         new
                         {
                             OptionId = 50,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Jag gillar att röra mig men föredrar mer avslappnade aktiviteter",
                             QuestionId = 9
                         },
                         new
                         {
                             OptionId = 51,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Jag föredrar aktiviteter som är lugna och mindre intensiva",
                             QuestionId = 9
                         },
                         new
                         {
                             OptionId = 52,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Jag tycker om att ha rutiner men behöver inte mycket fysisk aktivitet",
                             QuestionId = 9
                         },
                         new
                         {
                             OptionId = 53,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Jag tycker om att sitta still och observera",
                             QuestionId = 9
                         },
                         new
                         {
                             OptionId = 54,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Jag föredrar att utforska saker i min egen takt",
                             QuestionId = 9
                         },
                         new
                         {
                             OptionId = 55,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Rutiner är mycket viktiga för mig",
                             QuestionId = 10
                         },
                         new
                         {
                             OptionId = 56,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Jag gillar rutiner men kan vara flexibel när det behövs",
                             QuestionId = 10
                         },
                         new
                         {
                             OptionId = 57,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Jag uppskattar rutiner men behöver också utrymme för frihet",
                             QuestionId = 10
                         },
                         new
                         {
                             OptionId = 58,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Jag har vissa rutiner men är inte beroende av dem",
                             QuestionId = 10
                         },
                         new
                         {
                             OptionId = 59,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Rutiner är viktiga för mig men jag följer dem på mitt eget sätt",
                             QuestionId = 10
                         },
                         new
                         {
                             OptionId = 60,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Jag föredrar att vara flexibel och följa dagsformen",
                             QuestionId = 10
                         },
                         new
                         {
                             OptionId = 61,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Jag föredrar ett sällskap som är lika aktivt som jag",
                             QuestionId = 11
                         },
                         new
                         {
                             OptionId = 62,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Jag gillar sällskap men vill också ha tid för mig själv",
                             QuestionId = 11
                         },
                         new
                         {
                             OptionId = 63,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Jag uppskattar ett lugnt och avslappnat sällskap",
                             QuestionId = 11
                         },
                         new
                         {
                             OptionId = 64,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Jag gillar ett sällskap som är pratsamt och uttrycksfullt",
                             QuestionId = 11
                         },
                         new
                         {
                             OptionId = 65,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Jag föredrar ett sällskap som är stillsamt och rogivande",
                             QuestionId = 11
                         },
                         new
                         {
                             OptionId = 66,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Jag vill ha ett sällskap som är unikt och intressant",
                             QuestionId = 11
                         },
                         new
                         {
                             OptionId = 67,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Jag är noggrann med städning och gillar att ha det rent och snyggt",
                             QuestionId = 12
                         },
                         new
                         {
                             OptionId = 68,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Jag gillar att ha det rent men är inte överdrivet noggrann",
                             QuestionId = 12
                         },
                         new
                         {
                             OptionId = 69,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Jag uppskattar ett rent hem men tycker inte att det behöver vara perfekt",
                             QuestionId = 12
                         },
                         new
                         {
                             OptionId = 70,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Jag tycker om att ha ett vackert och prydligt hem",
                             QuestionId = 12
                         },
                         new
                         {
                             OptionId = 71,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Jag gillar att ha det rent och enkelt",
                             QuestionId = 12
                         },
                         new
                         {
                             OptionId = 72,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Jag är mer intresserad av att ha ett intressant och organiserat utrymme",
                             QuestionId = 12
                         },
                         new
                         {
                             OptionId = 73,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Jag trivs bäst i ett hem med liv och rörelse",
                             QuestionId = 13
                         },
                         new
                         {
                             OptionId = 74,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Jag tycker om att ha det lugnt men kan stå ut med lite ljud",
                             QuestionId = 13
                         },
                         new
                         {
                             OptionId = 75,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Jag föredrar ett tyst och stilla hem",
                             QuestionId = 13
                         },
                         new
                         {
                             OptionId = 76,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Jag gillar att höra ljud från naturen, som fågelsång",
                             QuestionId = 13
                         },
                         new
                         {
                             OptionId = 77,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Jag föredrar en lugn och rogivande atmosfär",
                             QuestionId = 13
                         },
                         new
                         {
                             OptionId = 78,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Jag gillar ett hem som är stilla men med lite variation",
                             QuestionId = 13
                         },
                         new
                         {
                             OptionId = 79,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Jag tar gärna på mig ansvar och trivs med det",
                             QuestionId = 14
                         },
                         new
                         {
                             OptionId = 80,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Jag gillar att ha ansvar men behöver också tid för mig själv",
                             QuestionId = 14
                         },
                         new
                         {
                             OptionId = 81,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Jag föredrar att ha ett ansvar som inte är för tungt",
                             QuestionId = 14
                         },
                         new
                         {
                             OptionId = 82,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Jag gillar att ha ansvar för att ta hand om något vackert",
                             QuestionId = 14
                         },
                         new
                         {
                             OptionId = 83,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Jag gillar att ha ansvar men på ett sätt som är enkelt och lugnt",
                             QuestionId = 14
                         },
                         new
                         {
                             OptionId = 84,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Jag tar gärna på mig ansvar för något unikt och spännande",
                             QuestionId = 14
                         },
                         new
                         {
                             OptionId = 85,
-                            Animal = "Hund",
+                            Animal = "Dog",
                             Option = "Jag älskar att ha besök och är en utmärkt värd",
                             QuestionId = 15
                         },
                         new
                         {
                             OptionId = 86,
-                            Animal = "Katt",
+                            Animal = "Cat",
                             Option = "Jag gillar att ha besök men också min egen tid",
                             QuestionId = 15
                         },
                         new
                         {
                             OptionId = 87,
-                            Animal = "Kanin",
+                            Animal = "Rabbit",
                             Option = "Jag föredrar mindre sällskap och lugna besök",
                             QuestionId = 15
                         },
                         new
                         {
                             OptionId = 88,
-                            Animal = "Fågel",
+                            Animal = "Bird",
                             Option = "Jag gillar att dekorera och göra hemmet inbjudande för besökare",
                             QuestionId = 15
                         },
                         new
                         {
                             OptionId = 89,
-                            Animal = "Akvarium",
+                            Animal = "Aquarium",
                             Option = "Jag trivs bäst när jag kan ha mitt eget utrymme, även när jag har besök",
                             QuestionId = 15
                         },
                         new
                         {
                             OptionId = 90,
-                            Animal = "Reptil",
+                            Animal = "Reptile",
                             Option = "Jag gillar att ha besök men vill inte att det blir för ofta",
                             QuestionId = 15
                         });
@@ -979,12 +1025,23 @@ namespace WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateOnly?>("DateOfBirth")
+                        .HasColumnType("date");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateOnly?>("EarliestDelivery")
                         .HasColumnType("date");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Images")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAdoptionReady")
                         .HasColumnType("bit");
@@ -1007,8 +1064,11 @@ namespace WebApi.Migrations
                             AnimalBreed = "Labrador",
                             AnimalType = "Dog",
                             ApplicationUserId = "user1",
+                            DateOfBirth = new DateOnly(2020, 11, 1),
                             Description = "Description for post 1",
                             EarliestDelivery = new DateOnly(2024, 9, 1),
+                            Gender = "Male",
+                            Images = "[\"https://www.marthastewart.com/thmb/Ki1fnPkHDxYQv_kAN2HtBxwOELY=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/happy-labrador-retriever-getty-0322-2000-eb585d9e672e47da8b1b7e9d3215a5cb.jpg\"]",
                             IsAdoptionReady = true,
                             Title = "Post 1"
                         },
@@ -1019,8 +1079,11 @@ namespace WebApi.Migrations
                             AnimalBreed = "Siamese",
                             AnimalType = "Cat",
                             ApplicationUserId = "user2",
+                            DateOfBirth = new DateOnly(2021, 11, 1),
                             Description = "Description for post 2",
                             EarliestDelivery = new DateOnly(2024, 10, 1),
+                            Gender = "Female",
+                            Images = "[\"https://www.purina.co.uk/sites/default/files/styles/square_medium_440x440/public/2022-06/Siamese-Cat_0.jpg?itok=Qy1J6ZDS\"]",
                             IsAdoptionReady = false,
                             Title = "Post 2"
                         });
@@ -1148,18 +1211,53 @@ namespace WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QuizId"));
 
+                    b.Property<string>("Aquarium")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Bird")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cat")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Dog")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Info")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rabbit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reptile")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("QuizId");
 
-                    b.ToTable("Quiz");
+                    b.ToTable("Quizzes");
 
                     b.HasData(
                         new
                         {
                             QuizId = 1,
+                            Aquarium = "Ett akvarium med fiskar kan vara en lugnande och vacker del av ditt hem. Fiskar är tysta och kräver inte mycket interaktion, men de behöver en välskött miljö för att trivas.\r\n\r\nSkötsel:\r\nSkötsel av ett akvarium innebär att regelbundet byta vatten, kontrollera vattenkvaliteten och se till att filtren fungerar korrekt. Fiskar behöver rätt typ av mat, och det är viktigt att välja fiskar som trivs tillsammans. Ett akvarium kräver också en noggrann inställning till temperatur och belysning.\r\n\r\nSaker att tänka på:\r\nFiskar är känsliga för förändringar i sin miljö, så det är viktigt att vara noggrann med vattenkvalitet och skötsel. Ett akvarium kan vara ett vackert tillskott till ditt hem, men det kräver tid och engagemang för att underhålla. Fundera på om du vill ha ett sötvatten- eller saltvattenakvarium, då de har olika krav.\r\n",
+                            Bird = "Fåglar är färgglada, intelligenta och kan vara mycket sociala. De älskar att interagera med sina ägare och vissa arter kan till och med lära sig att prata. Fåglar kräver dock mycket mental stimulans och ett tryggt hem.\r\n\r\nSkötsel:\r\nAtt ta hand om en fågel innebär att ge dem en stor, säker bur med utrymme att flyga och leka. Deras kost ska vara varierad och näringsrik, inklusive fröer, frukt och grönsaker. Fåglar behöver daglig uppmärksamhet och interaktion, samt leksaker för att hålla dem underhållna.\r\n\r\nSaker att tänka på:\r\nFåglar kan leva länge, ibland upp till flera decennier beroende på art, så det är ett långsiktigt åtagande. De kan också vara högljudda och röriga, så se till att du är beredd på detta. Det är viktigt att förstå fåglars sociala behov och att de kan bli stressade om de lämnas ensamma för länge.\r\n",
+                            Cat = "Katter är självständiga och nyfikna djur som älskar att utforska och samtidigt njuta av långa stunder av vila. De kan vara kärleksfulla och sociala, men de har också en stark egen vilja och uppskattar ofta sitt eget sällskap.\r\n\r\nSkötsel:\r\nKatter är relativt lättskötta jämfört med många andra husdjur. De behöver daglig mat, vatten, och en ren kattlåda. Katter kräver också lite lektid och mental stimulans, särskilt inomhuskatter. Regelbunden veterinärvård är också viktigt för att hålla din katt frisk.\r\n\r\nSaker att tänka på:\r\nKatter kan vara ganska självständiga, vilket gör dem idealiska för människor med hektiska scheman. Men de behöver fortfarande uppmärksamhet och omsorg. Tänk på att katter kan ha olika personligheter, från väldigt sociala till mer reserverade. Fundera på om du vill ha en inomhus- eller utomhuskatt och hur du kan göra ditt hem kattvänligt.\r\n",
+                            Dog = "Hundar är sociala, lojala och ofta fulla av energi. De är fantastiska följeslagare för dem som gillar att vara aktiva och spendera tid utomhus. Hundar kräver dagliga promenader, mental stimulans, och en hel del uppmärksamhet och kärlek.\r\n\r\nSkötsel:\r\nAtt ha en hund innebär ett stort ansvar. Förutom dagliga promenader och regelbunden motion behöver hundar också träning, socialisering, och regelbunden veterinärvård. Hundar älskar att vara en del av familjen och kräver mycket tid och engagemang från sina ägare.\r\n\r\nSaker att tänka på:\r\nInnan du skaffar en hund, tänk på att de behöver mycket tid och energi. De flesta hundar gillar inte att vara ensamma under längre perioder, så se till att din livsstil kan anpassas efter deras behov. Räkna också med kostnader för mat, veterinärbesök, försäkringar och eventuella oväntade utgifter.\r\n",
+                            Info = "Välkommen till vårt husdjursquiz! Att välja rätt husdjur är ett stort beslut som bör baseras på din livsstil, personlighet och preferenser. I det här testet kommer du att besvara 15 frågor som hjälper dig att upptäcka vilket djur som passar bäst för just dig. Oavsett om du är en aktiv person som älskar att vara utomhus eller om du föredrar en lugn och stillsam miljö, så finns det ett husdjur som passar din vardag perfekt. Svara ärligt på frågorna, så får du snart veta vilken typ av husdjur som skulle bli din bästa vän!",
+                            Rabbit = "Kaniner är tysta, sällskapliga djur som trivs bäst i ett lugnt och säkert hem. De är ofta lekfulla och kan skapa starka band med sina ägare, men de är också känsliga och kräver ett särskilt omhändertagande.\r\n\r\nSkötsel:\r\nKaniner behöver en rymlig bur eller ett område där de kan röra sig fritt. Deras kost består främst av hö, grönsaker och pellets. Det är också viktigt att erbjuda dem leksaker och aktiviteter för att hålla dem mentalt stimulerade. Regelbunden rengöring av deras bur och veterinärbesök är också nödvändiga.\r\n\r\nSaker att tänka på:\r\nKaniner är känsliga djur som kräver en lugn miljö. De passar bra för personer som kan erbjuda en stabil och tyst hemmiljö. Kaniner kan leva ganska länge, så det är viktigt att vara beredd på ett långsiktigt åtagande. De är också sociala djur och kan ibland må bäst av att ha en annan kanin som sällskap.",
+                            Reptile = "Reptiler är fascinerande och unika husdjur som kräver en speciell typ av skötsel. De kan vara ganska självständiga och är ofta mest lämpade för ägare som är intresserade av att skapa en specifik miljö och förstå deras unika behov.\r\n\r\nSkötsel:\r\nReptiler, såsom ormar, ödlor och sköldpaddor, kräver ett specialanpassat terrarium med rätt temperatur, belysning och luftfuktighet. Deras kost varierar beroende på art, från insekter till grönt foder. Regelbunden rengöring av terrariet och kontroll av deras miljö är avgörande för deras hälsa.\r\n\r\nSaker att tänka på:\r\nReptiler kan vara känsliga för förändringar i sin omgivning och kräver noggrann övervakning av deras livsmiljö. De är inte lika sociala som andra husdjur och kan vara mindre interaktiva, vilket är viktigt att överväga om du vill ha ett djur som du kan hantera ofta. Reptiler är bäst lämpade för dem som har ett särskilt intresse för dessa fascinerande djur och är villiga att investera tid i att skapa och underhålla deras miljö.\r\n\r\n",
                             Title = "Vilket djur passar dig bäst?"
                         });
                 });
@@ -1265,6 +1363,13 @@ namespace WebApi.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WebApi.Models.FileModel", b =>
+                {
+                    b.HasOne("WebApi.Data.ApplicationUser", null)
+                        .WithMany("MyFiles")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
             modelBuilder.Entity("WebApi.Models.InterestModel", b =>
                 {
                     b.HasOne("WebApi.Data.ApplicationUser", "User")
@@ -1276,7 +1381,7 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Models.PostModel", "PostModel")
                         .WithMany("Interests")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("PostModel");
@@ -1339,6 +1444,8 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Data.ApplicationUser", b =>
                 {
                     b.Navigation("Interests");
+
+                    b.Navigation("MyFiles");
 
                     b.Navigation("Posts");
 
