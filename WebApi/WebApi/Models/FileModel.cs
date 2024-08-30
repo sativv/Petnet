@@ -11,5 +11,6 @@ namespace WebApi.Models
         public string Path { get; set; }
         public DateTime UploadDate { get; set; }
 
+
     }
 }
