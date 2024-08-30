@@ -56,6 +56,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("optionsByQuestion/{id}")]
+
         public async Task<IActionResult> GetOptions(int id)
         {
             IEnumerable<OptionModel> options = await quizRepo.GetOptionsByIdAsync(id);
