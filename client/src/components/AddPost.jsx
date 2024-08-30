@@ -140,7 +140,7 @@ function AddPost() {
             <input className='login-input' type="url" name="" id="img" required value={img} onChange={(e) => setImg(e.target.value)} />
 
             <label htmlFor="desc">Description</label>
-            <textarea className='login-input' type="text" name="" id="desc" required value={desc} onChange={(e) => setDesc(e.target.value)}/>
+            <textarea className='login-input add-textarea' type="text" name="" id="desc" required value={desc} onChange={(e) => setDesc(e.target.value)}/>
 
             <button className='login-button' style={{marginTop:"20px"}}> Submit</button>
 
