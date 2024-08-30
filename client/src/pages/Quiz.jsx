@@ -35,7 +35,7 @@ function Quiz() {
           const questions = await resQuestions.json();
           setQuestionsData(questions);
 
-          // Fetch options for all questions
+          // Hämtar options för alla questions
           const optionsPromises = questions.map((q) =>
             fetch(
               `https://localhost:7072/Quiz/optionsByQuestion/${q.questionId}`
