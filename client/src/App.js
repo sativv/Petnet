@@ -66,10 +66,9 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/quiz" element={<Quiz />} />
               </Route>
-                   <Route element={<ProtectedRoute />}>
+              <Route element={<ProtectedRoute />}>
                 <Route path="/addpost" element={<AddPost />} />
-              </Route> 
-            
+              </Route>
             </Routes>
           </Router>
         </div>

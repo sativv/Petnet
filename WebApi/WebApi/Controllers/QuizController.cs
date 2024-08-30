@@ -42,7 +42,7 @@ namespace WebApi.Controllers
             return Ok(quiz);
         }
 
-        [HttpGet("questionsbyquiz/{id}")]
+        [HttpGet("questionsByQuiz/{id}")]
         public async Task<IActionResult> GetQuestions(int id)
         {
             IEnumerable<QuestionModel> questions = await quizRepo.GetQuestionsByIdAsync(id);
@@ -55,7 +55,8 @@ namespace WebApi.Controllers
             return Ok(questions);
         }
 
-        [HttpGet("optionsbyquestion/{id}")]
+        [HttpGet("optionsByQuestion/{id}")]
+
         public async Task<IActionResult> GetOptions(int id)
         {
             IEnumerable<OptionModel> options = await quizRepo.GetOptionsByIdAsync(id);
