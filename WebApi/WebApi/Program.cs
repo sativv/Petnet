@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
 using WebApi.Data;
 using WebApi.Repositories;
+using WebApi.Service.Models;
+using WebApi.Service.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +31,11 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+// För email - reset Denna rad är för hur länge länken/ token ska gälla efter du fått den på mail. 
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(opts => opts.TokenLifespan = TimeSpan.FromHours(10));
+
+
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -40,6 +47,14 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 });
 
+//Lägg till Email configurations 
+
+var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfigurations>();
+
+builder.Services.AddSingleton(emailConfig);
+
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 
 builder.Services.AddAuthorization();
 
@@ -50,6 +65,10 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddScoped<PostRepo>();
+
+
+
+
 
 
 var app = builder.Build();
