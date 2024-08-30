@@ -645,6 +645,7 @@ a {
   line-height: 1.5;
   font-size: 1.6rem;
   margin-bottom: 20px;
+  pointer-events: none;
 }
 
 .quiz-cont-questions button {
@@ -657,6 +658,7 @@ a {
   color: #e7f0dc;
   font-size: 0.9rem;
   font-weight: 400;
+  cursor: pointer;
 }
 
 .quiz-cont-questions button.active {
@@ -674,6 +676,7 @@ a {
   margin-right: 30px;
   font-weight: 200;
   color: #1c5c00;
+  pointer-events: none;
 }
 
 .counter-and-btn button {
@@ -681,6 +684,7 @@ a {
   height: 30px;
   margin-top: 20px;
   background-color: #1c5c00;
+  cursor: pointer;
 }
 
 .quiz-cont-result {
@@ -702,21 +706,25 @@ a {
 
   font-weight: 200;
   font-size: 1rem;
+  pointer-events: none;
 }
 
 .quiz-cont-result img {
   width: 200px;
   margin-top: 30px;
   border-radius: 10px;
+  pointer-events: none;
 }
 
 .quiz-cont-result img:nth-of-type(2) {
   width: 150px;
+  pointer-events: none;
 }
 
 .quiz-cont-result span {
   font-size: 1.4rem;
   font-weight: 550;
+  pointer-events: none;
 }
 
 .quiz-cont-result p {
@@ -726,6 +734,7 @@ a {
   padding: 10px;
   margin-left: 15px;
   margin-right: 15px;
+  pointer-events: none;
 }
 
 .quiz-cont-result button {
@@ -734,8 +743,10 @@ a {
   margin-top: 30px;
   margin-bottom: 30px;
   border-radius: 10px;
+  border: none;
   background-color: #1c5c00;
   color: #e7f0dc;
   font-size: 1rem;
   font-weight: 400;
+  cursor: pointer;
 }
