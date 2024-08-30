@@ -72,6 +72,14 @@ a {
   padding: 5%;
 }
 
+@media (min-width: 768px) {
+  .add-post-form{
+    max-width: 30%;
+    margin: auto;
+  }
+}
+
+
 /* =======================================
    Login page 
    ======================================= */
