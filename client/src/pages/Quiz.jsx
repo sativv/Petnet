@@ -152,11 +152,12 @@ function Quiz() {
         </div>
       ) : (
         <form className="quiz-cont-questions" onSubmit={HandleSubmit}>
-          <h1>{questionsData[counter]?.text}</h1>
+          <h1>{questionsData[counter - 1]?.text}</h1>
           {optionsData
             .filter(
               (o) => o.questionId === questionsData[counter - 1]?.questionId
             )
+            .sort(() => Math.random() - 0.5)
             .map((o) => (
               <button
                 key={`${o.questionId}.${o.optionId}`}
