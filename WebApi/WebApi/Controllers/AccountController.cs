@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data;
+using WebApi.Models.APIModels;
 
 namespace WebApi.Controllers
 {
@@ -48,6 +49,70 @@ namespace WebApi.Controllers
             return Ok();
         }
 
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterUser userObject)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = new ApplicationUser
+            {
+                UserName = userObject.Email,
+                Email = userObject.Email,
+                IsPrivateSeller = userObject.IsPrivateSeller,
+                OrganizationNumber = userObject.OrganizationNumber,
+                OrganizationName = userObject.OrganizationName,
+                BuisnessContact = userObject.BuisnessContact,
+                Adress = userObject.Adress,
+                Postcode = userObject.Postcode,
+                City = userObject.City,
+                PhoneNumber = userObject.PhoneNumber
+            };
+
+            var result = await _userManager.CreateAsync(user, userObject.Password);
+
+            if (result.Succeeded)
+            {
+                return Ok("User registered successfully");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return BadRequest(ModelState);
+
+
+
+        }
+
+        [HttpPut("update/quizResultByUserId/{id}")]
+        public async Task<IActionResult> UpdateUsersQuizResult(string id, [FromBody] QuizResultModel qResult)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound(new { message = $"User with ID {id} not found." });
+
+            user.QuizResult = qResult.QuizResult;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return Ok(new { message = "User quiz result updated successfully" });
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return BadRequest(ModelState);
+        }
 
     }
 }
