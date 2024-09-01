@@ -19,23 +19,28 @@ function Register() {
   const [city, setCity] = useState("");
   const [phone, setPhone] = useState("");
   const [registration, setRegistration] = useState(null);
+  const [response, setResponse] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const newUser = {
-      email: email,
-      password: password,
-      //Lägger till resterande uppgifter om "registrerad uppfödare" är ibockad
-      ...(isBreeder && {
-        organizationNumber: organizationNumber,
-        organizationName: organizationName,
-        buisnessContact: buisnessContact,
-        adress: adress,
-        postcode: postcode,
-        city: city,
-        phone: phone,
-      }),
+      Email: email,
+      Password: password,
+      IsPrivateSeller: true,
+    };
+
+    const newUserBreeder = {
+      Email: email,
+      Password: password,
+      OrganizationNumber: organizationNumber,
+      OrganizationName: organizationName,
+      BuisnessContact: buisnessContact,
+      Adress: adress,
+      Postcode: postcode,
+      City: city,
+      Phonenumber: phone,
+      IsPrivateSeller: false,
     };
 
     if (email.length < 10) {
@@ -57,18 +62,36 @@ function Register() {
       return;
     }
 
-    const response = await fetch("http://localhost:5054/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newUser),
-    });
+    if (isBreeder) {
+      const response = await fetch(
+        "https://localhost:7072/api/Account/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newUserBreeder),
+        }
+      );
+      setResponse(response);
+    } else {
+      const response = await fetch(
+        "https://localhost:7072/api/Account/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newUser),
+        }
+      );
+      setResponse(response);
+    }
 
     if (!response.ok) {
       // DID NOT WORKING
     }
-
+    console.log(response);
     alert("Welcome, your account has been created!");
     nav("/login");
   };
