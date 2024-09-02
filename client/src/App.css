@@ -52,6 +52,50 @@ a {
    Home-page
    ======================================= */
 
+.filter-search{
+  width: 100%;
+  background-color: #E7F0DC;
+  margin-bottom: 15px;
+  padding: 15px;
+}
+
+.filter-container{
+  display: flex;
+  justify-content: space-evenly;
+
+  /* padding: 15px; */
+}
+
+.search{
+  border-radius: 15px;
+  border: 2px solid #658147;
+  text-align: end;
+  font-size: 16px;
+  height: 26px;
+}
+
+.filter-box{
+  display: flex;
+  flex-direction: column;
+}
+.filter-input{
+  border: 1px solid #658147;
+  border-radius: 5px;
+  width: 25vw;
+  
+}
+
+
+.filter-input option{
+  padding: 0 5px;
+  text-align: end;
+}
+.filter-input option:checked{
+  background-color: #E1E7DF;
+  color: #000;
+  
+}
+
 .post-container {
   display: flex;
   flex-direction: column;
