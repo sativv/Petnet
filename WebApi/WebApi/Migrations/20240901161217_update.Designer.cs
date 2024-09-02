@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240829175144_fixInit")]
-    partial class fixInit
+    [Migration("20240901161217_update")]
+    partial class update
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,6 +172,9 @@ namespace WebApi.Migrations
                     b.Property<string>("BuisnessContact")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -206,8 +209,8 @@ namespace WebApi.Migrations
                     b.Property<int>("OrganizationName")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrganizationNumber")
-                        .HasColumnType("int");
+                    b.Property<long>("OrganizationNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -251,18 +254,18 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1d48aa15-3e20-4c16-960b-a713a2a1b216",
+                            ConcurrencyStamp = "ba833f92-3326-4690-8f6e-b8be0c2fd04b",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
                             IsVerified = true,
                             LockoutEnabled = false,
                             OrganizationName = 0,
-                            OrganizationNumber = 0,
-                            PasswordHash = "AQAAAAIAAYagAAAAEGrNgp/8WsbqIXkBvF7PiVKJgg7uvBBG+V/l0kl73SbFT/CquYKf/ZJ6xEtTqC3/NA==",
+                            OrganizationNumber = 0L,
+                            PasswordHash = "AQAAAAIAAYagAAAAEI+zYGRU9uANhyyJQbohW1dZNoe4SXArzgpOygrNFMGwTjKeGGmbbMciHFIHuFnIgg==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "a6e79bf9-8e09-40f0-8626-9579d99f05f4",
+                            SecurityStamp = "b18e16f7-56c9-4ade-aef0-d2ac0242dc22",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -270,18 +273,18 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c02f26b1-c081-4bcc-bf8b-a0a71e94964c",
+                            ConcurrencyStamp = "02ddb803-120a-4938-9ec8-7ccdc5681abe",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
                             IsVerified = false,
                             LockoutEnabled = false,
                             OrganizationName = 0,
-                            OrganizationNumber = 0,
-                            PasswordHash = "AQAAAAIAAYagAAAAELIfds6FIQHZ6AL3uJ9wuxhqnKcehiTOVG9Afj+IDdT01waJnMnnWpiOiTiPp43wNg==",
+                            OrganizationNumber = 0L,
+                            PasswordHash = "AQAAAAIAAYagAAAAEJWCrtyXuqz47sakQpSV7V8H8znPj8T+aU2JQ7AruljFTu8LKEfKXei+Pl7PGe52Dg==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "32e800c0-b2ba-455d-ae0d-02bc2c802858",
+                            SecurityStamp = "1bf93b53-399b-42e6-b154-d183e8aab785",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         });

@@ -6,6 +6,11 @@ using System.Text.Json.Serialization;
 using WebApi.Data;
 using WebApi.Repositories;
 
+using WebApi.Service.Models;
+using WebApi.Service.Services;
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +37,11 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+// F�r email - reset Denna rad �r f�r hur l�nge l�nken/ token ska g�lla efter du f�tt den p� mail. 
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(opts => opts.TokenLifespan = TimeSpan.FromHours(10));
+
+
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -42,6 +52,14 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.ExpireTimeSpan = TimeSpan.FromDays(1);
 
 });
+
+//L�gg till Email configurations 
+
+var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfigurations>();
+
+builder.Services.AddSingleton(emailConfig);
+
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 builder.Services.AddAuthorization();
@@ -54,6 +72,10 @@ builder.Services.AddControllers()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddScoped<PostRepo>();
+
 
 
 
