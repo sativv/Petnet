@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class newInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,12 +35,13 @@ namespace WebApi.Migrations
                     QuizResult = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsPrivateSeller = table.Column<bool>(type: "bit", nullable: false),
                     IsVerified = table.Column<bool>(type: "bit", nullable: false),
-                    OrganizationNumber = table.Column<int>(type: "int", nullable: false),
                     AboutMe = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OrganizationName = table.Column<int>(type: "int", nullable: false),
+                    OrganizationNumber = table.Column<long>(type: "bigint", nullable: false),
+                    OrganizationName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BuisnessContact = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Postcode = table.Column<int>(type: "int", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -333,11 +334,11 @@ namespace WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "user1", null, 0, null, null, "dc6ad19c-02bc-4196-a4ca-aa59ac50066a", "user1@example.com", false, true, true, false, null, null, null, 0, 0, "AQAAAAIAAYagAAAAEIMm74aHtKYjK1SLuwCz1sXLqkSko2tv3o0Nd/8Obp+ofwsN7/PeiicsUVzUa92T5Q==", null, false, 0, null, "42afaafd-e43b-401b-830f-c9bd3dafff2f", false, "user1@example.com" },
-                    { "user2", null, 0, null, null, "3bfe637b-91a8-4619-a02a-432928ab9528", "user2@example.com", false, false, false, false, null, null, null, 0, 0, "AQAAAAIAAYagAAAAEK/7aUf9ntvDBGCUTuEC1q35gQCU8YiOr03ngChMwzqGWzq8jxnGSDuOh+MQJalVaw==", null, false, 0, null, "5aac7aa0-7fd9-4afb-be19-c952f7cd5c43", false, "user2@example.com" }
+                    { "user1", null, 0, null, null, null, "df5b70c8-029a-401b-a902-aa24ce66cd53", "user1@example.com", false, true, true, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEHFhzZQ0CGoILUvpu51mm5VLz28FeYOcnIAl1auZD5RAgf0HHNVBMt3CAXOX3cgH5Q==", null, false, 0, null, "905ae8aa-82a0-4b9f-bf83-d3b1c319cb2a", false, "user1@example.com" },
+                    { "user2", null, 0, null, null, null, "dabed999-92f3-4229-8923-ec606bc91999", "user2@example.com", false, false, false, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEP2cp/kqiuOEialZ706Kk6DKleISzgO0kkI9kgXcq9P/SKe+MLF0P/nCQ2noIcM84g==", null, false, 0, null, "1dd84190-f340-4b2c-97eb-cba8b0e29f09", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(

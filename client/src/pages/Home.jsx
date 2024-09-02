@@ -24,13 +24,13 @@ function Home() {
       
     // }
 
-    if(type !== ""){
-      filtered = posts.filter((post) =>post.animalType === type);
-      currentlyFiltering = true;
-    }
     
     if(gender !== ""){
       filtered = (filtered.length > 0 ? filtered : posts).filter((post) => post.gender.toLowerCase() === gender.toLowerCase());
+      currentlyFiltering = true;
+    }
+    if(type !== ""){
+      filtered = (filtered.length > 0 ? filtered : posts).filter((post) =>post.animalType === type);
       currentlyFiltering = true;
     }
 
