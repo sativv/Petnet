@@ -9,7 +9,6 @@ namespace WebApi.Data
         public bool IsPrivateSeller { get; set; }
         public bool IsVerified { get; set; }
         public string? AboutMe { get; set; }
-        public int OrganizationName { get; set; }
         public long OrganizationNumber { get; set; }
         public string? OrganizationName { get; set; }
         public string? BuisnessContact { get; set; }
