@@ -72,18 +72,17 @@ a {
   padding: 5%;
 }
 
-.add-textarea{
+.add-textarea {
   field-sizing: content;
   resize: none;
 }
 
 @media (min-width: 768px) {
-  .add-post-form{
+  .add-post-form {
     max-width: 30%;
     margin: auto;
   }
 }
-
 
 /* =======================================
    Login page 
@@ -336,6 +335,9 @@ a {
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .postInfo {
@@ -377,15 +379,17 @@ a {
 }
 
 .postTitleInput {
-  width: 100%;
+  width: 98%;
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
+  box-sizing: border-box;
 }
 
 .postDescriptionInput {
-  width: 100%;
+  width: 98%;
   height: 80px;
   margin-top: 0.5rem;
+  box-sizing: border-box;
 }
 
 .postDescription {
