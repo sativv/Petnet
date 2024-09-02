@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class fixInit : Migration
+    public partial class start : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,6 +40,7 @@ namespace WebApi.Migrations
                     BuisnessContact = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Postcode = table.Column<int>(type: "int", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -332,11 +333,11 @@ namespace WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "Adress", "BuisnessContact", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "user1", 0, null, null, "1d48aa15-3e20-4c16-960b-a713a2a1b216", "user1@example.com", false, true, true, false, null, null, null, 0, 0, "AQAAAAIAAYagAAAAEGrNgp/8WsbqIXkBvF7PiVKJgg7uvBBG+V/l0kl73SbFT/CquYKf/ZJ6xEtTqC3/NA==", null, false, 0, null, "a6e79bf9-8e09-40f0-8626-9579d99f05f4", false, "user1@example.com" },
-                    { "user2", 0, null, null, "c02f26b1-c081-4bcc-bf8b-a0a71e94964c", "user2@example.com", false, false, false, false, null, null, null, 0, 0, "AQAAAAIAAYagAAAAELIfds6FIQHZ6AL3uJ9wuxhqnKcehiTOVG9Afj+IDdT01waJnMnnWpiOiTiPp43wNg==", null, false, 0, null, "32e800c0-b2ba-455d-ae0d-02bc2c802858", false, "user2@example.com" }
+                    { "user1", 0, null, null, null, "018fc2ef-2aa1-443d-a84a-a6470e984247", "user1@example.com", false, true, true, false, null, null, null, 0, 0, "AQAAAAIAAYagAAAAEJggvoo5i/Kw3UUjdKl5L4TrXaB/rv1ytb8aqMTDinyQSmNWWXJWYK7a/UwaWuH2IQ==", null, false, 0, null, "4d4ff0f5-9e69-475f-a169-2fe938b7b9a0", false, "user1@example.com" },
+                    { "user2", 0, null, null, null, "b2cf1114-3c19-4a60-992a-1d75446b0703", "user2@example.com", false, false, false, false, null, null, null, 0, 0, "AQAAAAIAAYagAAAAEG5+NmnufHwLbYLhLk/iq8WLU3xxwKLeHjvcHeoleL7S1JUpvHJAgQACWK7vBNSccg==", null, false, 0, null, "c8234cb6-6bd1-4e74-894f-f4a3e0aa52ab", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(
