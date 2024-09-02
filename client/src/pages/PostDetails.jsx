@@ -9,13 +9,8 @@ function PostDetails() {
 
   const nav = useNavigate();
 
-  const getTodayDate = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    const day = String(today.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
+  var datenow = new Date();
+  var currentDate = datenow.toISOString().substring(0, 10);
 
   const unlockEdit = () => {
     setIsEditable(true);
@@ -204,7 +199,7 @@ function PostDetails() {
                   setPost({ ...post, earliestAdoption: e.target.value })
                 }
                 className="postInput"
-                min={getTodayDate()}
+                min={currentDate}
               />
             </label>
 
