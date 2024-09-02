@@ -23,29 +23,31 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const newUser = {
-      email: email,
-      password: password,
-      //Lägger till resterande uppgifter om "registrerad uppfödare" är ibockad
-      ...(isBreeder && {
-        organizationNumber: organizationNumber,
-        organizationName: organizationName,
-        buisnessContact: buisnessContact,
-        adress: adress,
-        postcode: postcode,
-        city: city,
-        phone: phone,
-      }),
-    };
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+
+    if (isBreeder) {
+      formData.append("organizationNumber", organizationNumber);
+      formData.append("organizationName", organizationName);
+      formData.append("buisnessContact", buisnessContact);
+      formData.append("adress", adress);
+      formData.append("postcode", postcode);
+      formData.append("city", city);
+      formData.append("phone", phone);
+      if (registration) {
+        formData.append("registration", registration);
+      }
+    }
 
     if (email.length < 10) {
       alert("Email must be at least 10 characters long");
       return;
     }
 
-    if (!passwordRegex.test(password, passwordAgain)) {
+    if (!passwordRegex.test(password)) {
       alert(
-        "Password must be at least 6 characters long asnd contain at least one number"
+        "Password must be at least 6 characters long and contain at least one number"
       );
       return;
     }
@@ -59,14 +61,13 @@ function Register() {
 
     const response = await fetch("http://localhost:5054/register", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newUser),
+      body: formData,
     });
 
     if (!response.ok) {
-      // DID NOT WORKING
+      // Hantera fel här, t.ex. visa ett felmeddelande
+      alert("Registration failed. Please try again.");
+      return;
     }
 
     alert("Welcome, your account has been created!");
@@ -92,6 +93,10 @@ function Register() {
     }
   };
 
+  const handleCheckboxChange = () => {
+    setIsBreeder((prev) => !prev);
+  };
+
   return (
     <div className="register">
       <div className="register-cont">
@@ -107,12 +112,11 @@ function Register() {
           </div>
 
           <div className="info-check-breeder">
-            <label htmlFor="">
-              {" "}
+            <label>
               <input
                 type="checkbox"
                 checked={isBreeder}
-                onChange={() => setIsBreeder(!isBreeder)}
+                onChange={handleCheckboxChange}
               />
               Registrerad uppfödare
             </label>
@@ -193,14 +197,12 @@ function Register() {
                   onChange={(e) => setPhone(e.target.value)}
                   required
                 />
-                <label for="registration">Registreringsbevis</label>
-
+                <label htmlFor="registration">Registreringsbevis</label>
                 <input
                   name="registration"
                   type="file"
                   accept=".pdf, image/*"
                   onChange={handleFileChange}
-                  required
                 />
                 <img
                   id="preview"

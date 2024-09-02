@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { userContext } from "../App";
 import profile1 from "../profile-images/profile1.jpg";
 import pen from "../profile-images/pen.png";
-import verifiedBadge from "../profile-images/verified-badge.png"; 
+import verifiedBadge from "../profile-images/verified-badge.png";
 
 function Profile() {
   const { currentUser, setCurrentUser } = useContext(userContext);
@@ -13,6 +13,29 @@ function Profile() {
 
   const handleEditClick = () => {
     setIsEditing(true);
+  };
+
+  const handleSaveClick = async () => {
+    try {
+      const response = await fetch("http://localhost:5054/api/Account/me/about", {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ aboutMe }),
+      });
+
+      if (response.ok) {
+        // Uppdatera den lokala användarens `aboutMe`-fält
+        setCurrentUser((prevUser) => ({ ...prevUser, aboutMe }));
+        setIsEditing(false); // Avsluta redigeringsläget
+      } else {
+        console.error("Failed to update About Me");
+      }
+    } catch (error) {
+      console.error("Error during update:", error);
+    }
   };
 
   if (!currentUser) {
@@ -44,28 +67,7 @@ function Profile() {
               cols="50"
             />
             <button onClick={() => setIsEditing(false)}>Avbryt</button>
-            <button onClick={async () => {
-              try {
-                const response = await fetch("http://localhost:5054/api/Account/updateAboutMe", {
-                  method: "POST",
-                  credentials: "include",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({ aboutMe }),
-                });
-
-                if (response.ok) {
-                  const updatedUser = await response.json();
-                  setCurrentUser(updatedUser);
-                  setIsEditing(false);
-                } else {
-                  console.error("Failed to update About Me");
-                }
-              } catch (error) {
-                console.error("Error during update:", error);
-              }
-            }}>Spara</button>
+            <button onClick={handleSaveClick}>Spara</button>
           </div>
         ) : (
           <p>{aboutMe || "Ingen information tillgänglig."}</p>
