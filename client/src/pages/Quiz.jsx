@@ -9,6 +9,7 @@ function Quiz() {
   const [quizData, setQuizData] = useState(null);
   const [questionsData, setQuestionsData] = useState(null);
   const [optionsData, setOptionsData] = useState([]);
+  const [active, setActive] = useState(null);
 
   useEffect(() => {
     const getQuiz = async () => {
@@ -42,7 +43,8 @@ function Quiz() {
             ).then((res) => res.json())
           );
           const optionsResults = await Promise.all(optionsPromises);
-          setOptionsData(optionsResults.flat());
+          //Blandar listan med options på måfå
+          setOptionsData(optionsResults.flat().sort(() => Math.random() - 0.5));
           console.log(optionsResults);
         } catch (error) {
           console.error("Error fetching questions or options:", error);
@@ -152,20 +154,22 @@ function Quiz() {
         </div>
       ) : (
         <form className="quiz-cont-questions" onSubmit={HandleSubmit}>
-          <h1>{questionsData[counter]?.text}</h1>
+          <h1>{questionsData[counter - 1]?.text}</h1>
           {optionsData
             .filter(
               (o) => o.questionId === questionsData[counter - 1]?.questionId
             )
             .map((o) => (
               <button
+                className={active === o.optionId ? "active" : ""}
                 key={`${o.questionId}.${o.optionId}`}
                 type="button"
-                onClick={() =>
+                onClick={() => {
+                  setActive(active === o.optionId ? null : o.optionId);
                   setAnimal(
                     animal === "" || animal !== o.animal ? o.animal : ""
-                  )
-                }
+                  );
+                }}
               >
                 {o.option}
               </button>
