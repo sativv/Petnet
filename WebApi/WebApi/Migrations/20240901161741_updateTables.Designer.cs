@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Data;
 
@@ -11,9 +12,11 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240901161741_updateTables")]
+    partial class updateTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,9 +163,6 @@ namespace WebApi.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AboutMe")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
@@ -254,15 +254,12 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-
                             ConcurrencyStamp = "c0b8b021-b53c-4347-b310-73e378e294ae",
-
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
                             IsVerified = true,
                             LockoutEnabled = false,
-
                             OrganizationNumber = 0L,
                             PasswordHash = "AQAAAAIAAYagAAAAEIQCu9yRM6tfCRfg3Y5G3S8zAZ8gIzoKVl9+ZmfgWxAKcI8WOBEbLBfgtgGOKD2pJQ==",
                             PhoneNumberConfirmed = false,
@@ -275,23 +272,17 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-
-
                             ConcurrencyStamp = "784d3d2a-2360-4ee4-9d11-c428b588d002",
-
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
                             IsVerified = false,
                             LockoutEnabled = false,
-
-
                             OrganizationNumber = 0L,
                             PasswordHash = "AQAAAAIAAYagAAAAEPG3uqagbdOdm26GZaB+BoDxt1ZrKpuMQWYLtvpAgkPqFds3gERscgX8eL0nXVEZyA==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
                             SecurityStamp = "46d7629e-57d2-4ad8-8153-5a670e05f7fb",
-
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         });
