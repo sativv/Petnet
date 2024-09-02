@@ -109,7 +109,7 @@ namespace WebApi.Controllers
             _postRepo.RemovePostAsync(postToRemove);
             await _postRepo.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
     }
