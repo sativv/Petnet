@@ -57,13 +57,13 @@ function PostDetails() {
 
     // Validation check
     if (
-      post.title != "" ||
-      post.description != "" ||
-      post.animalBreed != "" ||
-      post.gender != "" ||
-      post.age != "" ||
-      post.title != ""
+      post.title === "" ||
+      post.description === "" ||
+      post.animalBreed === "" ||
+      post.gender === "" ||
+      post.age === ""
     ) {
+      console.log(post);
       alert("Alla fält måste vara ifyllda!");
       return;
     }
