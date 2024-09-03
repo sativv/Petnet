@@ -29,7 +29,7 @@ describe("New user breeder", () => {
     cy.get("form > :nth-child(4)").type("Private1!");
     cy.get("form > :nth-child(6)").type("Private1!");
     //orgnr
-    cy.get("form > :nth-child(8)").type("112233444");
+    cy.get("form > :nth-child(8)").type("1122334449");
     //företagnnamn
     cy.get("form > :nth-child(10)").type("Uppfödare AB");
     //kontakt
@@ -41,7 +41,7 @@ describe("New user breeder", () => {
     //ort
     cy.get("form > :nth-child(18)").type("Swestad");
     //tel
-    cy.get("form > :nth-child(20)").type("733-101010");
+    cy.get("form > :nth-child(20)").type("0733101010");
 
     //fil
     const fileName = "../fixtures/thinkbox2.png";
