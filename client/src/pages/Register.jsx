@@ -24,24 +24,6 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password);
-
-    if (isBreeder) {
-      formData.append("organizationNumber", organizationNumber);
-      formData.append("organizationName", organizationName);
-      formData.append("buisnessContact", buisnessContact);
-      formData.append("adress", adress);
-      formData.append("postcode", postcode);
-      formData.append("city", city);
-      formData.append("phone", phone);
-      if (registration) {
-        formData.append("registration", registration);
-      }
-    }
-
     const newUser = {
       Email: email,
       Password: password,
@@ -60,7 +42,6 @@ function Register() {
       Phonenumber: phone,
       IsPrivateSeller: false,
     };
-
 
     if (email.length < 10) {
       alert("Email must be at least 10 characters long");
@@ -81,45 +62,20 @@ function Register() {
       return;
     }
 
-    const response = await fetch("http://localhost:5054/register", {
+    let response = await fetch("https://localhost:7072/api/Account/register", {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(isBreeder ? newUserBreeder : newUser),
     });
-
-    if (isBreeder) {
-      const response = await fetch(
-        "https://localhost:7072/api/Account/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newUserBreeder),
-        }
-      );
-      setResponse(response);
-      console.log(response);
-    } else {
-      const response = await fetch(
-        "https://localhost:7072/api/Account/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newUser),
-        }
-      );
-      setResponse(response);
-    }
-
 
     if (!response.ok) {
       // Hantera fel här, t.ex. visa ett felmeddelande
       alert("Registration failed. Please try again.");
       return;
     }
-    console.log(response);
+
     alert("Welcome, your account has been created!");
     nav("/login");
   };
