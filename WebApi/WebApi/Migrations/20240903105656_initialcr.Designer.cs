@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240903080826_update-user")]
-    partial class updateuser
+    [Migration("20240903105656_initialcr")]
+    partial class initialcr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,6 +163,9 @@ namespace WebApi.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AboutMe")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
@@ -254,17 +257,17 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dde9325e-6c67-4257-8737-ad8fcc0143c0",
+                            ConcurrencyStamp = "bf20feb7-7a67-48e4-9f26-8c2d44708aa4",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
                             IsVerified = true,
                             LockoutEnabled = false,
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEMtWzexeqKREi9JprJAdIuKcNiGaMaYNZEPh5l0/pQq3W1NjAwNy07h/RELqJUEF7g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGeQYRs9sPqWB8c//s61UHJqNNqc5daUHZ+vv926Nlz276QYDIFvvwCn/FpBjJQ+cw==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "ac4ae309-061e-47ec-ac95-4079d91e1da2",
+                            SecurityStamp = "b19506a8-1192-41f1-b3d1-058ebec257dc",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -272,17 +275,17 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3dbead9a-8eaa-46e6-bc10-97a485b3e700",
+                            ConcurrencyStamp = "77daf8aa-8ccb-4d18-9cce-5711f44db0d1",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
                             IsVerified = false,
                             LockoutEnabled = false,
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEOeLFoTwxIwNfqf4wsVUwbfoDiCOTlSHigg0j71crd+fvC4yLiY/utxXswxzGlmkCw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKdnktdSEFCTy6yC4svJxrl2ukesWBQyNzYHNOg21WyyZEnC9foXd0k+xeAwT1igDg==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "e85e1b6f-8e9c-433a-a0a5-738d1a57a2ab",
+                            SecurityStamp = "fc2cfa4e-c3e2-4c03-8c2e-72dd17ddaff7",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         });

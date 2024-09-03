@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class newInit : Migration
+    public partial class initialcr : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -337,8 +337,8 @@ namespace WebApi.Migrations
                 columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "user1", null, 0, null, null, null, "df5b70c8-029a-401b-a902-aa24ce66cd53", "user1@example.com", false, true, true, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEHFhzZQ0CGoILUvpu51mm5VLz28FeYOcnIAl1auZD5RAgf0HHNVBMt3CAXOX3cgH5Q==", null, false, 0, null, "905ae8aa-82a0-4b9f-bf83-d3b1c319cb2a", false, "user1@example.com" },
-                    { "user2", null, 0, null, null, null, "dabed999-92f3-4229-8923-ec606bc91999", "user2@example.com", false, false, false, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEP2cp/kqiuOEialZ706Kk6DKleISzgO0kkI9kgXcq9P/SKe+MLF0P/nCQ2noIcM84g==", null, false, 0, null, "1dd84190-f340-4b2c-97eb-cba8b0e29f09", false, "user2@example.com" }
+                    { "user1", null, 0, null, null, null, "bf20feb7-7a67-48e4-9f26-8c2d44708aa4", "user1@example.com", false, true, true, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEGeQYRs9sPqWB8c//s61UHJqNNqc5daUHZ+vv926Nlz276QYDIFvvwCn/FpBjJQ+cw==", null, false, 0, null, "b19506a8-1192-41f1-b3d1-058ebec257dc", false, "user1@example.com" },
+                    { "user2", null, 0, null, null, null, "77daf8aa-8ccb-4d18-9cce-5711f44db0d1", "user2@example.com", false, false, false, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEKdnktdSEFCTy6yC4svJxrl2ukesWBQyNzYHNOg21WyyZEnC9foXd0k+xeAwT1igDg==", null, false, 0, null, "fc2cfa4e-c3e2-4c03-8c2e-72dd17ddaff7", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(
