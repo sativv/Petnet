@@ -127,7 +127,7 @@ namespace WebApi.Controllers
                 ModelState.AddModelError(string.Empty, error.Description);
             }
 
-            return BadRequest(ModelState);
+            return BadRequest("Bad req" + ModelState);
 
 
 
