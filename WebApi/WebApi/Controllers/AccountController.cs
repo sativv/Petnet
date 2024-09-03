@@ -93,6 +93,23 @@ namespace WebApi.Controllers
             return Ok();
         }
 
+        [HttpGet("check-email")]
+        public async Task<IActionResult> CheckEmail([FromQuery] string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return BadRequest("Email is required.");
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                return Ok(new { exists = true });
+            }
+
+            return Ok(new { exists = false });
+        }
+
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUser userObject)
