@@ -52,6 +52,50 @@ a {
    Home-page
    ======================================= */
 
+.filter-search{
+  width: 100%;
+  background-color: #E7F0DC;
+  margin-bottom: 15px;
+  padding: 15px;
+}
+
+.filter-container{
+  display: flex;
+  justify-content: space-evenly;
+
+  /* padding: 15px; */
+}
+
+.search{
+  border-radius: 15px;
+  border: 2px solid #658147;
+  text-align: end;
+  font-size: 16px;
+  height: 26px;
+}
+
+.filter-box{
+  display: flex;
+  flex-direction: column;
+}
+.filter-input{
+  border: 1px solid #658147;
+  border-radius: 5px;
+  width: 25vw;
+  
+}
+
+
+.filter-input option{
+  padding: 0 5px;
+  text-align: end;
+}
+.filter-input option:checked{
+  background-color: #E1E7DF;
+  color: #000;
+  
+}
+
 .post-container {
   display: flex;
   flex-direction: column;
@@ -72,18 +116,17 @@ a {
   padding: 5%;
 }
 
-.add-textarea{
+.add-textarea {
   field-sizing: content;
   resize: none;
 }
 
 @media (min-width: 768px) {
-  .add-post-form{
+  .add-post-form {
     max-width: 30%;
     margin: auto;
   }
 }
-
 
 /* =======================================
    Login page 
@@ -336,6 +379,9 @@ a {
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .postInfo {
@@ -377,15 +423,17 @@ a {
 }
 
 .postTitleInput {
-  width: 100%;
+  width: 98%;
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
+  box-sizing: border-box;
 }
 
 .postDescriptionInput {
-  width: 100%;
+  width: 98%;
   height: 80px;
   margin-top: 0.5rem;
+  box-sizing: border-box;
 }
 
 .postDescription {
@@ -414,6 +462,7 @@ a {
   cursor: pointer;
   text-align: center;
   margin-top: 0.5rem;
+  border: none;
 }
 
 .editButton {

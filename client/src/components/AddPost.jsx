@@ -109,23 +109,35 @@ function AddPost() {
     <div>
         <h3>Ladda upp annons</h3>
         <form onSubmit={submitPost} className="add-post-form">
-            <label htmlFor="title">Title</label>
+            <label htmlFor="title">Titel</label>
             <input className='login-input ' type="text" name="" id="title" required value={title} onChange={(e) => setTitle(e.target.value)}/>
 
-            <label htmlFor="type">Animal type</label>
-            <input className='login-input' type="text" name="" id="type" required value={type} onChange={(e) => setType(e.target.value)}/>
+            <label htmlFor="type">Djurtyp</label>
+            {/* <input className='login-input' type="text" name="" id="type" required value={type} onChange={(e) => setType(e.target.value)}/> */}
 
-            <label htmlFor="breed">Breed</label>
+            <select className='login-input text-center'  name="" id="type" required value={type} onChange={(e) => setType(e.target.value)}>
+                <option value="">Typ av djur</option>
+                <option value="Hund">Hund</option>
+                <option value="Katt">Katt</option>
+                <option value="Fågel">Fågel</option>
+                <option value="Gnagare">Gnagare</option>
+                <option value="Akvarium">Akvarium</option>
+                <option value="Reptil">Reptil</option>
+                <option value="N/A">N/A</option>
+                
+            </select>
+
+            <label htmlFor="breed">Ras</label>
             <input className='login-input' type="text" name="" id="breed" required value={breed} onChange={(e) => setBreed(e.target.value)}/>
 
 
-            <label htmlFor="gender">Gender</label>
+            <label htmlFor="gender">Kön</label>
 
             <select className='login-input text-center'  name="" id="gender" required value={gender} onChange={(e) => setGender(e.target.value)}>
-                <option value="">Please select a gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Mixed">Mixed</option>
+                <option value="">Kön</option>
+                <option value="Hane">Hane</option>
+                <option value="Hona">Hona</option>
+                <option value="Båda">Båda</option>
                 <option value="N/A">N/A</option>
                 
             </select>
@@ -136,10 +148,10 @@ function AddPost() {
             <input className='login-input text-center' type="date" name="" id="" value={earliestDelivery} onChange={(e) => setEarliestDelivery(e.target.value)} min={currentDate}/>
 
 
-            <label htmlFor="img">Image link</label>
+            <label htmlFor="img">Bildlänk</label>
             <input className='login-input' type="url" name="" id="img" required value={img} onChange={(e) => setImg(e.target.value)} />
 
-            <label htmlFor="desc">Description</label>
+            <label htmlFor="desc">Beskrivning</label>
             <textarea className='login-input add-textarea' type="text" name="" id="desc" required value={desc} onChange={(e) => setDesc(e.target.value)}/>
 
             <button className='login-button' style={{marginTop:"20px"}}> Submit</button>

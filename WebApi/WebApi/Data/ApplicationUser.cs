@@ -8,6 +8,7 @@ namespace WebApi.Data
         public string? QuizResult { get; set; }
         public bool IsPrivateSeller { get; set; }
         public bool IsVerified { get; set; }
+        public string? AboutMe { get; set; }
         public long OrganizationNumber { get; set; }
         public string? OrganizationName { get; set; }
         public string? BuisnessContact { get; set; }

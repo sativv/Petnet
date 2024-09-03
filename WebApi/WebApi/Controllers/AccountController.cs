@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using WebApi.Data;
+using WebApi.Data.NewFolder;
 using WebApi.Models;
 
 using WebApi.Models.APIModels;
@@ -29,6 +30,37 @@ namespace WebApi.Controllers
             _signInManager = signInManager;
             _emailService = emailService;
             _logger = logger;
+        }
+
+        [HttpPatch("me/about")]
+        [Authorize]
+        public async Task<IActionResult> UpdateAboutMe([FromBody] UpdateUserDTO updateUserDto)
+        {
+            // Hämta den inloggade användaren
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Uppdatera AboutMe-fältet om det finns i DTO:n
+            if (!string.IsNullOrEmpty(updateUserDto.AboutMe))
+            {
+                user.AboutMe = updateUserDto.AboutMe;
+            }
+
+            // Spara ändringarna
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return ValidationProblem(ModelState);
+            }
+
+            return NoContent(); // uppdateringen lyckades
         }
 
         [HttpGet("me")]
