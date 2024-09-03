@@ -74,6 +74,7 @@ function Register() {
         }
       );
       setResponse(response);
+      console.log(response);
     } else {
       const response = await fetch(
         "https://localhost:7072/api/Account/register",
