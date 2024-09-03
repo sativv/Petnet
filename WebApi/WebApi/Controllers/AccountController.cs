@@ -68,16 +68,17 @@ namespace WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+
             var user = new ApplicationUser
             {
                 UserName = userObject.Email,
                 Email = userObject.Email,
-                IsPrivateSeller = userObject.IsPrivateSeller,
-                OrganizationNumber = userObject.OrganizationNumber,
+                IsPrivateSeller = userObject.IsPrivateSeller ?? false,
+                OrganizationNumber = userObject.OrganizationNumber ?? 0,
                 OrganizationName = userObject.OrganizationName,
                 BuisnessContact = userObject.BuisnessContact,
                 Adress = userObject.Adress,
-                Postcode = userObject.Postcode,
+                Postcode = userObject.Postcode ?? 0,
                 City = userObject.City,
                 PhoneNumber = userObject.PhoneNumber
             };
