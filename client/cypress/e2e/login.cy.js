@@ -2,9 +2,9 @@ describe("User login", () => {
   it("should log in a user successfuly", () => {
     cy.visit("http://localhost:3000/login");
 
-    cy.get(":nth-child(2) > .login-input").type("staffan@staffan.staffan");
+    cy.get(":nth-child(2) > .login-input").type("private@private.private");
     // Fyll i lösenord
-    cy.get(":nth-child(3) > .login-input").type("Staffan1!");
+    cy.get(":nth-child(3) > .login-input").type("Private1!");
     // Klicka på logga in-knappen
     cy.get(".login-button").click();
     // Verifiera att användaren är omdirigerad till dashboard eller en annan skyddad sida
