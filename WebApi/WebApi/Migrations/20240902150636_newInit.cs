@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class start : Migration
+    public partial class newInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,8 +35,9 @@ namespace WebApi.Migrations
                     QuizResult = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsPrivateSeller = table.Column<bool>(type: "bit", nullable: false),
                     IsVerified = table.Column<bool>(type: "bit", nullable: false),
-                    OrganizationNumber = table.Column<int>(type: "int", nullable: false),
-                    OrganizationName = table.Column<int>(type: "int", nullable: false),
+                    AboutMe = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrganizationNumber = table.Column<long>(type: "bigint", nullable: false),
+                    OrganizationName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BuisnessContact = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Postcode = table.Column<int>(type: "int", nullable: false),
@@ -333,11 +334,11 @@ namespace WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "user1", 0, null, null, null, "018fc2ef-2aa1-443d-a84a-a6470e984247", "user1@example.com", false, true, true, false, null, null, null, 0, 0, "AQAAAAIAAYagAAAAEJggvoo5i/Kw3UUjdKl5L4TrXaB/rv1ytb8aqMTDinyQSmNWWXJWYK7a/UwaWuH2IQ==", null, false, 0, null, "4d4ff0f5-9e69-475f-a169-2fe938b7b9a0", false, "user1@example.com" },
-                    { "user2", 0, null, null, null, "b2cf1114-3c19-4a60-992a-1d75446b0703", "user2@example.com", false, false, false, false, null, null, null, 0, 0, "AQAAAAIAAYagAAAAEG5+NmnufHwLbYLhLk/iq8WLU3xxwKLeHjvcHeoleL7S1JUpvHJAgQACWK7vBNSccg==", null, false, 0, null, "c8234cb6-6bd1-4e74-894f-f4a3e0aa52ab", false, "user2@example.com" }
+                    { "user1", null, 0, null, null, null, "df5b70c8-029a-401b-a902-aa24ce66cd53", "user1@example.com", false, true, true, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEHFhzZQ0CGoILUvpu51mm5VLz28FeYOcnIAl1auZD5RAgf0HHNVBMt3CAXOX3cgH5Q==", null, false, 0, null, "905ae8aa-82a0-4b9f-bf83-d3b1c319cb2a", false, "user1@example.com" },
+                    { "user2", null, 0, null, null, null, "dabed999-92f3-4229-8923-ec606bc91999", "user2@example.com", false, false, false, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEP2cp/kqiuOEialZ706Kk6DKleISzgO0kkI9kgXcq9P/SKe+MLF0P/nCQ2noIcM84g==", null, false, 0, null, "1dd84190-f340-4b2c-97eb-cba8b0e29f09", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(

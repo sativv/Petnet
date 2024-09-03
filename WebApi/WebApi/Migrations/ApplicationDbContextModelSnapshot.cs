@@ -160,6 +160,9 @@ namespace WebApi.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AboutMe")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
@@ -251,17 +254,17 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "dde9325e-6c67-4257-8737-ad8fcc0143c0",
+                            ConcurrencyStamp = "df5b70c8-029a-401b-a902-aa24ce66cd53",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
                             IsVerified = true,
                             LockoutEnabled = false,
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEMtWzexeqKREi9JprJAdIuKcNiGaMaYNZEPh5l0/pQq3W1NjAwNy07h/RELqJUEF7g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHFhzZQ0CGoILUvpu51mm5VLz28FeYOcnIAl1auZD5RAgf0HHNVBMt3CAXOX3cgH5Q==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "ac4ae309-061e-47ec-ac95-4079d91e1da2",
+                            SecurityStamp = "905ae8aa-82a0-4b9f-bf83-d3b1c319cb2a",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -269,17 +272,17 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3dbead9a-8eaa-46e6-bc10-97a485b3e700",
+                            ConcurrencyStamp = "dabed999-92f3-4229-8923-ec606bc91999",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
                             IsVerified = false,
                             LockoutEnabled = false,
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEOeLFoTwxIwNfqf4wsVUwbfoDiCOTlSHigg0j71crd+fvC4yLiY/utxXswxzGlmkCw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEP2cp/kqiuOEialZ706Kk6DKleISzgO0kkI9kgXcq9P/SKe+MLF0P/nCQ2noIcM84g==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "e85e1b6f-8e9c-433a-a0a5-738d1a57a2ab",
+                            SecurityStamp = "1dd84190-f340-4b2c-97eb-cba8b0e29f09",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         });

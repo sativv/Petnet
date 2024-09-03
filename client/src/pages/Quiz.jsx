@@ -12,9 +12,11 @@ function Quiz() {
   const [questionsData, setQuestionsData] = useState(null);
   const [optionsData, setOptionsData] = useState([]);
   const [active, setActive] = useState(null);
+
   const { currentUser } = useContext(userContext);
 
   console.log("current user: " + currentUser.id);
+
 
   useEffect(() => {
     const getQuiz = async () => {
