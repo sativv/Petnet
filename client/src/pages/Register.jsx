@@ -6,6 +6,9 @@ function Register() {
   const nav = useNavigate();
   const passwordRegex =
     /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$/;
+  const check10NumbersRegex = /^\d{10}$/;
+  const check5NumbersRegex = /^\d{5}$/;
+  const containsSwedishLetters = /[åäö]/i;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +22,6 @@ function Register() {
   const [city, setCity] = useState("");
   const [phone, setPhone] = useState("");
   const [registration, setRegistration] = useState(null);
-  const [response, setResponse] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,14 +45,35 @@ function Register() {
       IsPrivateSeller: false,
     };
 
-    if (email.length < 10) {
-      alert("Email must be at least 10 characters long");
+    if (email.length < 10 || containsSwedishLetters.test(email)) {
+      alert(
+        "Email måste innehålla minst 10 tecken och får inte innehålla å, ä, ö"
+      );
+      return;
+    }
+
+    //Mailadress uppfyller minikraven
+    try {
+      const emailResponse = await fetch(
+        `https://localhost:7072/api/Account/check-email?email=${email}`
+      );
+      const data = await emailResponse.json();
+
+      if (data.exists) {
+        alert("Mejladressen används redan, var god välj en annan!");
+        return;
+      }
+    } catch (error) {
+      console.error("Error checking email:", error);
+      alert(
+        "Ett fel uppstod när vi försökte kolla tillgängligheten på din mejladress"
+      );
       return;
     }
 
     if (!passwordRegex.test(password)) {
       alert(
-        "Password must be at least 6 characters long and contain at least one number"
+        "Lösenordet måste vara minst 6 tecken långt och innehålla minst ett nummer och ett specialtecken!"
       );
       return;
     }
@@ -62,22 +85,54 @@ function Register() {
       return;
     }
 
-    let response = await fetch("https://localhost:7072/api/Account/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(isBreeder ? newUserBreeder : newUser),
-    });
+    if (isBreeder) {
+      if (!check10NumbersRegex.test(organizationNumber)) {
+        alert(
+          "Fältet innehåller bokstäver, specialtecken eller är inte 10 siffror långt, var god ange ett korrekt organisationsnummer!"
+        );
+        return;
+      }
 
-    if (!response.ok) {
-      // Hantera fel här, t.ex. visa ett felmeddelande
-      alert("Registration failed. Please try again.");
-      return;
+      if (!check5NumbersRegex.test(postcode)) {
+        alert(
+          "Fältet innehåller bokstäver, specialtecken eller är inte 5 siffror långt, var god ange ett korrekt postnummer!"
+        );
+        return;
+      }
+
+      if (!check10NumbersRegex.test(phone)) {
+        alert(
+          "Fältet innehåller inte 10 siffror, otillåtna bokstäver eller otillåtna specialtecken, var god ange ett korrekt telefonnummer!"
+        );
+        return;
+      }
     }
 
-    alert("Welcome, your account has been created!");
-    nav("/login");
+    try {
+      const response = await fetch(
+        "https://localhost:7072/api/Account/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(isBreeder ? newUserBreeder : newUser),
+        }
+      );
+
+      if (!response.ok) {
+        alert("Registration failed. Please try again.");
+        return;
+      }
+
+      alert(
+        "Välkommen, du är nu registrerad! Vänligen logga in med ditt nya konto "
+      );
+      nav("/login");
+    } catch (e) {
+      console.error("Error during registration:", e);
+      alert("Ett fel uppstod vid registreringen. Vänligen försök igen.");
+    }
   };
 
   const handleFileChange = (event) => {
@@ -135,21 +190,21 @@ function Register() {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value.trim())}
               required
             />
             <label>Lösenord</label>
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value.trim())}
               required
             />
             <label>Upprepa lösenord</label>
             <input
               type="password"
               value={passwordAgain}
-              onChange={(e) => setPasswordAgain(e.target.value)}
+              onChange={(e) => setPasswordAgain(e.target.value.trim())}
               required
             />
             {isBreeder && (
@@ -158,49 +213,60 @@ function Register() {
                 <input
                   type="text"
                   value={organizationNumber}
-                  onChange={(e) => setOrganizationNumber(e.target.value)}
+                  maxLength={10}
+                  onChange={(e) =>
+                    setOrganizationNumber(
+                      e.target.value.replace(/\s+/g, "").trim()
+                    )
+                  }
                   required
                 />
                 <label>Företagsnamn</label>
                 <input
                   type="text"
                   value={organizationName}
-                  onChange={(e) => setOrganizationName(e.target.value)}
+                  onChange={(e) => setOrganizationName(e.target.value.trim())}
                   required
                 />
                 <label>Kontaktperson</label>
                 <input
                   type="text"
                   value={buisnessContact}
-                  onChange={(e) => setBuisnessContact(e.target.value)}
+                  onChange={(e) => setBuisnessContact(e.target.value.trim())}
                   required
                 />
                 <label>Adress</label>
                 <input
                   type="text"
                   value={adress}
-                  onChange={(e) => setAdress(e.target.value)}
+                  onChange={(e) => setAdress(e.target.value.trim())}
                   required
                 />
                 <label>Postnummer</label>
                 <input
                   type="text"
                   value={postcode}
-                  onChange={(e) => setPostcode(e.target.value)}
+                  maxLength={5}
+                  onChange={(e) =>
+                    setPostcode(e.target.value.replace(/\s+/g, "").trim())
+                  }
                   required
                 />
                 <label>Ort</label>
                 <input
                   type="text"
                   value={city}
-                  onChange={(e) => setCity(e.target.value)}
+                  onChange={(e) => setCity(e.target.value.trim())}
                   required
                 />
                 <label>Telefonnummer</label>
                 <input
                   type="tel"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  maxLength={10}
+                  onChange={(e) =>
+                    setPhone(e.target.value.replace(/\s+/g, "").trim())
+                  }
                   required
                 />
                 <label htmlFor="registration">Registreringsbevis</label>
