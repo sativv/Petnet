@@ -75,11 +75,15 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
+            bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
             var userDTO = new
             {
                 user.Id,
                 user.Email,
-                user.UserName
+                user.UserName,
+                isAdmin
+                
             };
 
             return Ok(userDTO);
