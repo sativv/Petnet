@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Identity.Web;
 using System.Text.Json.Serialization;
 using WebApi.Data;
 using WebApi.Repositories;
@@ -27,7 +25,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 builder.Services.AddScoped<PostRepo>();
 builder.Services.AddScoped<QuizRepo>();
-
+builder.Services.AddScoped<ReviewRepo>();
 
 //builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 //    .AddEntityFrameworkStores<ApplicationDbContext>()

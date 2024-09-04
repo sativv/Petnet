@@ -50,6 +50,32 @@ namespace WebApi.Controllers
                 user.AboutMe = updateUserDto.AboutMe;
             }
 
+            // Uppdatera uppfödaruppgifter om det finns i DTO:n
+            if (updateUserDto.OrganizationNumber.HasValue)
+            {
+                user.OrganizationNumber = updateUserDto.OrganizationNumber.Value;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.OrganizationName))
+            {
+                user.OrganizationName = updateUserDto.OrganizationName;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.BuisnessContact))
+            {
+                user.BuisnessContact = updateUserDto.BuisnessContact;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.Adress))
+            {
+                user.Adress = updateUserDto.Adress;
+            }
+            if (updateUserDto.Postcode.HasValue)
+            {
+                user.Postcode = updateUserDto.Postcode.Value;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.City))
+            {
+                user.City = updateUserDto.City;
+            }
+
             // Spara ändringarna
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
@@ -63,6 +89,8 @@ namespace WebApi.Controllers
 
             return NoContent(); // uppdateringen lyckades
         }
+
+
 
         [HttpGet("me")]
         [Authorize]
