@@ -87,7 +87,7 @@ using (ServiceProvider serviceProvider = builder.Services.BuildServiceProvider()
 
     ApplicationUser newAdmin = new()
     {
-        UserName = "admin",
+        UserName = "admin@petnet.com",
         Email = "admin@petnet.com",
         EmailConfirmed = true,
     };
