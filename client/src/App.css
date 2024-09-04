@@ -598,11 +598,12 @@ a {
 /* Header för profil */
 .profile-header-wrapper {
   display: flex;
-  flex-direction: column;
+ flex-direction: column;
   align-items: center;
-  margin: 20px;
-  color: #4CAF50;
-  text-align: center;
+
+  width: 60vw;
+  height: min-content;
+
 }
 
 /* Penna ikon */
@@ -612,6 +613,7 @@ a {
   border: 2px solid #4CAF50;
   padding: 8px;
   border-radius: 10px;
+  align-self: flex-end;
   background-color: #f0f8f0;
   transition: background-color 0.3s, transform 0.3s;
 }
@@ -625,31 +627,37 @@ a {
 .profile-introduction-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 800px;
+
+  width: 60vw;
   border: 1px solid #4CAF50;
   border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
   background-color: #f9f9f9;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
+.profile-img-and-username
+{
+  border-bottom: 1px solid #4CAF50;
+  display: flex;
+  align-items: center;
+}
+
 .profile-img {
-  width: 150px;
-  height: 150px;
+  width: 20%;
   border-radius: 50%;
   border: 4px solid #ddd;
-  margin-bottom: 10px;
+  margin: 5%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Verifieringsbatal och betyg */
+
 .verified-badge-container {
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  border-bottom: 1px solid #4CAF50;
+  width: 100%;
+  justify-content: center;
+  
 }
 
 .badge-img {
@@ -659,8 +667,12 @@ a {
 
 .rating-container {
   display: flex;
-  margin-top: 10px;
+
+ display: flex;
+ justify-content: center;
+ align-items: center;
   cursor: pointer;
+  padding: 2%;
 }
 
 
@@ -677,20 +689,18 @@ a {
 }
 
 .star-img.empty {
-  opacity: 0.5;
+  opacity: 0.2;
 
 }
 
 /* Om mig avsnitt */
 .profile-aboutme-wrapper {
-  width: 100%;
-  max-width: 800px;
+  width: 60vw;
   text-align: center;
   margin-bottom: 20px;
-  padding: 20px;
   border: 1px solid #4CAF50;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: #f9f9f9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -726,28 +736,40 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 auto;
+  width: 40vw;
 }
 
 .edit-fields-wrapper {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 600px;
+
 }
 
 .edit-fields-wrapper label {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   margin-bottom: 12px;
+  margin: 0 auto;
+  width: 70%;
   font-size: 16px;
 }
 
+.review-counter
+{
+  padding: 2%;
+}
+
 .edit-fields-wrapper input {
-  width: calc(100% - 150px);
+ 
   border-radius: 4px;
   border: 1px solid #ddd;
-  padding: 8px;
   font-size: 16px;
+  padding: 1%;
+  text-align: center;
+  margin-bottom: 2%;
 }
 
 .edit-buttons {
@@ -809,6 +831,63 @@ button:hover {
   font-weight: bold;
   margin-top: 10px;
 }
+
+/* profile search */
+.profile-search-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+}
+
+.user-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.user-list-item {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-link {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+
+.user-status {
+  font-weight: bold;
+}
+
+
 /* =======================================
    Quiz page 
    ======================================= */

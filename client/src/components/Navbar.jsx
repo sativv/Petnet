@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+
 import "../App.css";
+import React, { useState, useContext } from "react";
+import { userContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [isToggled, Toggle] = useState(false);
+    const { currentUser } = useContext(userContext); // Hämta den inloggade användaren
+      const navigate = useNavigate();
 
   const toggleBurger = () => {
     Toggle(!isToggled);
+  };
+
+
+  const goToProfile = () => {
+    if (currentUser) {
+      navigate(`/profile/${currentUser.id}`); // Navigera till inloggad användares profil
+    } else {
+      navigate("/login"); // Om ingen är inloggad, navigera till inloggningssidan
+    }
   };
 
   return (
@@ -23,9 +37,10 @@ function Navbar() {
 
         {/* Lägg till länkar till nya sidor!  */}
         <a href="/addpost">Ny annons</a>
-        <a href="/Profile">Profil</a>
+        <a href="/profileSearch">Sök profil</a>
         <a href="/register">Registrering</a>
         <a href="/login">Logga in</a>
+                  <button onClick={goToProfile}>Min profil</button>
       </div>
 
       <div className="burgerIcon" onClick={toggleBurger}>

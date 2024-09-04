@@ -1,41 +1,70 @@
-import { useState, useEffect, useContext, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { userContext } from "../App";
 import profile1 from "../profile-images/profile1.jpg";
 import badge from "../profile-images/verified-badge.png";
 import pen from "../profile-images/pen.png";
-import star from "../profile-images/star.png"; // Samma stjärnbild för både fyllda och tomma stjärnor
+import star from "../profile-images/star.png";
 
 function Profile() {
   const { currentUser, setCurrentUser } = useContext(userContext);
+  const { id: profileId } = useParams();
+  const [profile, setProfile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [aboutMe, setAboutMe] = useState(currentUser?.aboutMe || "");
-  const [organizationNumber, setOrganizationNumber] = useState(currentUser?.organizationNumber || "");
-  const [organizationName, setOrganizationName] = useState(currentUser?.organizationName || "");
-  const [buisnessContact, setBuisnessContact] = useState(currentUser?.buisnessContact || "");
-  const [adress, setAdress] = useState(currentUser?.adress || "");
-  const [postcode, setPostcode] = useState(currentUser?.postcode || "");
-  const [city, setCity] = useState(currentUser?.city || "");
+  const [aboutMe, setAboutMe] = useState("");
+  const [organizationNumber, setOrganizationNumber] = useState("");
+  const [organizationName, setOrganizationName] = useState("");
+  const [buisnessContact, setBuisnessContact] = useState("");
+  const [adress, setAdress] = useState("");
+  const [postcode, setPostcode] = useState("");
+  const [city, setCity] = useState("");
   const [reviews, setReviews] = useState([]);
+  const [newReview, setNewReview] = useState({ rating: 1, comment: "" });
   const reviewsRef = useRef(null);
+  const editRef = useRef(null); // New ref for the edit section
   const nav = useNavigate();
 
   useEffect(() => {
-    if (currentUser) {
-      fetch(`http://localhost:5054/Review/user/${currentUser.id}/reviews`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => setReviews(data))
-        .catch((error) => console.error("Error fetching reviews:", error));
-    }
-  }, [currentUser]);
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch(`http://localhost:5054/api/Account/user/${profileId}`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setProfile(data);
+
+        // Update local state with profile data
+        setAboutMe(data.aboutMe || "");
+        setOrganizationNumber(data.organizationNumber || "");
+        setOrganizationName(data.organizationName || "");
+        setBuisnessContact(data.buisnessContact || "");
+        setAdress(data.adress || "");
+        setPostcode(data.postcode || "");
+        setCity(data.city || "");
+
+        // Fetch reviews
+        const reviewResponse = await fetch(`http://localhost:5054/Review/user/${profileId}/reviews`);
+        if (reviewResponse.ok) {
+          const reviewData = await reviewResponse.json();
+          setReviews(reviewData);
+        } else {
+          console.error("Failed to fetch reviews");
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        nav("/login");
+      }
+    };
+
+    fetchProfile();
+  }, [profileId, nav]);
 
   const handleEditClick = () => {
     setIsEditing(true);
+    if (editRef.current) {
+      editRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const handleSaveClick = async () => {
@@ -77,15 +106,12 @@ function Profile() {
     }
   };
 
-  // Funktion för att beräkna medelvärdet och avrunda till heltal
   const calculateAverageRating = () => {
-    if (reviews.length === 0) return 0; // Om inga recensioner finns, returnera 0
+    if (reviews.length === 0) return 0;
     const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-    const average = totalRating / reviews.length;
-    return Math.round(average); // Avrunda till närmaste heltal
+    return Math.round(totalRating / reviews.length);
   };
 
-  // Funktion för att generera stjärnor baserat på betyg
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, index) => (
       <img
@@ -103,47 +129,88 @@ function Profile() {
     }
   };
 
+  const handleReviewChange = (e) => {
+    const { name, value } = e.target;
+    setNewReview((prev) => ({
+      ...prev,
+      [name]: name === "rating" ? parseInt(value, 10) : value,
+    }));
+  };
+
+  const handleAddReview = async () => {
+    if (newReview.rating < 1 || newReview.rating > 5) {
+      alert("Rating must be between 1 and 5.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5054/api/Review/AddReview", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: newReview.comment,
+          rating: newReview.rating,
+          reviewerId: currentUser.id,
+        }),
+      });
+
+      if (response.ok) {
+        const addedReview = await response.json();
+        setReviews((prevReviews) => [...prevReviews, addedReview]);
+        setNewReview({ rating: 1, comment: "" });
+      } else {
+        console.error("Failed to add review");
+      }
+    } catch (error) {
+      console.error("Error adding review:", error);
+    }
+  };
+
   if (!currentUser) {
     nav("/login");
     return null;
   }
 
-  const averageRating = calculateAverageRating(); // Använd funktionen för att få det avrundade medelvärdet
+  const averageRating = calculateAverageRating();
 
   return (
     <div className="profile-wrapper">
       <div className="profile-header-wrapper">
-        <img src={pen} alt="pen-img" className="pen-img" onClick={handleEditClick} />
-        <h1>Min profil</h1>
-        <p>Här kan du se dina recensioner och redigera dina uppgifter</p>
+        {profile?.id === currentUser.id && (
+          <img src={pen} alt="pen-img" className="pen-img" onClick={handleEditClick} />
+        )}
+        <h1>{profile?.id === currentUser.id ? "Min profil" : "Användarprofil"}</h1>
       </div>
 
       <div className="profile-introduction-wrapper">
-        <img src={profile1} alt="profile1" className="profile-img" />
-        <h2>{currentUser.email}</h2>
-        
-        {(currentUser.isVerified || currentUser.isPrivateSeller) && (
+        <div className="profile-img-and-username">
+          <img src={profile1} alt="profile1" className="profile-img" />
+          <h2>{profile?.email}</h2>
+        </div>
+        {(profile?.isVerified || profile?.isPrivateSeller) && (
           <div>
-            {currentUser.isVerified && (
+            {profile?.isVerified && (
               <div className="verified-badge-container">
                 <h3>Verifierad</h3>
                 <img src={badge} alt="badge" className="badge-img" />
               </div>
             )}
-            <div className="review-counter">
-              <span>{reviews.length} recensioner</span>
-            </div>
-            <div className="rating-container" onClick={handleStarClick}>
-              {renderStars(averageRating)} {/* Visa stjärnor baserat på medelvärdet */}
-            </div>
             <div className="average-rating">
               <h3>Genomsnittligt betyg: {averageRating}</h3>
+            </div>
+            <div className="rating-container" onClick={handleStarClick}>
+              {renderStars(averageRating)}
+            </div>
+            <div className="review-counter">
+              <span>Baserat på: {reviews.length} recensioner</span>
             </div>
           </div>
         )}
       </div>
 
-      <div className="profile-aboutme-wrapper">
+      <div className="profile-aboutme-wrapper" ref={editRef}>
         <h2>Om mig</h2>
         {isEditing ? (
           <div className="edit-mode">
@@ -210,36 +277,43 @@ function Profile() {
             </div>
           </div>
         ) : (
-          <p>{aboutMe || "Ingen information tillgänglig."}</p>
-        )}
-      </div>
-
-      <div className="profile-details-wrapper">
-        {currentUser.quizResult && (
           <div>
-            <h3>Quiz Resultat</h3>
-            <p>{currentUser.quizResult}</p>
-          </div>
-        )}
-
-        {currentUser.organizationNumber && (
-          <div>
-            <h3>Uppfödaruppgifter</h3>
-            <p>Organisationsnummer: {currentUser.organizationNumber}</p>
-            {currentUser.organizationName && (
-              <p>Organisationsnamn: {currentUser.organizationName}</p>
+            <p>{aboutMe || "Ingen information tillgänglig."}</p>
+            {profile?.organizationNumber && (
+              <div>
+                <h3>Organisationsnummer:</h3>
+                <p>{profile.organizationNumber}</p>
+              </div>
             )}
-            {currentUser.buisnessContact && (
-              <p>Affärskontakt: {currentUser.buisnessContact}</p>
+            {profile?.organizationName && (
+              <div>
+                <h3>Organisationsnamn:</h3>
+                <p>{profile.organizationName}</p>
+              </div>
             )}
-            {currentUser.adress && (
-              <p>Adress: {currentUser.adress}</p>
+            {profile?.buisnessContact && (
+              <div>
+                <h3>Affärskontakt:</h3>
+                <p>{profile.buisnessContact}</p>
+              </div>
             )}
-            {currentUser.postcode && (
-              <p>Postnummer: {currentUser.postcode}</p>
+            {profile?.adress && (
+              <div>
+                <h3>Adress:</h3>
+                <p>{profile.adress}</p>
+              </div>
             )}
-            {currentUser.city && (
-              <p>Stad: {currentUser.city}</p>
+            {profile?.postcode && (
+              <div>
+                <h3>Postnummer:</h3>
+                <p>{profile.postcode}</p>
+              </div>
+            )}
+            {profile?.city && (
+              <div>
+                <h3>Stad:</h3>
+                <p>{profile.city}</p>
+              </div>
             )}
           </div>
         )}
@@ -257,7 +331,38 @@ function Profile() {
             ))}
           </ul>
         ) : (
-          <p>Inga recensioner ännu.</p>
+          <p>Inga recensioner.</p>
+        )}
+
+        {profile?.id !== currentUser.id && (
+          <div className="add-review-form">
+            <h3>Lägg till en recension</h3>
+            <label>
+              Betyg:
+              <select
+                name="rating"
+                value={newReview.rating}
+                onChange={handleReviewChange}
+              >
+                {Array.from({ length: 5 }, (_, index) => (
+                  <option key={index + 1} value={index + 1}>
+                    {index + 1}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Kommentar:
+              <textarea
+                name="comment"
+                value={newReview.comment}
+                onChange={handleReviewChange}
+                rows="4"
+                cols="50"
+              />
+            </label>
+            <button onClick={handleAddReview}>Skicka Recension</button>
+          </div>
         )}
       </div>
     </div>
@@ -265,3 +370,4 @@ function Profile() {
 }
 
 export default Profile;
+
