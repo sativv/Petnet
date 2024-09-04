@@ -934,3 +934,29 @@ button:hover {
   font-weight: 400;
   cursor: pointer;
 }
+
+
+/* =======================================
+   Admin page 
+   ======================================= */
+
+   .report-container{
+    border: 1px solid #729762;
+    max-width: 95%;
+    min-height: 10vh;
+    margin: auto;
+    
+    border-radius: 5px;
+    max-height: 50vh;
+    overflow-y: scroll;
+   }
+
+   .verification-container{
+    border: 1px solid #729762;
+    max-width: 95%;
+    min-height: 10vh;
+    margin: auto;
+    border-radius: 5px;
+    max-height: 50vh;
+    overflow-y: scroll;
+   }

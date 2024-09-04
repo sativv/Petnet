@@ -76,11 +76,14 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
+            bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
             var userDTO = new
             {
                 user.Id,
                 user.Email,
                 user.UserName,
+                isAdmin         
                 user.IsPrivateSeller,
                 user.IsVerified,
                 user.OrganizationName,
@@ -91,11 +94,11 @@ namespace WebApi.Controllers
                 user.BuisnessContact,
                 user.Postcode,
                 user.AboutMe
-
             };
 
             return Ok(userDTO);
         }
+
 
         [HttpPost("logout")]
         [Authorize]

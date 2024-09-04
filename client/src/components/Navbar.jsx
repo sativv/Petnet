@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../App.css";
+import { userContext } from "../App";
 
 function Navbar() {
   const [isToggled, Toggle] = useState(false);
-
+  const { currentUser} = useContext(userContext);
+  let isAdmin = false;
   const toggleBurger = () => {
     Toggle(!isToggled);
   };
 
+  if(currentUser !== null){
+    isAdmin = currentUser.isAdmin;
+  }
   return (
     <nav className="navbarContainer">
       <div>
@@ -26,6 +31,7 @@ function Navbar() {
         <a href="/Profile">Profil</a>
         <a href="/register">Registrering</a>
         <a href="/login">Logga in</a>
+        {isAdmin ? <a href="/admin">Admin</a> : <></>}
       </div>
 
       <div className="burgerIcon" onClick={toggleBurger}>
