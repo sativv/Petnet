@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using WebApi.Data;
 using WebApi.Data.NewFolder;
@@ -79,7 +80,18 @@ namespace WebApi.Controllers
             {
                 user.Id,
                 user.Email,
-                user.UserName
+                user.UserName,
+                user.IsPrivateSeller,
+                user.IsVerified,
+                user.OrganizationName,
+                user.OrganizationNumber,
+                user.PhoneNumber,
+                user.City,
+                user.Adress,
+                user.BuisnessContact,
+                user.Postcode,
+                user.AboutMe
+
             };
 
             return Ok(userDTO);
@@ -93,6 +105,23 @@ namespace WebApi.Controllers
             return Ok();
         }
 
+        [HttpGet("check-email")]
+        public async Task<IActionResult> CheckEmail([FromQuery] string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return BadRequest("Email is required.");
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                return Ok(new { exists = true });
+            }
+
+            return Ok(new { exists = false });
+        }
+
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUser userObject)
@@ -100,16 +129,18 @@ namespace WebApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+
             var user = new ApplicationUser
             {
                 UserName = userObject.Email,
                 Email = userObject.Email,
-                IsPrivateSeller = userObject.IsPrivateSeller,
-                OrganizationNumber = userObject.OrganizationNumber,
+                IsPrivateSeller = userObject.IsPrivateSeller ?? false,
+                IsVerified = userObject.IsVerified ?? false,
+                OrganizationNumber = userObject.OrganizationNumber ?? 0,
                 OrganizationName = userObject.OrganizationName,
                 BuisnessContact = userObject.BuisnessContact,
                 Adress = userObject.Adress,
-                Postcode = userObject.Postcode,
+                Postcode = userObject.Postcode ?? 0,
                 City = userObject.City,
                 PhoneNumber = userObject.PhoneNumber
             };
@@ -128,8 +159,22 @@ namespace WebApi.Controllers
 
             return BadRequest(ModelState);
 
+        }
 
+        [HttpGet("{id}/reviewsreceived")]
+        public async Task<IActionResult> GetReviewsReceived(string id)
+        {
+            // Hämta användaren och inkludera recensionerna som mottagits
+            var user = await _userManager.Users
+                .Include(u => u.ReviewsRecieved)
+                .FirstOrDefaultAsync(u => u.Id == id);
 
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user.ReviewsRecieved);
         }
 
         [HttpPut("update/quizResultByUserId/{id}")]
@@ -201,8 +246,12 @@ namespace WebApi.Controllers
 
 
 
-            // generar en länk som användaren kan trycka med som kommer innehålla en email och en token 
-            var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Authentication", new { token, email = user.Email }, Request.Scheme);
+            ////generar en länk som användaren kan trycka med som kommer innehålla en email och en token
+            //var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
+
+
+            var forgotPasswordLink = $"http://localhost:3000/reset-password?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(user.Email)}";
+
 
 
             if (string.IsNullOrEmpty(forgotPasswordLink))

@@ -5,11 +5,16 @@ function PostDetails() {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
+  const [imageUrl, setImageUrl] = useState(""); // State for image URL
 
   const nav = useNavigate();
 
+  var datenow = new Date();
+  var currentDate = datenow.toISOString().substring(0, 10);
+
   const unlockEdit = () => {
     setIsEditable(true);
+    setImageUrl(post.images[0] || ""); // Populate imageUrl when editing is unlocked
   };
 
   const deletePost = async () => {
@@ -61,12 +66,19 @@ function PostDetails() {
       post.description === "" ||
       post.animalBreed === "" ||
       post.gender === "" ||
-      post.age === ""
+      post.age === "" ||
+      post.animalType === "" ||
+      post.birthdate === "" ||
+      post.earliestAdoption === ""
     ) {
       console.log(post);
       alert("Alla fält måste vara ifyllda!");
       return;
     }
+
+    // Update the first image in the images array with the new image URL
+    const updatedImages = [...post.images];
+    updatedImages[0] = imageUrl;
 
     post.applicationUser = {};
 
@@ -78,13 +90,14 @@ function PostDetails() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(post),
+          body: JSON.stringify({ ...post, images: updatedImages }),
         }
       );
 
       if (response.ok) {
         setIsEditable(false); // Disable editing after saving
         alert("Annonsen har uppdaterats!");
+        window.location.reload();
       } else {
         alert("Något gick fel vid uppdateringen av annonsen.");
         console.log(post);
@@ -107,7 +120,27 @@ function PostDetails() {
         <form onSubmit={handleSaveChanges}>
           <div className="postInfo">
             <label>
-              <strong>Breed:</strong>
+              <strong>Djur:</strong>
+              <select
+                value={post.animalType}
+                disabled={!isEditable}
+                onChange={(e) =>
+                  setPost({ ...post, animalType: e.target.value })
+                }
+                className="postInput"
+              >
+                <option value="Hund">Hund</option>
+                <option value="Katt">Katt</option>
+                <option value="Fågel">Fågel</option>
+                <option value="Gnagare">Gnagare</option>
+                <option value="Akvarium">Akvarium</option>
+                <option value="Reptil">Reptil</option>
+                <option value="N/A">N/A</option>
+              </select>
+            </label>
+
+            <label>
+              <strong>Ras:</strong>
               <input
                 type="text"
                 value={post.animalBreed}
@@ -119,7 +152,7 @@ function PostDetails() {
               />
             </label>
             <label>
-              <strong>Gender:</strong>
+              <strong>Kön:</strong>
               <select
                 value={post.gender}
                 disabled={!isEditable}
@@ -133,7 +166,7 @@ function PostDetails() {
               </select>
             </label>
             <label>
-              <strong>Age:</strong>
+              <strong>Ålder:</strong>
               <input
                 type="text"
                 value={post.age}
@@ -142,6 +175,45 @@ function PostDetails() {
                 className="postInput"
               />
             </label>
+
+            <label>
+              <strong>Födelsedatum:</strong>
+              <input
+                type="date"
+                value={post.birthdate || ""}
+                disabled={!isEditable}
+                onChange={(e) =>
+                  setPost({ ...post, birthdate: e.target.value })
+                }
+                className="postInput"
+              />
+            </label>
+
+            <label>
+              <strong>Tidigast Adoption:</strong>
+              <input
+                type="date"
+                value={post.earliestAdoption || ""}
+                disabled={!isEditable}
+                onChange={(e) =>
+                  setPost({ ...post, earliestAdoption: e.target.value })
+                }
+                className="postInput"
+                min={currentDate}
+              />
+            </label>
+
+            {isEditable && (
+              <label>
+                <strong>Bildlänk:</strong>
+                <input
+                  type="text"
+                  value={imageUrl}
+                  onChange={(e) => setImageUrl(e.target.value)}
+                  className="postInput"
+                />
+              </label>
+            )}
           </div>
           <div className="postDetails">
             <h1 className="postTitle">
@@ -163,6 +235,7 @@ function PostDetails() {
                 className="postInput postDescriptionInput"
               />
             </p>
+
             <button type="button" className="contactButton">
               Ta Kontakt
             </button>
