@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using WebApi.Data;
 using WebApi.Data.NewFolder;
@@ -79,7 +80,18 @@ namespace WebApi.Controllers
             {
                 user.Id,
                 user.Email,
-                user.UserName
+                user.UserName,
+                user.IsPrivateSeller,
+                user.IsVerified,
+                user.OrganizationName,
+                user.OrganizationNumber,
+                user.PhoneNumber,
+                user.City,
+                user.Adress,
+                user.BuisnessContact,
+                user.Postcode,
+                user.AboutMe
+
             };
 
             return Ok(userDTO);
@@ -123,6 +135,7 @@ namespace WebApi.Controllers
                 UserName = userObject.Email,
                 Email = userObject.Email,
                 IsPrivateSeller = userObject.IsPrivateSeller ?? false,
+                IsVerified = userObject.IsVerified ?? false,
                 OrganizationNumber = userObject.OrganizationNumber ?? 0,
                 OrganizationName = userObject.OrganizationName,
                 BuisnessContact = userObject.BuisnessContact,
@@ -146,8 +159,22 @@ namespace WebApi.Controllers
 
             return BadRequest(ModelState);
 
+        }
 
+        [HttpGet("{id}/reviewsreceived")]
+        public async Task<IActionResult> GetReviewsReceived(string id)
+        {
+            // Hämta användaren och inkludera recensionerna som mottagits
+            var user = await _userManager.Users
+                .Include(u => u.ReviewsRecieved)
+                .FirstOrDefaultAsync(u => u.Id == id);
 
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user.ReviewsRecieved);
         }
 
         [HttpPut("update/quizResultByUserId/{id}")]

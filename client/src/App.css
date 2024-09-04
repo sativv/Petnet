@@ -584,50 +584,172 @@ a {
 /* =======================================
  Profile page 
 ======================================= */
-
 .profile-wrapper {
   display: flex;
   flex-direction: column;
-}
-
-.profile-introduction-wrapper {
-  display: flex;
-  width: 60vw;
-  justify-content: flex-start;
   align-items: center;
-  gap: 5%;
-  border-top: 1px solid #729762;
-  margin: 0 auto;
-  padding-bottom: 2%;
-}
-
-.pen-img {
-  width: 50px;
-  margin: 3%;
-}
-
-.profile-img {
-  margin-top: 5%;
-  width: 30%;
-  border-radius: 50%;
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
 .profile-header-wrapper {
   display: flex;
-  margin: 0 auto;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
   width: 60vw;
+  margin: 20px auto;
   color: #729762;
 }
 
-.profile-aboutme-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 60vw;
-  margin: 0 auto;
-  align-items: flex-start;
+.pen-img {
+  width: 24px;
+  cursor: pointer;
 }
 
+.profile-introduction-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60vw;
+  border-top: 1px solid #729762;
+  border-bottom: 1px solid #729762;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  border: 3px solid #ddd;
+}
+
+.verified-badge-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.badge-img {
+  width: 24px;
+  margin-left: 10px;
+}
+
+.rating-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.star-img {
+  width: 24px;
+  margin-right: 5px;
+}
+
+.profile-aboutme-wrapper {
+  width: 60vw;
+  margin: 20px auto;
+  text-align: center;
+}
+
+textarea {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 16px;
+  resize: vertical;
+}
+
+button {
+  background-color: #729762;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #5a8040;
+}
+
+.profile-details-wrapper {
+  width: 60vw;
+  margin: 20px auto;
+}
+
+.reviews-container {
+  width: 60vw;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-list {
+  margin-top: 20px;
+}
+
+.review-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.review-date {
+  color: #888;
+  font-size: 14px;
+}
+
+.review-text {
+  font-size: 16px;
+}
+
+.review-form {
+  margin-bottom: 20px;
+}
+
+.review-form h2 {
+  margin-top: 0;
+}
+
+#reviewForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.review-counter
+{
+  border-bottom: 1px solid black;
+}
+
+#reviewText {
+  height: 100px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.add-review-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
 /* =======================================
    Quiz page 
    ======================================= */
