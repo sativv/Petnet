@@ -246,8 +246,12 @@ namespace WebApi.Controllers
 
 
 
-            // generar en länk som användaren kan trycka med som kommer innehålla en email och en token 
-            var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Authentication", new { token, email = user.Email }, Request.Scheme);
+            ////generar en länk som användaren kan trycka med som kommer innehålla en email och en token
+            //var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
+
+
+            var forgotPasswordLink = $"http://localhost:3000/reset-password?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(user.Email)}";
+
 
 
             if (string.IsNullOrEmpty(forgotPasswordLink))
