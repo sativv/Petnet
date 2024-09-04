@@ -18,6 +18,7 @@ import AddPost from "./components/AddPost";
 import ProfileSearch from "./pages/ProfileSearch";
 
 import PostDetails from "./pages/PostDetails";
+import Admin from "./pages/Admin";
 
 // create user context
 export const userContext = createContext();
@@ -68,6 +69,7 @@ function App() {
               <Route element={<ProtectedRoute />}>
              <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/quiz" element={<Quiz />} />
+                <Route path="/admin" element={<Admin />}/>
               </Route>
               <Route element={<ProtectedRoute />}>
                 <Route path="/addpost" element={<AddPost />} />

@@ -137,11 +137,14 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
+            bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
             var userDTO = new
             {
                 user.Id,
                 user.Email,
                 user.UserName,
+                isAdmin         
                 user.IsPrivateSeller,
                 user.IsVerified,
                 user.OrganizationName,
@@ -152,11 +155,11 @@ namespace WebApi.Controllers
                 user.BuisnessContact,
                 user.Postcode,
                 user.AboutMe
-
             };
 
             return Ok(userDTO);
         }
+
 
         [HttpPost("logout")]
         [Authorize]
@@ -324,8 +327,12 @@ namespace WebApi.Controllers
 
 
 
-            // generar en länk som användaren kan trycka med som kommer innehålla en email och en token 
-            var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Authentication", new { token, email = user.Email }, Request.Scheme);
+            ////generar en länk som användaren kan trycka med som kommer innehålla en email och en token
+            //var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
+
+
+            var forgotPasswordLink = $"http://localhost:3000/reset-password?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(user.Email)}";
+
 
 
             if (string.IsNullOrEmpty(forgotPasswordLink))
