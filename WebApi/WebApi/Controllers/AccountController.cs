@@ -33,6 +33,39 @@ namespace WebApi.Controllers
             _logger = logger;
         }
 
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetUserById(string id)
+        {
+            // Hämta användaren med det angivna ID:t
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound(new { message = $"User with ID {id} not found." });
+            }
+
+            // Skapa en DTO för att returnera användarens information
+            var userDTO = new
+            {
+                user.Id,
+                user.UserName,
+                user.Email,
+                user.IsPrivateSeller,
+                user.IsVerified,
+                user.OrganizationName,
+                user.OrganizationNumber,
+                user.PhoneNumber,
+                user.City,
+                user.Adress,
+                user.BuisnessContact,
+                user.Postcode,
+                user.AboutMe
+            };
+
+            return Ok(userDTO);
+        }
+
+
         [HttpPatch("me/about")]
         [Authorize]
         public async Task<IActionResult> UpdateAboutMe([FromBody] UpdateUserDTO updateUserDto)
@@ -188,6 +221,23 @@ namespace WebApi.Controllers
             return BadRequest(ModelState);
 
         }
+
+        [HttpGet("all-users")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userManager.Users
+                .Select(u => new
+                {
+                    u.Id,
+                    u.UserName,
+                    u.Email
+                })
+                .ToListAsync();
+
+            return Ok(users);
+        }
+
+
 
         [HttpGet("{id}/reviewsreceived")]
         public async Task<IActionResult> GetReviewsReceived(string id)
