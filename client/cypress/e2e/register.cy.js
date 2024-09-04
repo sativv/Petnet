@@ -5,6 +5,7 @@ describe("New user private", () => {
     cy.get('[type="email"]').type("private@private.private");
     // Fyll i lösenord
     cy.get("form > :nth-child(4)").type("Private1!");
+    // Upprepa lösenord
     cy.get("form > :nth-child(6)").type("Private1!");
 
     // Klicka på logga in-knappen
@@ -13,7 +14,7 @@ describe("New user private", () => {
     // Verifiera att användaren är omdirigerad till dashboard eller en annan skyddad sida
     cy.url().should("include", "/login");
 
-    // Verifiera att en viss text eller element finns på sidan, vilket bekräftar att användaren är inloggad
+    // Verifiera att en viss text eller element finns på sidan, vilket bekräftar att användaren är registrerad
     cy.contains("Logga in");
   });
 });
@@ -27,6 +28,7 @@ describe("New user breeder", () => {
     cy.get('[type="email"]').type("breeder@breeder.breeder");
     // Fyll i lösenord
     cy.get("form > :nth-child(4)").type("Private1!");
+    //Upprepa lösenord
     cy.get("form > :nth-child(6)").type("Private1!");
     //orgnr
     cy.get("form > :nth-child(8)").type("1122334449");
@@ -43,7 +45,7 @@ describe("New user breeder", () => {
     //tel
     cy.get("form > :nth-child(20)").type("0733101010");
 
-    //fil
+    //Ladda upp en fil
     const fileName = "../fixtures/thinkbox2.png";
     cy.get('input[type="file"]').attachFile(fileName);
 
@@ -51,7 +53,7 @@ describe("New user breeder", () => {
     // Verifiera att användaren är omdirigerad till dashboard eller en annan skyddad sida
     cy.url().should("include", "/login");
 
-    // Verifiera att en viss text eller element finns på sidan, vilket bekräftar att användaren är inloggad
+    // Verifiera att en viss text eller element finns på sidan, vilket bekräftar att användaren är registrerad
     cy.contains("Logga in");
   });
 });
