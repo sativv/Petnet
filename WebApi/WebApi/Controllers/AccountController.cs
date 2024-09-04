@@ -94,6 +94,7 @@ namespace WebApi.Controllers
         }
 
 
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUser userObject)
         {
@@ -269,6 +270,31 @@ namespace WebApi.Controllers
             return StatusCode(StatusCodes.Status400BadRequest,
                 new Response { Status = "Error", Message = "Something went wrong" });
         }
+
+
+
+        [HttpGet("me/favorites")]
+
+        public async Task<IActionResult> GetAllFavoritesAsync()
+        {
+            // hämta användaren
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            //get favorites
+
+            var userDTO = new
+            {
+                user.Interests
+            };
+
+            return Ok(userDTO);
+        }
+
 
 
 

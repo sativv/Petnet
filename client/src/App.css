@@ -52,21 +52,21 @@ a {
    Home-page
    ======================================= */
 
-.filter-search{
+.filter-search {
   width: 100%;
-  background-color: #E7F0DC;
+  background-color: #e7f0dc;
   margin-bottom: 15px;
   padding: 15px;
 }
 
-.filter-container{
+.filter-container {
   display: flex;
   justify-content: space-evenly;
 
   /* padding: 15px; */
 }
 
-.search{
+.search {
   border-radius: 15px;
   border: 2px solid #658147;
   text-align: end;
@@ -74,26 +74,23 @@ a {
   height: 26px;
 }
 
-.filter-box{
+.filter-box {
   display: flex;
   flex-direction: column;
 }
-.filter-input{
+.filter-input {
   border: 1px solid #658147;
   border-radius: 5px;
   width: 25vw;
-  
 }
 
-
-.filter-input option{
+.filter-input option {
   padding: 0 5px;
   text-align: end;
 }
-.filter-input option:checked{
-  background-color: #E1E7DF;
+.filter-input option:checked {
+  background-color: #e1e7df;
   color: #000;
-  
 }
 
 .post-container {
@@ -412,6 +409,7 @@ a {
 .postInput:disabled {
   opacity: 1;
   color: #000;
+  appearance: none;
 }
 
 .postInput:enabled {
@@ -471,6 +469,17 @@ a {
 
 .deleteButton {
   background-color: #729762;
+}
+
+.favoriteDiv {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.favIcon {
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 /* =======================================

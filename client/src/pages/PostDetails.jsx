@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar, faStar as faRegStar } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -6,6 +8,7 @@ function PostDetails() {
   const [post, setPost] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
   const [imageUrl, setImageUrl] = useState(""); // State for image URL
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const nav = useNavigate();
 
@@ -15,6 +18,11 @@ function PostDetails() {
   const unlockEdit = () => {
     setIsEditable(true);
     setImageUrl(post.images[0] || ""); // Populate imageUrl when editing is unlocked
+  };
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+    // change logic to check database whether the logged in user has the post favorited
   };
 
   const deletePost = async () => {
@@ -115,6 +123,15 @@ function PostDetails() {
     <div className="postCard">
       <div className="postImage">
         <img src={post.images[0]} alt={post.title} />
+        <div className="favoriteIcon favoriteDiv" onClick={toggleFavorite}>
+          <p>Spara Annons</p>
+          <FontAwesomeIcon
+            icon={isFavorite ? faStar : faRegStar}
+            color={isFavorite ? "gold" : "gray"}
+            size="2x"
+            className="favIcon"
+          />
+        </div>
       </div>
       <div className="postContent">
         <form onSubmit={handleSaveChanges}>
@@ -222,7 +239,7 @@ function PostDetails() {
                 value={post.title}
                 disabled={!isEditable}
                 onChange={(e) => setPost({ ...post, title: e.target.value })}
-                className="postInput postTitleInput"
+                className="postInput postTitleInput add-textarea"
               />
             </h1>
             <p className="postDescription">
@@ -232,7 +249,7 @@ function PostDetails() {
                 onChange={(e) =>
                   setPost({ ...post, description: e.target.value })
                 }
-                className="postInput postDescriptionInput"
+                className="postInput postDescriptionInput add-textarea"
               />
             </p>
 
