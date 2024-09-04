@@ -34,6 +34,7 @@ builder.Services.AddScoped<QuizRepo>();
 //    .AddDefaultTokenProviders();
 
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
@@ -78,8 +79,40 @@ builder.Services.AddScoped<PostRepo>();
 
 
 
+using (ServiceProvider serviceProvider = builder.Services.BuildServiceProvider())
+{
+    var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+    var signInManager = serviceProvider.GetRequiredService<SignInManager<ApplicationUser>>();
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
+    ApplicationUser newAdmin = new()
+    {
+        UserName = "admin",
+        Email = "admin@petnet.com",
+        EmailConfirmed = true,
+    };
 
+    var admin = signInManager.UserManager.FindByEmailAsync(newAdmin.Email).GetAwaiter().GetResult();
+
+    if (admin == null)
+    {
+        signInManager.UserManager.CreateAsync(newAdmin, "Admin1!").GetAwaiter().GetResult();
+
+        bool adminRoleExists = roleManager.RoleExistsAsync("Admin").GetAwaiter().GetResult();
+
+        if (!adminRoleExists)
+        {
+            IdentityRole adminRole = new()
+            {
+                Name = "Admin",
+            };
+
+            roleManager.CreateAsync(adminRole).GetAwaiter().GetResult();
+        }
+
+        signInManager.UserManager.AddToRoleAsync(newAdmin, "Admin").GetAwaiter().GetResult();
+    }
+}
 
 var app = builder.Build();
 
