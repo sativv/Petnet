@@ -89,6 +89,7 @@ namespace WebApi.Controllers
             return Ok(userDTO);
         }
 
+
         [HttpPost("logout")]
         [Authorize]
         public async Task<IActionResult> Logout()

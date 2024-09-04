@@ -15,7 +15,12 @@ function Admin() {
   return (
     <div>
         <p>Admin page</p>
-        <div></div>
+        <p>Anmälningar</p>
+        <div className='report-container'>
+
+        </div>
+        <p>Verifikationer</p>
+        <div className="verification-container"></div>
     </div>
   )
 }

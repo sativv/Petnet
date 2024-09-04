@@ -84,6 +84,9 @@ namespace WebApi.Controllers
             return Ok("Ur admin");
         }
 
+
+
+
         // Make post 
 
         [HttpPost("AddPost")]
