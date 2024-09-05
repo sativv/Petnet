@@ -13,12 +13,15 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+<
+import ResetPassword from "./pages/ResetPassword";
 import Quiz from "./pages/Quiz";
 import AddPost from "./components/AddPost";
 import ProfileSearch from "./pages/ProfileSearch";
 
 import PostDetails from "./pages/PostDetails";
 import Admin from "./pages/Admin";
+
 
 // create user context
 export const userContext = createContext();
@@ -63,6 +66,7 @@ function App() {
                 path="/login"
                 element={<Login setIsAuthenticated={setIsAuthenticated} />}
               />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/register" element={<Register />} />
                <Route path="/profileSearch" element={<ProfileSearch />} />
               <Route path="/post/:postId" element={<PostDetails />} />
