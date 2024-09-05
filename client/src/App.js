@@ -15,6 +15,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Quiz from "./pages/Quiz";
 import AddPost from "./components/AddPost";
+import ProfileSearch from "./pages/ProfileSearch";
 
 import PostDetails from "./pages/PostDetails";
 import Admin from "./pages/Admin";
@@ -51,9 +52,10 @@ function App() {
   return (
     <>
       <userContext.Provider value={{ currentUser, setCurrentUser }}>
-        <Navbar />
+ 
         <div className="App">
           <Router>
+                   <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
 
@@ -62,9 +64,10 @@ function App() {
                 element={<Login setIsAuthenticated={setIsAuthenticated} />}
               />
               <Route path="/register" element={<Register />} />
+               <Route path="/profileSearch" element={<ProfileSearch />} />
               <Route path="/post/:postId" element={<PostDetails />} />
               <Route element={<ProtectedRoute />}>
-                <Route path="/profile" element={<Profile />} />
+             <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/quiz" element={<Quiz />} />
                 <Route path="/admin" element={<Admin />}/>
               </Route>
