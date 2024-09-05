@@ -1,12 +1,14 @@
 ﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using WebApi.Data;
+using WebApi.Data.NewFolder;
 using WebApi.Models;
+
+using WebApi.Models.APIModels;
 using WebApi.Service.Models;
 using WebApi.Service.Services;
 
@@ -23,7 +25,7 @@ namespace WebApi.Controllers
 
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,IEmailService emailService , ILogger<AccountController> logger)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService, ILogger<AccountController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -31,8 +33,100 @@ namespace WebApi.Controllers
             _logger = logger;
         }
 
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetUserById(string id)
+        {
+            // Hämta användaren med det angivna ID:t
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound(new { message = $"User with ID {id} not found." });
+            }
+
+            // Skapa en DTO för att returnera användarens information
+            var userDTO = new
+            {
+                user.Id,
+                user.UserName,
+                user.Email,
+                user.IsPrivateSeller,
+                user.IsVerified,
+                user.OrganizationName,
+                user.OrganizationNumber,
+                user.PhoneNumber,
+                user.City,
+                user.Adress,
+                user.BuisnessContact,
+                user.Postcode,
+                user.AboutMe
+            };
+
+            return Ok(userDTO);
+        }
+
+
+        [HttpPatch("me/about")]
         [Authorize]
+        public async Task<IActionResult> UpdateAboutMe([FromBody] UpdateUserDTO updateUserDto)
+        {
+            // Hämta den inloggade användaren
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Uppdatera AboutMe-fältet om det finns i DTO:n
+            if (!string.IsNullOrEmpty(updateUserDto.AboutMe))
+            {
+                user.AboutMe = updateUserDto.AboutMe;
+            }
+
+            // Uppdatera uppfödaruppgifter om det finns i DTO:n
+            if (updateUserDto.OrganizationNumber.HasValue)
+            {
+                user.OrganizationNumber = updateUserDto.OrganizationNumber.Value;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.OrganizationName))
+            {
+                user.OrganizationName = updateUserDto.OrganizationName;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.BuisnessContact))
+            {
+                user.BuisnessContact = updateUserDto.BuisnessContact;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.Adress))
+            {
+                user.Adress = updateUserDto.Adress;
+            }
+            if (updateUserDto.Postcode.HasValue)
+            {
+                user.Postcode = updateUserDto.Postcode.Value;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.City))
+            {
+                user.City = updateUserDto.City;
+            }
+
+            // Spara ändringarna
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return ValidationProblem(ModelState);
+            }
+
+            return NoContent(); // uppdateringen lyckades
+        }
+
+
+
         [HttpGet("me")]
+        [Authorize]
         public async Task<IActionResult> GetCurrentUser()
         {
 
@@ -43,15 +137,29 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
+            bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
             var userDTO = new
             {
                 user.Id,
                 user.Email,
-                user.UserName
+                user.UserName,
+                isAdmin         
+                user.IsPrivateSeller,
+                user.IsVerified,
+                user.OrganizationName,
+                user.OrganizationNumber,
+                user.PhoneNumber,
+                user.City,
+                user.Adress,
+                user.BuisnessContact,
+                user.Postcode,
+                user.AboutMe
             };
 
             return Ok(userDTO);
         }
+
 
         [HttpPost("logout")]
         [Authorize]
@@ -61,20 +169,134 @@ namespace WebApi.Controllers
             return Ok();
         }
 
+        [HttpGet("check-email")]
+        public async Task<IActionResult> CheckEmail([FromQuery] string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return BadRequest("Email is required.");
+            }
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                return Ok(new { exists = true });
+            }
+
+            return Ok(new { exists = false });
+        }
+
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterUser userObject)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+
+            var user = new ApplicationUser
+            {
+                UserName = userObject.Email,
+                Email = userObject.Email,
+                IsPrivateSeller = userObject.IsPrivateSeller ?? false,
+                IsVerified = userObject.IsVerified ?? false,
+                OrganizationNumber = userObject.OrganizationNumber ?? 0,
+                OrganizationName = userObject.OrganizationName,
+                BuisnessContact = userObject.BuisnessContact,
+                Adress = userObject.Adress,
+                Postcode = userObject.Postcode ?? 0,
+                City = userObject.City,
+                PhoneNumber = userObject.PhoneNumber
+            };
+
+            var result = await _userManager.CreateAsync(user, userObject.Password);
+
+            if (result.Succeeded)
+            {
+                return Ok("User registered successfully");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return BadRequest(ModelState);
+
+        }
+
+        [HttpGet("all-users")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userManager.Users
+                .Select(u => new
+                {
+                    u.Id,
+                    u.UserName,
+                    u.Email
+                })
+                .ToListAsync();
+
+            return Ok(users);
+        }
+
+
+
+        [HttpGet("{id}/reviewsreceived")]
+        public async Task<IActionResult> GetReviewsReceived(string id)
+        {
+            // Hämta användaren och inkludera recensionerna som mottagits
+            var user = await _userManager.Users
+                .Include(u => u.ReviewsRecieved)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user.ReviewsRecieved);
+        }
+
+        [HttpPut("update/quizResultByUserId/{id}")]
+        public async Task<IActionResult> UpdateUsersQuizResult(string id, [FromBody] QuizResultModel qResult)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound(new { message = $"User with ID {id} not found." });
+
+            user.QuizResult = qResult.QuizResult;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return Ok(new { message = "User quiz result updated successfully" });
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return BadRequest(ModelState);
+        }
 
 
         //  Testa email sendern 
 
-        [HttpGet("TestSendEmail")] 
+        [HttpGet("TestSendEmail")]
         public IActionResult TestEmail()
         {
             var message = new Message(new string[]
 
             {"alinia93@gmail.com"}, "Test", "<h1> Subscribe to my channel</h1>");
-            
-               
 
-           
+
+
+
             _emailService.SendEmail(message);
 
             return StatusCode(StatusCodes.Status200OK,
@@ -86,7 +308,7 @@ namespace WebApi.Controllers
         // Denna endpoint används för att skicka en förfrågan om att få ändra password. 
 
         [HttpPost("forgot-password")]
-         [AllowAnonymous] // Detta betyder att alla kan använda denna endpoint även om man inte är inloggad
+        [AllowAnonymous] // Detta betyder att alla kan använda denna endpoint även om man inte är inloggad
         public async Task<IActionResult> ForgotPassword([Required] string email)
         {
 
@@ -144,12 +366,12 @@ namespace WebApi.Controllers
         }
 
 
- 
+
         [HttpPost]
         [AllowAnonymous]
         [Route("reset-password")]
-        
-        public async Task <IActionResult> ResetPassword(ResetPassword resetPassword)
+
+        public async Task<IActionResult> ResetPassword(ResetPassword resetPassword)
         {
 
             // Hittar användaren med resetPassword objektet 
@@ -158,14 +380,14 @@ namespace WebApi.Controllers
 
             if (user != null)
             {
-               // metod som tar token och det nya passwordet för att reseta det. 
+                // metod som tar token och det nya passwordet för att reseta det. 
                 var resetPassResult = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password);
-                if ( !resetPassResult.Succeeded)
+                if (!resetPassResult.Succeeded)
                 {
-                    foreach(var error in resetPassResult.Errors)
+                    foreach (var error in resetPassResult.Errors)
                     {
                         ModelState.AddModelError(error.Code, error.Description);
-                       
+
                     }
                     return Ok(ModelState);
                 }

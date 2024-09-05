@@ -44,6 +44,90 @@ a {
   color: #1c5c00;
 }
 
+.text-center {
+  text-align: center;
+}
+
+/* =======================================
+   Home-page
+   ======================================= */
+
+.filter-search{
+  width: 100%;
+  background-color: #E7F0DC;
+  margin-bottom: 15px;
+  padding: 15px;
+}
+
+.filter-container{
+  display: flex;
+  justify-content: space-evenly;
+
+  /* padding: 15px; */
+}
+
+.search{
+  border-radius: 15px;
+  border: 2px solid #658147;
+  text-align: end;
+  font-size: 16px;
+  height: 26px;
+}
+
+.filter-box{
+  display: flex;
+  flex-direction: column;
+}
+.filter-input{
+  border: 1px solid #658147;
+  border-radius: 5px;
+  width: 25vw;
+  
+}
+
+
+.filter-input option{
+  padding: 0 5px;
+  text-align: end;
+}
+.filter-input option:checked{
+  background-color: #E1E7DF;
+  color: #000;
+  
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5%;
+}
+
+/* =======================================
+   Add post page
+   ======================================= */
+
+.add-post-form {
+  display: flex;
+  flex-direction: column;
+  margin: 5%;
+  background-color: #e7f0dc;
+  border-radius: 25px;
+  padding: 5%;
+}
+
+.add-textarea {
+  field-sizing: content;
+  resize: none;
+}
+
+@media (min-width: 768px) {
+  .add-post-form {
+    max-width: 30%;
+    margin: auto;
+  }
+}
+
 /* =======================================
    Login page 
    ======================================= */
@@ -240,6 +324,46 @@ a {
   width: 45%;
 }
 
+.adContainer {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-bottom: 5%;
+}
+
+.adImgContainer {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.adImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.adBottom {
+  padding: 1px 16px 4px 16px;
+  text-align: left;
+  background-color: #e7f0dc;
+}
+
+.adBottom h3 {
+  margin-bottom: 8px;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.adBottom p {
+  margin: 4px 0;
+  color: #666;
+  font-size: 1em;
+}
+
 @media (max-width: 768px) {
   .navbarMenu {
     position: absolute;
@@ -262,6 +386,121 @@ a {
   .burgerIcon {
     display: flex;
   }
+}
+/* =======================================
+   PostDetails Page
+   ======================================= */
+
+.postCard {
+  max-width: 600px;
+  margin: 2rem auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.postImage img {
+  width: 100%;
+  height: auto;
+}
+
+.postContent {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.postInfo {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.postInfo label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.postInfo strong {
+  min-width: 80px;
+}
+
+.postInput {
+  flex: 1;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  border: none;
+  background-color: transparent;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.postInput:disabled {
+  opacity: 1;
+  color: #000;
+}
+
+.postInput:enabled {
+  border: 1px solid black;
+}
+
+.postDetails {
+  text-align: center;
+}
+
+.postTitleInput {
+  width: 98%;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  box-sizing: border-box;
+}
+
+.postDescriptionInput {
+  width: 98%;
+  height: 80px;
+  margin-top: 0.5rem;
+  box-sizing: border-box;
+}
+
+.postDescription {
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+.contactButton {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #729762;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.postBtn {
+  width: 50%;
+  border-radius: 15px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 0.5rem;
+  border: none;
+}
+
+.editButton {
+  background-color: #729762;
+}
+
+.deleteButton {
+  background-color: #729762;
 }
 
 /* =======================================
@@ -371,3 +610,521 @@ a {
   margin-top: 60px;
   font-size: 2rem;
 }
+
+/* =======================================
+ Profile page 
+======================================= */
+/* Huvudwrapper för profilen */
+.profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  margin: 2% auto;
+  max-width: 1200px;
+}
+
+/* Header för profil */
+.profile-header-wrapper {
+  display: flex;
+ flex-direction: column;
+  align-items: center;
+
+  width: 60vw;
+  height: min-content;
+
+}
+
+/* Penna ikon */
+.pen-img {
+  width: 40px;
+  cursor: pointer;
+  border: 2px solid #4CAF50;
+  padding: 8px;
+  border-radius: 10px;
+  align-self: flex-end;
+  background-color: #f0f8f0;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.pen-img:hover {
+  background-color: #e8f5e9;
+  transform: scale(1.1);
+}
+
+/* Introduktionsdel av profil */
+.profile-introduction-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  width: 60vw;
+  border: 1px solid #4CAF50;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.profile-img-and-username
+{
+  border-bottom: 1px solid #4CAF50;
+  display: flex;
+  align-items: center;
+}
+
+.profile-img {
+  width: 20%;
+  border-radius: 50%;
+  border: 4px solid #ddd;
+  margin: 5%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.verified-badge-container {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #4CAF50;
+  width: 100%;
+  justify-content: center;
+  
+}
+
+.badge-img {
+  width: 30px;
+  margin-left: 10px;
+}
+
+.rating-container {
+  display: flex;
+
+ display: flex;
+ justify-content: center;
+ align-items: center;
+  cursor: pointer;
+  padding: 2%;
+}
+
+
+.star-img {
+  width: 30px;
+  margin-right: 4px;
+  transition: opacity 0.3s ease;
+
+}
+
+.star-img.filled {
+  opacity: 1;
+
+}
+
+.star-img.empty {
+  opacity: 0.2;
+
+}
+
+/* Om mig avsnitt */
+.profile-aboutme-wrapper {
+  width: 60vw;
+  text-align: center;
+  margin-bottom: 20px;
+  border: 1px solid #4CAF50;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 12px;
+  font-size: 16px;
+  resize: vertical;
+  margin-bottom: 15px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 5px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #388E3C;
+  transform: scale(1.05);
+}
+
+/* Editeringsläge */
+.edit-mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  width: 40vw;
+}
+
+.edit-fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+}
+
+.edit-fields-wrapper label {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  margin: 0 auto;
+  width: 70%;
+  font-size: 16px;
+}
+
+.review-counter
+{
+  padding: 2%;
+}
+
+.edit-fields-wrapper input {
+ 
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  padding: 1%;
+  text-align: center;
+  margin-bottom: 2%;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* Detaljer av profil */
+.profile-details-wrapper {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Recensions-sektion */
+.reviews-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-list {
+  margin-top: 20px;
+}
+
+.review-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.review-date {
+  color: #888;
+  font-size: 14px;
+}
+
+.review-text {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.review-rating {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* profile search */
+.profile-search-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+}
+
+.user-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.user-list-item {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-link {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+
+.user-status {
+  font-weight: bold;
+}
+
+
+/* =======================================
+   Quiz page 
+   ======================================= */
+
+.quiz {
+  display: flex;
+  justify-content: center;
+}
+
+.quiz-cont-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: #e7f0dc;
+  border-radius: 30px;
+}
+
+.quiz-cont-start h1 {
+  color: #da0000;
+  pointer-events: none;
+  line-height: 1.5;
+  margin-top: 40px;
+}
+
+.quiz-cont-start h2 {
+  font-size: 1.3rem;
+  font-weight: 400;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  pointer-events: none;
+  margin-top: 5px;
+}
+
+.quiz-cont-start h5 {
+  font-size: 0.8rem;
+  text-align: justify;
+  margin-top: 0px;
+  margin-left: 30px;
+  margin-right: 30px;
+  font-weight: 200;
+  pointer-events: none;
+}
+
+.quiz-cont-start button {
+  width: 175px;
+  height: 40px;
+  background-color: #1c5c00;
+  color: #e7f0dc;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  cursor: pointer;
+}
+
+.quiz-cont-questions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: #e7f0dc;
+  border-radius: 30px;
+}
+
+.quiz-cont-questions h1 {
+  padding: 10px;
+  line-height: 1.5;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  pointer-events: none;
+}
+
+.quiz-cont-questions button {
+  width: 90%;
+  height: 40px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: #729762;
+  color: #e7f0dc;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.quiz-cont-questions button.active {
+  background-color: #1c5c00;
+}
+
+.counter-and-btn {
+  display: flex;
+  justify-content: flex-end;
+  width: 80vw;
+}
+
+.counter-and-btn h5 {
+  text-align: end;
+  margin-right: 30px;
+  font-weight: 200;
+  color: #1c5c00;
+  pointer-events: none;
+}
+
+.counter-and-btn button {
+  width: 80px;
+  height: 30px;
+  margin-top: 20px;
+  background-color: #1c5c00;
+  cursor: pointer;
+}
+
+.quiz-cont-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: #e7f0dc;
+  border-radius: 30px;
+}
+
+.quiz-cont-result h2 {
+  width: 90%;
+
+  color: #1c5c00;
+
+  font-weight: 200;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.quiz-cont-result img {
+  width: 200px;
+  margin-top: 30px;
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+.quiz-cont-result img:nth-of-type(2) {
+  width: 150px;
+  pointer-events: none;
+}
+
+.quiz-cont-result span {
+  font-size: 1.4rem;
+  font-weight: 550;
+  pointer-events: none;
+}
+
+.quiz-cont-result p {
+  font-weight: 200;
+  font-size: 0.8rem;
+  text-align: justify;
+  padding: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+  pointer-events: none;
+}
+
+.quiz-cont-result button {
+  width: 175px;
+  height: 40px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: #1c5c00;
+  color: #e7f0dc;
+  font-size: 1rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+
+/* =======================================
+   Admin page 
+   ======================================= */
+
+   .report-container{
+    border: 1px solid #729762;
+    max-width: 95%;
+    min-height: 10vh;
+    margin: auto;
+    
+    border-radius: 5px;
+    max-height: 50vh;
+    overflow-y: scroll;
+   }
+
+   .verification-container{
+    border: 1px solid #729762;
+    max-width: 95%;
+    min-height: 10vh;
+    margin: auto;
+    border-radius: 5px;
+    max-height: 50vh;
+    overflow-y: scroll;
+   }

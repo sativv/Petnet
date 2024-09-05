@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 using WebApi.Models;
 using WebApi.Repositories;
 
@@ -40,7 +43,7 @@ namespace WebApi.Controllers
         }
 
         // Get all posts
-        [HttpGet("Posts")]
+        [HttpGet]
         public async Task<IActionResult> GetAllPostsAsync()
         {
             List<PostModel> allPosts = await _postRepo.GetAllPostsAsync();
@@ -71,10 +74,19 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
-            await _postRepo.SaveChangesAsync();  
+            await _postRepo.SaveChangesAsync();
 
             return Ok(updatedPost);
         }
+
+        [HttpGet("AdminTest")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdminTest()
+        {
+            return Ok("Ur admin");
+        }
+
+
 
 
         // Make post 
@@ -107,9 +119,9 @@ namespace WebApi.Controllers
             }
 
             _postRepo.RemovePostAsync(postToRemove);
-            await _postRepo.SaveChangesAsync(); 
+            await _postRepo.SaveChangesAsync();
 
-            return NoContent(); 
+            return Ok();
         }
 
     }
