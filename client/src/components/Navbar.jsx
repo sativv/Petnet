@@ -40,7 +40,7 @@ function Navbar() {
         <a href="/profileSearch">Sök profil</a>
         <a href="/register">Registrering</a>
         <a href="/login">Logga in</a>
-                  <button onClick={goToProfile}>Min profil</button>
+                  <button onClick={goToProfile}>{currentUser?.email}</button>
       </div>
 
       <div className="burgerIcon" onClick={toggleBurger}>
