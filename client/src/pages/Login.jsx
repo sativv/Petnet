@@ -66,7 +66,10 @@ function Login() {
         const data = await meResponse.json();
         console.log(data);
         await setCurrentUser(data);
-        nav("/profile");
+
+        nav(`/profile/${currentUser.id}`)
+    
+
       }
     } catch (error) {
       console.error("Error during fetch:", error);
