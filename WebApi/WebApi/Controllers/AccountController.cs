@@ -144,7 +144,7 @@ namespace WebApi.Controllers
                 user.Id,
                 user.Email,
                 user.UserName,
-                isAdmin         
+                isAdmin,         
                 user.IsPrivateSeller,
                 user.IsVerified,
                 user.OrganizationName,
