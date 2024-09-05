@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.ComponentModel.DataAnnotations;
 using WebApi.Data;
 
 namespace WebApi.Models
@@ -9,6 +10,10 @@ namespace WebApi.Models
         public int Id { get; set; }
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
+
+        public List<string> Images { get; set; } = null!;
+        public string Gender { get; set; } = null!;
+        public DateOnly? DateOfBirth { get; set; }
 
         public string AnimalType { get; set; } = null!;
         public string AnimalBreed { get; set; } = null!;

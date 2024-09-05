@@ -1,13 +1,13 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Identity.Web;
+using System.Text.Json.Serialization;
 using WebApi.Data;
 using WebApi.Repositories;
+
 using WebApi.Service.Models;
 using WebApi.Service.Services;
+
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,15 +23,20 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
+builder.Services.AddScoped<PostRepo>();
+builder.Services.AddScoped<QuizRepo>();
+builder.Services.AddScoped<ReviewRepo>();
+
 //builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 //    .AddEntityFrameworkStores<ApplicationDbContext>()
 //    .AddDefaultTokenProviders();
 
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// För email - reset Denna rad är för hur länge länken/ token ska gälla efter du fått den på mail. 
+// Fï¿½r email - reset Denna rad ï¿½r fï¿½r hur lï¿½nge lï¿½nken/ token ska gï¿½lla efter du fï¿½tt den pï¿½ mail. 
 
 builder.Services.Configure<DataProtectionTokenProviderOptions>(opts => opts.TokenLifespan = TimeSpan.FromHours(10));
 
@@ -47,7 +52,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 });
 
-//Lägg till Email configurations 
+//Lï¿½gg till Email configurations 
 
 var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfigurations>();
 
@@ -58,7 +63,11 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+.AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+}); ;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -68,8 +77,40 @@ builder.Services.AddScoped<PostRepo>();
 
 
 
+using (ServiceProvider serviceProvider = builder.Services.BuildServiceProvider())
+{
+    var context = serviceProvider.GetRequiredService<ApplicationDbContext>();
+    var signInManager = serviceProvider.GetRequiredService<SignInManager<ApplicationUser>>();
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
+    ApplicationUser newAdmin = new()
+    {
+        UserName = "admin@petnet.com",
+        Email = "admin@petnet.com",
+        EmailConfirmed = true,
+    };
 
+    var admin = signInManager.UserManager.FindByEmailAsync(newAdmin.Email).GetAwaiter().GetResult();
+
+    if (admin == null)
+    {
+        signInManager.UserManager.CreateAsync(newAdmin, "Admin1!").GetAwaiter().GetResult();
+
+        bool adminRoleExists = roleManager.RoleExistsAsync("Admin").GetAwaiter().GetResult();
+
+        if (!adminRoleExists)
+        {
+            IdentityRole adminRole = new()
+            {
+                Name = "Admin",
+            };
+
+            roleManager.CreateAsync(adminRole).GetAwaiter().GetResult();
+        }
+
+        signInManager.UserManager.AddToRoleAsync(newAdmin, "Admin").GetAwaiter().GetResult();
+    }
+}
 
 var app = builder.Build();
 
@@ -86,7 +127,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    
+
 }
 app.UseHttpsRedirection();
 

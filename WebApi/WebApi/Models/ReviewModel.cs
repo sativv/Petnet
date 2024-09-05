@@ -9,13 +9,9 @@ namespace WebApi.Models
         public int ReviewId { get; set; }
         public string Content { get; set; } = null!;
         public int Rating { get; set; }
-
-        // User who wrote the review
-        public string ReviewerId { get; set; } // Use string to match ApplicationUser's primary key type
+        public string ReviewerId { get; set; }
         public ApplicationUser? Reviewer { get; set; }
-
-        // User who is being reviewed
-        public string ReviewedSellerId { get; set; } // Use string to match ApplicationUser's primary key type
+        public string ReviewedSellerId { get; set; }
         public ApplicationUser? ReviewedSeller { get; set; }
 
 
