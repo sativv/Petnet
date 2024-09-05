@@ -15,10 +15,12 @@ namespace WebApi.Repositories
         }
 
         // get review by userid
-        public async Task<List<ReviewModel>> GetReviewsByUserIdAsync(int userId)
+        public async Task<List<ReviewModel>> GetReviewsByUserIdAsync(string userId)
         {
-            var reviews = await _context.Reviews.ToListAsync();
-            return reviews.Where(r => int.TryParse(r.ReviewedSellerId, out int sellerId) && sellerId == userId).ToList();
+            // Hämta recensioner där ReviewedSellerId matchar userId
+            return await _context.Reviews
+                .Where(r => r.ReviewedSellerId == userId)
+                .ToListAsync();
         }
 
 

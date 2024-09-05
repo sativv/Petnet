@@ -41,10 +41,14 @@ function Navbar() {
         <a href="/profileSearch">Sök profil</a>
         <a href="/register">Registrering</a>
         <a href="/login">Logga in</a>
+
+                  <button onClick={goToProfile}>{currentUser?.email}</button>
+
         {currentUser && (
           <button onClick={goToProfile}>Min profil</button>
         )}
         {isAdmin && <a href="/admin">Admin</a>}
+
       </div>
 
       <div className="burgerIcon" onClick={toggleBurger}>

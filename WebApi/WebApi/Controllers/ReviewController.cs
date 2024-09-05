@@ -50,6 +50,7 @@ namespace WebApi.Controllers
                 Content = reviewDto.Content,
                 Rating = reviewDto.Rating,
                 ReviewerId = reviewDto.ReviewerId,
+                ReviewedSellerId = reviewDto.ReviewedSellerId,
             };
 
             // Lägg till recensionen i databasen
@@ -75,9 +76,9 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        // Ny endpoint för att hämta recensioner baserat på userId
+        // endpoint för att hämta recensioner baserat på userId
         [HttpGet("user/{userId}/reviews")]
-        public async Task<IActionResult> GetReviewsByUserId(int userId)
+        public async Task<IActionResult> GetReviewsByUserId(string userId)
         {
             List<ReviewModel> reviews = await reviewRepo.GetReviewsByUserIdAsync(userId);
 

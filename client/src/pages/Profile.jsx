@@ -153,6 +153,8 @@ function Profile() {
           content: newReview.comment,
           rating: newReview.rating,
           reviewerId: currentUser.id,
+          reviewedSellerId: profileId
+          
         }),
       });
 
