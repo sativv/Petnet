@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class initialcr : Migration
+    public partial class classReport : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -80,6 +80,22 @@ namespace WebApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Quizzes", x => x.QuizId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    ReportId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReasonOfReport = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SendedReportUserId = table.Column<int>(type: "int", nullable: false),
+                    ReportedUserId = table.Column<int>(type: "int", nullable: false),
+                    TimeReported = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.ReportId);
                 });
 
             migrationBuilder.CreateTable(
@@ -337,8 +353,8 @@ namespace WebApi.Migrations
                 columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "user1", null, 0, null, null, null, "bf20feb7-7a67-48e4-9f26-8c2d44708aa4", "user1@example.com", false, true, true, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEGeQYRs9sPqWB8c//s61UHJqNNqc5daUHZ+vv926Nlz276QYDIFvvwCn/FpBjJQ+cw==", null, false, 0, null, "b19506a8-1192-41f1-b3d1-058ebec257dc", false, "user1@example.com" },
-                    { "user2", null, 0, null, null, null, "77daf8aa-8ccb-4d18-9cce-5711f44db0d1", "user2@example.com", false, false, false, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEKdnktdSEFCTy6yC4svJxrl2ukesWBQyNzYHNOg21WyyZEnC9foXd0k+xeAwT1igDg==", null, false, 0, null, "fc2cfa4e-c3e2-4c03-8c2e-72dd17ddaff7", false, "user2@example.com" }
+                    { "user1", null, 0, null, null, null, "27baf54c-7725-457b-8c78-a4f002b2f9ff", "user1@example.com", false, true, true, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEBh3aDbV9cSnVXTNiw1TIFr30gOK98l1JW7G8ZRsWQV+IWWiSdJmvDHr3jaYwzFQAg==", null, false, 0, null, "eb2b7da7-bb38-484a-b5b8-99860a2361d7", false, "user1@example.com" },
+                    { "user2", null, 0, null, null, null, "65f3ba02-8212-4f5d-9fc0-18324568780f", "user2@example.com", false, false, false, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEEDL8cFhzBMF243XFGt3m8BeZQJnkXnSHFUV2DZ9ujpKfidMWJs5qV8twyMDn3xRBw==", null, false, 0, null, "e8634cd9-2dcd-4432-a075-f3f43b116ffb", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -593,6 +609,9 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Options");
+
+            migrationBuilder.DropTable(
+                name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "Reviews");

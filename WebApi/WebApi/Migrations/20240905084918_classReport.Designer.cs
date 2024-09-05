@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240903105656_initialcr")]
-    partial class initialcr
+    [Migration("20240905084918_classReport")]
+    partial class classReport
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -257,17 +257,17 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bf20feb7-7a67-48e4-9f26-8c2d44708aa4",
+                            ConcurrencyStamp = "27baf54c-7725-457b-8c78-a4f002b2f9ff",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
                             IsVerified = true,
                             LockoutEnabled = false,
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEGeQYRs9sPqWB8c//s61UHJqNNqc5daUHZ+vv926Nlz276QYDIFvvwCn/FpBjJQ+cw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBh3aDbV9cSnVXTNiw1TIFr30gOK98l1JW7G8ZRsWQV+IWWiSdJmvDHr3jaYwzFQAg==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "b19506a8-1192-41f1-b3d1-058ebec257dc",
+                            SecurityStamp = "eb2b7da7-bb38-484a-b5b8-99860a2361d7",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -275,17 +275,17 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "77daf8aa-8ccb-4d18-9cce-5711f44db0d1",
+                            ConcurrencyStamp = "65f3ba02-8212-4f5d-9fc0-18324568780f",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
                             IsVerified = false,
                             LockoutEnabled = false,
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEKdnktdSEFCTy6yC4svJxrl2ukesWBQyNzYHNOg21WyyZEnC9foXd0k+xeAwT1igDg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEDL8cFhzBMF243XFGt3m8BeZQJnkXnSHFUV2DZ9ujpKfidMWJs5qV8twyMDn3xRBw==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "fc2cfa4e-c3e2-4c03-8c2e-72dd17ddaff7",
+                            SecurityStamp = "e8634cd9-2dcd-4432-a075-f3f43b116ffb",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         });
@@ -1267,6 +1267,32 @@ namespace WebApi.Migrations
                             Reptile = "Reptiler är fascinerande och unika husdjur som kräver en speciell typ av skötsel. De kan vara ganska självständiga och är ofta mest lämpade för ägare som är intresserade av att skapa en specifik miljö och förstå deras unika behov.\r\n\r\nSkötsel:\r\nReptiler, såsom ormar, ödlor och sköldpaddor, kräver ett specialanpassat terrarium med rätt temperatur, belysning och luftfuktighet. Deras kost varierar beroende på art, från insekter till grönt foder. Regelbunden rengöring av terrariet och kontroll av deras miljö är avgörande för deras hälsa.\r\n\r\nSaker att tänka på:\r\nReptiler kan vara känsliga för förändringar i sin omgivning och kräver noggrann övervakning av deras livsmiljö. De är inte lika sociala som andra husdjur och kan vara mindre interaktiva, vilket är viktigt att överväga om du vill ha ett djur som du kan hantera ofta. Reptiler är bäst lämpade för dem som har ett särskilt intresse för dessa fascinerande djur och är villiga att investera tid i att skapa och underhålla deras miljö.\r\n\r\n",
                             Title = "Vilket djur passar dig bäst?"
                         });
+                });
+
+            modelBuilder.Entity("WebApi.Models.ReportModel", b =>
+                {
+                    b.Property<int>("ReportId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
+
+                    b.Property<string>("ReasonOfReport")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ReportedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SendedReportUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TimeReported")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ReportId");
+
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("WebApi.Models.ReviewModel", b =>
