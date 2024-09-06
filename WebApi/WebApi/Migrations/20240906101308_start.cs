@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class adminseedpasswordfix : Migration
+    public partial class start : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -42,6 +42,7 @@ namespace WebApi.Migrations
                     Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Postcode = table.Column<int>(type: "int", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -80,6 +81,23 @@ namespace WebApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Quizzes", x => x.QuizId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    ReportId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReasonOfReport = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AdminComment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SendedReportUserId = table.Column<int>(type: "int", nullable: false),
+                    ReportedUserId = table.Column<int>(type: "int", nullable: false),
+                    TimeReported = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.ReportId);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,7 +216,7 @@ namespace WebApi.Migrations
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UploadDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -207,7 +225,8 @@ namespace WebApi.Migrations
                         name: "FK_Files_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -339,12 +358,12 @@ namespace WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "ProfilePicture", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "d64256ad-1099-41cd-b3d0-efd12d7810e5", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAENAv9E4PWM88INP14Q3Bj7Bt2Ny3ABiWPKslTFq+W7hWF6Si1zBzB2FfPWPyHv4Emw==", null, false, 0, null, "11a92def-13cb-4437-8faf-479287ef7632", false, "Admin@petnet.com" },
-                    { "user1", null, 0, null, null, null, "78f54cb8-0452-40b4-bced-fb0fefc5d0d7", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEIOoqqfnYk0QNOobe2LrSesRXuMVjHsKSZauS0eitVP6NwNTPhKmbiSry7ZMyaUGPQ==", null, false, 0, null, "d12de7c9-9843-4494-b5ba-4fc06f19f67f", false, "user1@example.com" },
-                    { "user2", null, 0, null, null, null, "756215c2-7547-46f2-84e5-3ca444e5b2d8", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEI9lc+yIK74QNwyi8CILbvRrjWnaAXErDdbrQvGyU1/K/iAsj82PW2sCmVjoJ0ZmbA==", null, false, 0, null, "37b26886-1c66-4a5a-9a13-f5a86f2934af", false, "user2@example.com" }
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "9e6ebc52-6c41-43f2-b60b-5ad97f71593d", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAEAl+DDmJwzQdbD5XnmP0ZaLWe9TFTe0QNsGbHa7gEtCvdXTpI1IurH90zC0rIonLgg==", null, false, 0, null, null, "178bf747-4267-4bd5-a08d-a7c690d52934", false, "Admin@petnet.com" },
+                    { "user1", null, 0, null, null, null, "e0f4f753-5c5b-49ed-8b1b-09efe5b86f96", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEFJfHUitMI5NaYgQ47/s9s+n+3KrHlyeo0iXbU2zOTJn6ui2kiXhBLgCQoJIKzNjjg==", null, false, 0, null, null, "a4edecef-249f-4a88-ba17-6aa3e31c745d", false, "user1@example.com" },
+                    { "user2", null, 0, null, null, null, "109718d0-187a-4741-97dd-2b16e1b93e6d", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEDRoyfr7OxCynCHdebvvx+ucZ7vWsYNRkb0owGQ2J8NzYs9WVUSeuXSa50yjyuOuFw==", null, false, 0, null, null, "defa7ff6-f006-4659-b1e1-3ba0d67cb263", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -604,6 +623,9 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Options");
+
+            migrationBuilder.DropTable(
+                name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "Reviews");

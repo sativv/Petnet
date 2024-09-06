@@ -30,4 +30,9 @@
     <ProjectReference Include="..\WebApi.Service\WebApi.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Uploads\" />
+    <Folder Include="wwwroot\FileUploads\" />
+  </ItemGroup>
+
 </Project>

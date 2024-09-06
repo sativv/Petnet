@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240905084918_classReport")]
-    partial class classReport
+    [Migration("20240906133035_addfilerelations")]
+    partial class addfilerelations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,14 @@ namespace WebApi.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -137,6 +145,13 @@ namespace WebApi.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
+                            RoleId = "b4280b6a-0613-4cbd-a9e6-f1701e926e73"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -257,17 +272,19 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "27baf54c-7725-457b-8c78-a4f002b2f9ff",
+                            ConcurrencyStamp = "fd9f864d-989e-4784-9fa7-ac332dbdf5b3",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
                             IsVerified = true,
                             LockoutEnabled = false,
+                            NormalizedEmail = "USER1@EXAMPLE.COM",
+                            NormalizedUserName = "USER1@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEBh3aDbV9cSnVXTNiw1TIFr30gOK98l1JW7G8ZRsWQV+IWWiSdJmvDHr3jaYwzFQAg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJ3P5qi0ERKAjcZPuzBw34ZXzzznzzQWdqnX58Rf227+To4YhdaEUv+WRk5HdJ9nlQ==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "eb2b7da7-bb38-484a-b5b8-99860a2361d7",
+                            SecurityStamp = "21bb03f4-70d5-4c7e-8140-909c76c8e434",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -275,19 +292,41 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "65f3ba02-8212-4f5d-9fc0-18324568780f",
+                            ConcurrencyStamp = "99d33ee5-7d25-40c1-bcdb-a2ac7b0578f8",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
                             IsVerified = false,
                             LockoutEnabled = false,
+                            NormalizedEmail = "USER2@EXAMPLE.COM",
+                            NormalizedUserName = "USER2@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEEDL8cFhzBMF243XFGt3m8BeZQJnkXnSHFUV2DZ9ujpKfidMWJs5qV8twyMDn3xRBw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJRgR/Ky0PRGigkWfENBbqtO9Z6dWEHsNeDS3yIovXAokuo8W4d/lBmHTjyVg8ZUKg==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "e8634cd9-2dcd-4432-a075-f3f43b116ffb",
+                            SecurityStamp = "17ef7b0d-3167-4aa4-b266-86c17995029e",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
+                        },
+                        new
+                        {
+                            Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "e374d5e6-af6e-4f6d-9d49-4b2dd2e19248",
+                            Email = "admin@petnet.com",
+                            EmailConfirmed = true,
+                            IsPrivateSeller = false,
+                            IsVerified = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@PETNET.COM",
+                            NormalizedUserName = "ADMIN@PETNET.COM",
+                            OrganizationNumber = 0L,
+                            PasswordHash = "AQAAAAIAAYagAAAAECQV5qCNhh9Az2rw4ryCkuOydrXn6v2SU1m8bEM0R2f+dx1kLwxXi6iMMmG+kuBU2g==",
+                            PhoneNumberConfirmed = false,
+                            Postcode = 0,
+                            SecurityStamp = "fc0c8f90-a158-4065-a35d-d6161e6c8636",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin@petnet.com"
                         });
                 });
 
@@ -300,6 +339,7 @@ namespace WebApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
@@ -1277,6 +1317,10 @@ namespace WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
 
+                    b.Property<string>("AdminComment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ReasonOfReport")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1398,9 +1442,13 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Models.FileModel", b =>
                 {
-                    b.HasOne("WebApi.Data.ApplicationUser", null)
+                    b.HasOne("WebApi.Data.ApplicationUser", "ApplicationUser")
                         .WithMany("MyFiles")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("WebApi.Models.InterestModel", b =>
