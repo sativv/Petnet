@@ -7,7 +7,7 @@ function PostDetails() {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
-  const [imageUrl, setImageUrl] = useState(""); // State for image URL
+  const [imageUrl, setImageUrl] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
 
   const nav = useNavigate();
@@ -17,12 +17,76 @@ function PostDetails() {
 
   const unlockEdit = () => {
     setIsEditable(true);
-    setImageUrl(post.images[0] || ""); // Populate imageUrl when editing is unlocked
+    setImageUrl(post.images[0] || "");
   };
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    // change logic to check database whether the logged in user has the post favorited
+  const checkIfBookmarked = async () => {
+    try {
+      const response = await fetch(
+        "https://localhost:7072/api/Account/me/bookmarks",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const bookmarks = await response.json();
+
+        const isBookmarked = bookmarks.includes(parseInt(postId));
+        setIsFavorite(isBookmarked);
+      } else {
+        console.error("Failed to fetch bookmarks");
+      }
+    } catch (error) {
+      console.error("Error checking bookmarks:", error);
+    }
+  };
+
+  const toggleFavorite = async () => {
+    if (isFavorite) {
+      // Remove bookmark
+      try {
+        const response = await fetch(
+          `https://localhost:7072/api/Account/RemoveBookmark/${postId}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.ok) {
+          setIsFavorite(false);
+        } else {
+          alert("Failed to remove bookmark.");
+        }
+      } catch (error) {
+        console.error("Error removing bookmark:", error);
+      }
+    } else {
+      // Add bookmark
+      try {
+        const response = await fetch(
+          "https://localhost:7072/api/Account/AddBookmark",
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(postId),
+          }
+        );
+        if (response.ok) {
+          setIsFavorite(true);
+        } else {
+          alert("Failed to add bookmark.");
+        }
+      } catch (error) {
+        console.error("Error adding bookmark:", error);
+      }
+    }
   };
 
   const deletePost = async () => {
@@ -35,6 +99,7 @@ function PostDetails() {
         `https://localhost:7072/api/Post/RemovePost/${post.id}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
 
@@ -63,12 +128,12 @@ function PostDetails() {
     };
 
     fetchPost();
+    checkIfBookmarked(); // Check if the post is bookmarked when the component loads
   }, [postId]);
 
   const handleSaveChanges = async (e) => {
     e.preventDefault();
 
-    // Validation check
     if (
       post.title === "" ||
       post.description === "" ||
@@ -79,12 +144,10 @@ function PostDetails() {
       post.birthdate === "" ||
       post.earliestAdoption === ""
     ) {
-      console.log(post);
       alert("Alla fält måste vara ifyllda!");
       return;
     }
 
-    // Update the first image in the images array with the new image URL
     const updatedImages = [...post.images];
     updatedImages[0] = imageUrl;
 
@@ -103,12 +166,11 @@ function PostDetails() {
       );
 
       if (response.ok) {
-        setIsEditable(false); // Disable editing after saving
+        setIsEditable(false);
         alert("Annonsen har uppdaterats!");
         window.location.reload();
       } else {
         alert("Något gick fel vid uppdateringen av annonsen.");
-        console.log(post);
       }
     } catch (error) {
       console.error(error.message);
