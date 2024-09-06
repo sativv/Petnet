@@ -2,12 +2,13 @@ import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../App";
-import "../App.css"
-
+import "../App.css";
+import ForgetPasswordModal from "../components/ForgetPasswordModal";
 
 //TODO: Add forgotten password link
 
 function Login() {
+  const [showForgetPasswordModal, setForgetPasswordModal] = useState(false);
   const { currentUser, setCurrentUser } = useContext(userContext);
   const nav = useNavigate();
 
@@ -57,80 +58,90 @@ function Login() {
             "Content-Type": "application/json",
           },
         });
-      
+
         if (!meResponse.ok) {
           throw new Error(`HTTP error! status: ${meResponse.status}`);
         }
-      
+
         const data = await meResponse.json();
         console.log(data);
         await setCurrentUser(data);
-        nav("/profile")
+
+        nav(`/profile/${currentUser.id}`)
+    
+
       }
     } catch (error) {
       console.error("Error during fetch:", error);
     }
-    
+
     // const userData = await response.json();
     // console.log(userData);
     // setCurrentUser(userData);
     // nav("/profile");
   };
 
+  function CloseModal() {
+    setForgetPasswordModal(false);
+  }
+
   return (
     <div className="login-wrapper">
       <form className="loginForm" onSubmit={handleSubmit}>
-
         <h1>Logga in</h1>
-        
+
         <div>
           <div className="login-text-wrapper">
             <label>Användarnamn</label>
           </div>
-        <input
-          type="text"
-          name="username"
-          placeholder="Email"
-          className="login-input"
-          value={FormData.username}
-          onChange={(e) => {
-            e.preventDefault();
-            setFormData({
-              username: e.target.value,
-              password: formData.password,
-            });
-          }}
-          required
-        />
+          <input
+            type="text"
+            name="username"
+            placeholder="Email"
+            className="login-input"
+            value={FormData.username}
+            onChange={(e) => {
+              e.preventDefault();
+              setFormData({
+                username: e.target.value,
+                password: formData.password,
+              });
+            }}
+            required
+          />
         </div>
         <div>
           <div className="login-text-wrapper">
-        <label>Lösenord:</label>
-        <Link>Glömt lösenord?</Link>
+            <label>Lösenord:</label>
+            <Link onClick={() => setForgetPasswordModal(true)}>
+              Glömt lösenord?
+            </Link>
           </div>
-        <input
-          type="password"
-          name="password"
-          className="login-input"
-          placeholder="Password"
-          value={FormData.password}
-          onChange={(e) => {
-            e.preventDefault();
-            setFormData({
-              username: formData.username,
-              password: e.target.value,
-            });
-          }}
-          required
-         />
+          <input
+            type="password"
+            name="password"
+            className="login-input"
+            placeholder="Password"
+            value={FormData.password}
+            onChange={(e) => {
+              e.preventDefault();
+              setFormData({
+                username: formData.username,
+                password: e.target.value,
+              });
+            }}
+            required
+          />
         </div>
         <input type="submit" value="Logga in" className="login-button" />
         <Link to={"/register"} className="returnLink">
-        Är du inte registrerad? Klicka <strong>här</strong>!
-      </Link>
+          Är du inte registrerad? Klicka <strong>här</strong>!
+        </Link>
       </form>
 
-      
+      {showForgetPasswordModal ? (
+        <ForgetPasswordModal closeModal={CloseModal} />
+      ) : null}
     </div>
   );
 }

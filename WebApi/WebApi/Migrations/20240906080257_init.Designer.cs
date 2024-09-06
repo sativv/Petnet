@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Data;
 
@@ -11,9 +12,11 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240906080257_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -298,7 +301,6 @@ namespace WebApi.Migrations
                             NormalizedEmail = "USER2@EXAMPLE.COM",
                             NormalizedUserName = "USER2@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-
                             PasswordHash = "AQAAAAIAAYagAAAAEERpBfeI2Nm5NgsUFm21Wkh1u/p8zH6Ays8zI7RTKsps2P2JeKeMIHuaFmobkp6TQQ==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
@@ -326,21 +328,6 @@ namespace WebApi.Migrations
                             TwoFactorEnabled = false,
                             UserName = "Admin@petnet.com"
                         });
-                });
-
-            modelBuilder.Entity("WebApi.Models.BookmarkModel", b =>
-                {
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("PostModelId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ApplicationUserId", "PostModelId");
-
-                    b.HasIndex("PostModelId");
-
-                    b.ToTable("Bookmarks");
                 });
 
             modelBuilder.Entity("WebApi.Models.FileModel", b =>
@@ -1452,25 +1439,6 @@ namespace WebApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebApi.Models.BookmarkModel", b =>
-                {
-                    b.HasOne("WebApi.Data.ApplicationUser", "User")
-                        .WithMany("Bookmarks")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebApi.Models.PostModel", "PostModel")
-                        .WithMany("Bookmarks")
-                        .HasForeignKey("PostModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PostModel");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("WebApi.Models.FileModel", b =>
                 {
                     b.HasOne("WebApi.Data.ApplicationUser", null)
@@ -1551,8 +1519,6 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Data.ApplicationUser", b =>
                 {
-                    b.Navigation("Bookmarks");
-
                     b.Navigation("Interests");
 
                     b.Navigation("MyFiles");
@@ -1566,8 +1532,6 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Models.PostModel", b =>
                 {
-                    b.Navigation("Bookmarks");
-
                     b.Navigation("Interests");
                 });
 

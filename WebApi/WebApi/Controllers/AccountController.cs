@@ -36,6 +36,39 @@ namespace WebApi.Controllers
             _bookmarkRepo = bookmarkRepo;
         }
 
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetUserById(string id)
+        {
+            // Hämta användaren med det angivna ID:t
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound(new { message = $"User with ID {id} not found." });
+            }
+
+            // Skapa en DTO för att returnera användarens information
+            var userDTO = new
+            {
+                user.Id,
+                user.UserName,
+                user.Email,
+                user.IsPrivateSeller,
+                user.IsVerified,
+                user.OrganizationName,
+                user.OrganizationNumber,
+                user.PhoneNumber,
+                user.City,
+                user.Adress,
+                user.BuisnessContact,
+                user.Postcode,
+                user.AboutMe
+            };
+
+            return Ok(userDTO);
+        }
+
+
         [HttpPatch("me/about")]
         [Authorize]
         public async Task<IActionResult> UpdateAboutMe([FromBody] UpdateUserDTO updateUserDto)
@@ -53,6 +86,32 @@ namespace WebApi.Controllers
                 user.AboutMe = updateUserDto.AboutMe;
             }
 
+            // Uppdatera uppfödaruppgifter om det finns i DTO:n
+            if (updateUserDto.OrganizationNumber.HasValue)
+            {
+                user.OrganizationNumber = updateUserDto.OrganizationNumber.Value;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.OrganizationName))
+            {
+                user.OrganizationName = updateUserDto.OrganizationName;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.BuisnessContact))
+            {
+                user.BuisnessContact = updateUserDto.BuisnessContact;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.Adress))
+            {
+                user.Adress = updateUserDto.Adress;
+            }
+            if (updateUserDto.Postcode.HasValue)
+            {
+                user.Postcode = updateUserDto.Postcode.Value;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.City))
+            {
+                user.City = updateUserDto.City;
+            }
+
             // Spara ändringarna
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
@@ -67,6 +126,8 @@ namespace WebApi.Controllers
             return NoContent(); // uppdateringen lyckades
         }
 
+
+
         [HttpGet("me")]
         [Authorize]
         public async Task<IActionResult> GetCurrentUser()
@@ -79,11 +140,14 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
+            bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
             var userDTO = new
             {
                 user.Id,
                 user.Email,
                 user.UserName,
+                isAdmin,         
                 user.IsPrivateSeller,
                 user.IsVerified,
                 user.OrganizationName,
@@ -94,11 +158,11 @@ namespace WebApi.Controllers
                 user.BuisnessContact,
                 user.Postcode,
                 user.AboutMe
-
             };
 
             return Ok(userDTO);
         }
+
 
         [HttpPost("logout")]
         [Authorize]
@@ -164,6 +228,23 @@ namespace WebApi.Controllers
             return BadRequest(ModelState);
 
         }
+
+        [HttpGet("all-users")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userManager.Users
+                .Select(u => new
+                {
+                    u.Id,
+                    u.UserName,
+                    u.Email
+                })
+                .ToListAsync();
+
+            return Ok(users);
+        }
+
+
 
         [HttpGet("{id}/reviewsreceived")]
         public async Task<IActionResult> GetReviewsReceived(string id)
