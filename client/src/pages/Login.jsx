@@ -46,7 +46,7 @@ function Login() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
         }
       );
 
@@ -67,9 +67,7 @@ function Login() {
         console.log(data);
         await setCurrentUser(data);
 
-        nav(`/profile/${currentUser.id}`)
-    
-
+        nav(`/profile/${currentUser.id}`);
       }
     } catch (error) {
       console.error("Error during fetch:", error);
