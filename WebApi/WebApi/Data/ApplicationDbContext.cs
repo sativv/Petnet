@@ -24,12 +24,37 @@ namespace WebApi.Data
 
         private void SeedUsers(ModelBuilder builder)
         {
+            const string ADMIN_ID = "b4280b6a-0613-4cbd-a9e6-f1701e926e73";
+            const string ROLE_ID = ADMIN_ID;
+
+
+            builder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Id = ROLE_ID,
+                Name = "Admin",
+                NormalizedName = "ADMIN"
+            });
+
+
+            ApplicationUser admin = new ApplicationUser
+            {
+                Id = ADMIN_ID,
+                UserName = "Admin@petnet.com",
+                NormalizedUserName = "ADMIN@PETNET.COM",
+                Email = "admin@petnet.com",
+                NormalizedEmail = "ADMIN@PETNET.COM",
+                IsVerified = true,
+                EmailConfirmed = true,
+
+            };
 
             ApplicationUser user1 = new ApplicationUser
             {
                 Id = "user1",
                 UserName = "user1@example.com",
                 Email = "user1@example.com",
+                NormalizedUserName = "USER1@EXAMPLE.COM",
+                NormalizedEmail = "USER1@EXAMPLE.COM",
                 IsPrivateSeller = true,
                 IsVerified = true
             };
@@ -39,6 +64,8 @@ namespace WebApi.Data
                 Id = "user2",
                 UserName = "user2@example.com",
                 Email = "user2@example.com",
+                NormalizedUserName = "USER2@EXAMPLE.COM",
+                NormalizedEmail = "USER2@EXAMPLE.COM",
                 IsPrivateSeller = false,
                 IsVerified = false
             };
@@ -46,8 +73,15 @@ namespace WebApi.Data
 
             PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
             user1.PasswordHash = passwordHasher.HashPassword(user1, "user1*123");
-            user2.PasswordHash = passwordHasher.HashPassword(user2, "user2*123");
-            builder.Entity<ApplicationUser>().HasData(user1, user2);
+            user2.PasswordHash = passwordHasher.HashPassword(user2, "user2*123");   
+            admin.PasswordHash = passwordHasher.HashPassword(null, "Admin1!");
+            builder.Entity<ApplicationUser>().HasData(user1, user2, admin);
+
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = ROLE_ID,
+                UserId = ADMIN_ID
+            });
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

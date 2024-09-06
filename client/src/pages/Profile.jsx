@@ -19,7 +19,7 @@ function Profile() {
   const [postcode, setPostcode] = useState("");
   const [city, setCity] = useState("");
   const [reviews, setReviews] = useState([]);
-  const [newReview, setNewReview] = useState({ rating: 1, comment: "" });
+  const [newReview, setNewReview] = useState({ rating: 1, content: "" });
   const reviewsRef = useRef(null);
   const editRef = useRef(null); // New ref for the edit section
   const nav = useNavigate();
@@ -137,38 +137,40 @@ function Profile() {
     }));
   };
 
-  const handleAddReview = async () => {
-    if (newReview.rating < 1 || newReview.rating > 5) {
-      alert("Rating must be between 1 and 5.");
-      return;
-    }
+ const handleAddReview = async () => {
+  if (newReview.rating < 1 || newReview.rating > 5) {
+    alert("Rating must be between 1 and 5.");
+    return;
+  }
 
-    try {
-      const response = await fetch("http://localhost:5054/api/Review/AddReview", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          content: newReview.comment,
-          rating: newReview.rating,
-          reviewerId: currentUser.id,
-          reviewedSellerId: profileId
-          
-        }),
-      });
+  try {
+    const response = await fetch("http://localhost:5054/review/AddReview", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: newReview.comment,
+        rating: newReview.rating,
+        reviewerId: currentUser.id,
+        reviewedSellerId: profileId
+      }),
+    });
 
-      if (response.ok) {
-        const addedReview = await response.json();
-        setReviews((prevReviews) => [...prevReviews, addedReview]);
-        setNewReview({ rating: 1, comment: "" });
-      } else {
-        console.error("Failed to add review");
-      }
-    } catch (error) {
-      console.error("Error adding review:", error);
+    if (response.ok) {
+      const addedReview = await response.json();
+      setReviews((prevReviews) => [...prevReviews, addedReview]);
+      setNewReview({ rating: 1, comment: "" });
+    } else {
+      const errorText = await response.text();
+      console.error("Failed to add review:", response.status, response.statusText, errorText);
     }
-  };
+  } catch (error) {
+    console.error("Error adding review:", error);
+  }
+};
+
+
 
   if (!currentUser) {
     nav("/login");
@@ -327,8 +329,8 @@ function Profile() {
           <ul>
             {reviews.map((review) => (
               <li key={review.id}>
-                <p>Betyg: {review.rating}</p>
-                <p>{review.comment}</p>
+              <p><strong>Betyg:</strong> {review.rating}</p>
+              <p><strong>Kommentar:</strong> {review.content}</p>
               </li>
             ))}
           </ul>

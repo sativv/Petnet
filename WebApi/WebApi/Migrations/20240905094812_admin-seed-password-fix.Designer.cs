@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Data;
 
@@ -11,9 +12,11 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240905094812_admin-seed-password-fix")]
+    partial class adminseedpasswordfix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -269,9 +272,7 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-
                             ConcurrencyStamp = "78f54cb8-0452-40b4-bced-fb0fefc5d0d7",
-
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
@@ -280,21 +281,18 @@ namespace WebApi.Migrations
                             NormalizedEmail = "USER1@EXAMPLE.COM",
                             NormalizedUserName = "USER1@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-
                             PasswordHash = "AQAAAAIAAYagAAAAEIOoqqfnYk0QNOobe2LrSesRXuMVjHsKSZauS0eitVP6NwNTPhKmbiSry7ZMyaUGPQ==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
                             SecurityStamp = "d12de7c9-9843-4494-b5ba-4fc06f19f67f",
-             TwoFactorEnabled = false,
+                            TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
                         new
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-
                             ConcurrencyStamp = "756215c2-7547-46f2-84e5-3ca444e5b2d8",
-
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
@@ -303,11 +301,10 @@ namespace WebApi.Migrations
                             NormalizedEmail = "USER2@EXAMPLE.COM",
                             NormalizedUserName = "USER2@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-                   PasswordHash = "AQAAAAIAAYagAAAAEI9lc+yIK74QNwyi8CILbvRrjWnaAXErDdbrQvGyU1/K/iAsj82PW2sCmVjoJ0ZmbA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI9lc+yIK74QNwyi8CILbvRrjWnaAXErDdbrQvGyU1/K/iAsj82PW2sCmVjoJ0ZmbA==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
                             SecurityStamp = "37b26886-1c66-4a5a-9a13-f5a86f2934af",
-
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         },
@@ -1309,36 +1306,6 @@ namespace WebApi.Migrations
                             Reptile = "Reptiler är fascinerande och unika husdjur som kräver en speciell typ av skötsel. De kan vara ganska självständiga och är ofta mest lämpade för ägare som är intresserade av att skapa en specifik miljö och förstå deras unika behov.\r\n\r\nSkötsel:\r\nReptiler, såsom ormar, ödlor och sköldpaddor, kräver ett specialanpassat terrarium med rätt temperatur, belysning och luftfuktighet. Deras kost varierar beroende på art, från insekter till grönt foder. Regelbunden rengöring av terrariet och kontroll av deras miljö är avgörande för deras hälsa.\r\n\r\nSaker att tänka på:\r\nReptiler kan vara känsliga för förändringar i sin omgivning och kräver noggrann övervakning av deras livsmiljö. De är inte lika sociala som andra husdjur och kan vara mindre interaktiva, vilket är viktigt att överväga om du vill ha ett djur som du kan hantera ofta. Reptiler är bäst lämpade för dem som har ett särskilt intresse för dessa fascinerande djur och är villiga att investera tid i att skapa och underhålla deras miljö.\r\n\r\n",
                             Title = "Vilket djur passar dig bäst?"
                         });
-                });
-
-            modelBuilder.Entity("WebApi.Models.ReportModel", b =>
-                {
-                    b.Property<int>("ReportId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
-
-                    b.Property<string>("AdminComment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReasonOfReport")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ReportedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SendedReportUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TimeReported")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ReportId");
-
-                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("WebApi.Models.ReviewModel", b =>
