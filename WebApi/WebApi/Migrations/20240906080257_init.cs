@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class adminseedpasswordfix : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -80,6 +80,23 @@ namespace WebApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Quizzes", x => x.QuizId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    ReportId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ReasonOfReport = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdminComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SendedReportUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReportedUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TimeReported = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.ReportId);
                 });
 
             migrationBuilder.CreateTable(
@@ -342,9 +359,9 @@ namespace WebApi.Migrations
                 columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "d64256ad-1099-41cd-b3d0-efd12d7810e5", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAENAv9E4PWM88INP14Q3Bj7Bt2Ny3ABiWPKslTFq+W7hWF6Si1zBzB2FfPWPyHv4Emw==", null, false, 0, null, "11a92def-13cb-4437-8faf-479287ef7632", false, "Admin@petnet.com" },
-                    { "user1", null, 0, null, null, null, "78f54cb8-0452-40b4-bced-fb0fefc5d0d7", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEIOoqqfnYk0QNOobe2LrSesRXuMVjHsKSZauS0eitVP6NwNTPhKmbiSry7ZMyaUGPQ==", null, false, 0, null, "d12de7c9-9843-4494-b5ba-4fc06f19f67f", false, "user1@example.com" },
-                    { "user2", null, 0, null, null, null, "756215c2-7547-46f2-84e5-3ca444e5b2d8", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEI9lc+yIK74QNwyi8CILbvRrjWnaAXErDdbrQvGyU1/K/iAsj82PW2sCmVjoJ0ZmbA==", null, false, 0, null, "37b26886-1c66-4a5a-9a13-f5a86f2934af", false, "user2@example.com" }
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "0d6c2c5a-91da-4ade-b3e6-ec5ba3e81c2d", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAEMvMCKFd5AbLGoXIEdRUeWnrsxyCv+lnRRRYlTMq2FWPJSsD93fsaxt8w9kvhzHImg==", null, false, 0, null, "5dbf2f26-f183-4cca-8dfd-b4d2b0082aca", false, "Admin@petnet.com" },
+                    { "user1", null, 0, null, null, null, "baf656cb-df3a-426b-ac64-ebf172379139", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAELXDmqUR9wQ95fby9WVtwjb29So3HEdW0Qsb/AL9XzqHJRa4Fv3m16UoRjE8f3vtxw==", null, false, 0, null, "7421ff3a-456d-40f9-8960-eb914d045243", false, "user1@example.com" },
+                    { "user2", null, 0, null, null, null, "d7a60b0e-2dbc-4861-9e00-2745bdf244f7", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEERpBfeI2Nm5NgsUFm21Wkh1u/p8zH6Ays8zI7RTKsps2P2JeKeMIHuaFmobkp6TQQ==", null, false, 0, null, "b6e853d4-fb0a-447b-9695-a991ea1278cf", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -604,6 +621,9 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Options");
+
+            migrationBuilder.DropTable(
+                name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "Reviews");
