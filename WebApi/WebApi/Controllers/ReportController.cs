@@ -57,5 +57,24 @@ namespace WebApi.Controllers
 
 
 
+        //Remove report 
+
+        [HttpDelete("RemoveReport/{id}")]
+        public async Task<IActionResult> RemoveReportAsync(int id)
+        {
+            var reportToRemove = await _reportRepo.GetReportAsync(id);
+            if (reportToRemove == null)
+            {
+                return NotFound();
+            }
+
+            _reportRepo.RemoveReportAsync(reportToRemove);
+            await _reportRepo.SaveChangesAsync();
+
+            return Ok();
+        }
+
+
+
     }
 }

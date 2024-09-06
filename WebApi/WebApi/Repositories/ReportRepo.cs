@@ -15,6 +15,14 @@ namespace WebApi.Repositories
 
 
 
+        // Get one Report
+        public async Task<ReportModel?> GetReportAsync(int id)
+        {
+            return await _context.Reports.FirstOrDefaultAsync(r => r.ReportId == id);
+        }
+
+
+
         // Gets all Reports
 
         public async Task<List<ReportModel>> GetAllReportsAsync()
@@ -28,6 +36,15 @@ namespace WebApi.Repositories
         {
             await _context.Reports.AddAsync(reportModelToAdd);
             return reportModelToAdd;
+        }
+
+
+        // Remove report 
+
+        public void RemoveReportAsync(ReportModel reportToRemove)
+        {
+
+            _context.Reports.Remove(reportToRemove);
         }
 
 
