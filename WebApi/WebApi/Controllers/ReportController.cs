@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApi.Data.DTOs;
 using WebApi.Models;
 using WebApi.Repositories;
 
@@ -55,6 +58,28 @@ namespace WebApi.Controllers
             return Ok(addedReport);
         }
 
+        [HttpPatch("{Id}")]
+        public async Task<IActionResult> PatchReportAsync(int Id, [FromBody] ReportPatchDTO patchModel)
+        {
+            if(patchModel == null)
+            {
+                return BadRequest();
+            }
+
+            var report = await _reportRepo.GetReportAsync(Id);
+
+            if(report == null)
+            {
+                return NotFound();
+            }
+
+            report.AdminComment = patchModel.AdminComment;
+            await _reportRepo.SaveChangesAsync();
+            
+            return Ok(report);
+
+
+        }
 
 
         //Remove report 
