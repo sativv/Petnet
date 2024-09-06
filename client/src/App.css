@@ -186,6 +186,36 @@ a {
 }
 
 /* =======================================
+   ForgetPasswordModal
+   ======================================= */
+
+.forget-password-modal-outer-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.forget-password-modal {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 2px solid black;
+  padding: 1%;
+}
+
+.forget-password-modal-close-btn {
+  background-color: white;
+  align-self: end;
+  border: none;
+}
+
+/* =======================================
    Navbar 
    ======================================= */
 
@@ -584,49 +614,309 @@ a {
 /* =======================================
  Profile page 
 ======================================= */
-
+/* Huvudwrapper för profilen */
 .profile-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  margin: 2% auto;
+  max-width: 1200px;
 }
 
+/* Header för profil */
+.profile-header-wrapper {
+  display: flex;
+ flex-direction: column;
+  align-items: center;
+
+  width: 60vw;
+  height: min-content;
+
+}
+
+/* Penna ikon */
+.pen-img {
+  width: 40px;
+  cursor: pointer;
+  border: 2px solid #4CAF50;
+  padding: 8px;
+  border-radius: 10px;
+  align-self: flex-end;
+  background-color: #f0f8f0;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.pen-img:hover {
+  background-color: #e8f5e9;
+  transform: scale(1.1);
+}
+
+/* Introduktionsdel av profil */
 .profile-introduction-wrapper {
   display: flex;
+  flex-direction: column;
+
   width: 60vw;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 5%;
-  border-top: 1px solid #729762;
-  margin: 0 auto;
-  padding-bottom: 2%;
+  border: 1px solid #4CAF50;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-.pen-img {
-  width: 50px;
-  margin: 3%;
+.profile-img-and-username
+{
+  border-bottom: 1px solid #4CAF50;
+  display: flex;
+  align-items: center;
 }
 
 .profile-img {
-  margin-top: 5%;
-  width: 30%;
+  width: 20%;
   border-radius: 50%;
+  border: 4px solid #ddd;
+  margin: 5%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.profile-header-wrapper {
+
+.verified-badge-container {
   display: flex;
-  margin: 0 auto;
-  justify-content: flex-start;
-  width: 60vw;
-  color: #729762;
+  align-items: center;
+  border-bottom: 1px solid #4CAF50;
+  width: 100%;
+  justify-content: center;
+  
 }
 
+.badge-img {
+  width: 30px;
+  margin-left: 10px;
+}
+
+.rating-container {
+  display: flex;
+
+ display: flex;
+ justify-content: center;
+ align-items: center;
+  cursor: pointer;
+  padding: 2%;
+}
+
+
+.star-img {
+  width: 30px;
+  margin-right: 4px;
+  transition: opacity 0.3s ease;
+
+}
+
+.star-img.filled {
+  opacity: 1;
+
+}
+
+.star-img.empty {
+  opacity: 0.2;
+
+}
+
+/* Om mig avsnitt */
 .profile-aboutme-wrapper {
+  width: 60vw;
+  text-align: center;
+  margin-bottom: 20px;
+  border: 1px solid #4CAF50;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 12px;
+  font-size: 16px;
+  resize: vertical;
+  margin-bottom: 15px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 5px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #388E3C;
+  transform: scale(1.05);
+}
+
+/* Editeringsläge */
+.edit-mode {
   display: flex;
   flex-direction: column;
-  width: 60vw;
+  align-items: center;
   margin: 0 auto;
-  align-items: flex-start;
+  width: 40vw;
 }
+
+.edit-fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+}
+
+.edit-fields-wrapper label {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  margin: 0 auto;
+  width: 70%;
+  font-size: 16px;
+}
+
+.review-counter
+{
+  padding: 2%;
+}
+
+.edit-fields-wrapper input {
+ 
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  padding: 1%;
+  text-align: center;
+  margin-bottom: 2%;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* Detaljer av profil */
+.profile-details-wrapper {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Recensions-sektion */
+.reviews-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-list {
+  margin-top: 20px;
+}
+
+.review-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.review-date {
+  color: #888;
+  font-size: 14px;
+}
+
+.review-text {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.review-rating {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* profile search */
+.profile-search-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+}
+
+.user-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.user-list-item {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-link {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+
+.user-status {
+  font-weight: bold;
+}
+
 
 /* =======================================
    Quiz page 
@@ -812,3 +1102,29 @@ a {
   font-weight: 400;
   cursor: pointer;
 }
+
+
+/* =======================================
+   Admin page 
+   ======================================= */
+
+   .report-container{
+    border: 1px solid #729762;
+    max-width: 95%;
+    min-height: 10vh;
+    margin: auto;
+    
+    border-radius: 5px;
+    max-height: 50vh;
+    overflow-y: scroll;
+   }
+
+   .verification-container{
+    border: 1px solid #729762;
+    max-width: 95%;
+    min-height: 10vh;
+    margin: auto;
+    border-radius: 5px;
+    max-height: 50vh;
+    overflow-y: scroll;
+   }

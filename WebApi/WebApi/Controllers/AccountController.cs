@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using WebApi.Data;
 using WebApi.Data.NewFolder;
@@ -32,6 +33,39 @@ namespace WebApi.Controllers
             _logger = logger;
         }
 
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetUserById(string id)
+        {
+            // Hämta användaren med det angivna ID:t
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound(new { message = $"User with ID {id} not found." });
+            }
+
+            // Skapa en DTO för att returnera användarens information
+            var userDTO = new
+            {
+                user.Id,
+                user.UserName,
+                user.Email,
+                user.IsPrivateSeller,
+                user.IsVerified,
+                user.OrganizationName,
+                user.OrganizationNumber,
+                user.PhoneNumber,
+                user.City,
+                user.Adress,
+                user.BuisnessContact,
+                user.Postcode,
+                user.AboutMe
+            };
+
+            return Ok(userDTO);
+        }
+
+
         [HttpPatch("me/about")]
         [Authorize]
         public async Task<IActionResult> UpdateAboutMe([FromBody] UpdateUserDTO updateUserDto)
@@ -49,6 +83,32 @@ namespace WebApi.Controllers
                 user.AboutMe = updateUserDto.AboutMe;
             }
 
+            // Uppdatera uppfödaruppgifter om det finns i DTO:n
+            if (updateUserDto.OrganizationNumber.HasValue)
+            {
+                user.OrganizationNumber = updateUserDto.OrganizationNumber.Value;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.OrganizationName))
+            {
+                user.OrganizationName = updateUserDto.OrganizationName;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.BuisnessContact))
+            {
+                user.BuisnessContact = updateUserDto.BuisnessContact;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.Adress))
+            {
+                user.Adress = updateUserDto.Adress;
+            }
+            if (updateUserDto.Postcode.HasValue)
+            {
+                user.Postcode = updateUserDto.Postcode.Value;
+            }
+            if (!string.IsNullOrEmpty(updateUserDto.City))
+            {
+                user.City = updateUserDto.City;
+            }
+
             // Spara ändringarna
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
@@ -63,6 +123,8 @@ namespace WebApi.Controllers
             return NoContent(); // uppdateringen lyckades
         }
 
+
+
         [HttpGet("me")]
         [Authorize]
         public async Task<IActionResult> GetCurrentUser()
@@ -75,15 +137,29 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
+            bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
             var userDTO = new
             {
                 user.Id,
                 user.Email,
-                user.UserName
+                user.UserName,
+                isAdmin,         
+                user.IsPrivateSeller,
+                user.IsVerified,
+                user.OrganizationName,
+                user.OrganizationNumber,
+                user.PhoneNumber,
+                user.City,
+                user.Adress,
+                user.BuisnessContact,
+                user.Postcode,
+                user.AboutMe
             };
 
             return Ok(userDTO);
         }
+
 
         [HttpPost("logout")]
         [Authorize]
@@ -123,6 +199,7 @@ namespace WebApi.Controllers
                 UserName = userObject.Email,
                 Email = userObject.Email,
                 IsPrivateSeller = userObject.IsPrivateSeller ?? false,
+                IsVerified = userObject.IsVerified ?? false,
                 OrganizationNumber = userObject.OrganizationNumber ?? 0,
                 OrganizationName = userObject.OrganizationName,
                 BuisnessContact = userObject.BuisnessContact,
@@ -146,8 +223,39 @@ namespace WebApi.Controllers
 
             return BadRequest(ModelState);
 
+        }
+
+        [HttpGet("all-users")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userManager.Users
+                .Select(u => new
+                {
+                    u.Id,
+                    u.UserName,
+                    u.Email
+                })
+                .ToListAsync();
+
+            return Ok(users);
+        }
 
 
+
+        [HttpGet("{id}/reviewsreceived")]
+        public async Task<IActionResult> GetReviewsReceived(string id)
+        {
+            // Hämta användaren och inkludera recensionerna som mottagits
+            var user = await _userManager.Users
+                .Include(u => u.ReviewsRecieved)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user.ReviewsRecieved);
         }
 
         [HttpPut("update/quizResultByUserId/{id}")]
@@ -219,8 +327,12 @@ namespace WebApi.Controllers
 
 
 
-            // generar en länk som användaren kan trycka med som kommer innehålla en email och en token 
-            var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Authentication", new { token, email = user.Email }, Request.Scheme);
+            ////generar en länk som användaren kan trycka med som kommer innehålla en email och en token
+            //var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
+
+
+            var forgotPasswordLink = $"http://localhost:3000/reset-password?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(user.Email)}";
+
 
 
             if (string.IsNullOrEmpty(forgotPasswordLink))

@@ -43,6 +43,7 @@ function Register() {
       City: city,
       Phonenumber: phone,
       IsPrivateSeller: false,
+      IsVerified: true
     };
 
     if (email.length < 10 || containsSwedishLetters.test(email)) {

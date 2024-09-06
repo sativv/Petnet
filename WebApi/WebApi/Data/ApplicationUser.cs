@@ -15,7 +15,6 @@ namespace WebApi.Data
         public string? Adress { get; set; }
         public int Postcode { get; set; }
         public string? City { get; set; }
-
         public List<FileModel> MyFiles { get; set; } = new List<FileModel>();
         public List<PostModel> Posts { get; set; } = new List<PostModel>();
         public List<InterestModel> Interests { get; set; } = new List<InterestModel>();

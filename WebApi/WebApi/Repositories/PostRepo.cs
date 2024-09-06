@@ -29,8 +29,6 @@ namespace WebApi.Repositories
         }
 
 
-
-
         // Make a post 
 
         public async Task<PostModel> AddPostModelAsync(PostModel postModelToAdd)
