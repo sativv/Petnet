@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Data;
 
@@ -11,9 +12,11 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240904124053_postmodelid")]
+    partial class postmodelid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,14 +50,6 @@ namespace WebApi.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -142,13 +137,6 @@ namespace WebApi.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            RoleId = "b4280b6a-0613-4cbd-a9e6-f1701e926e73"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -269,19 +257,17 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "baf656cb-df3a-426b-ac64-ebf172379139",
+                            ConcurrencyStamp = "099fa6a4-f2dc-41ef-b2f6-ae1b7ab10a32",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
                             IsVerified = true,
                             LockoutEnabled = false,
-                            NormalizedEmail = "USER1@EXAMPLE.COM",
-                            NormalizedUserName = "USER1@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAELXDmqUR9wQ95fby9WVtwjb29So3HEdW0Qsb/AL9XzqHJRa4Fv3m16UoRjE8f3vtxw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOv4G6ckjK2LnuOr+DCUoBPjoxykAPpWf4CVa2j3KuWStJn3h4EAmNqD8nTvz6LmWg==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "7421ff3a-456d-40f9-8960-eb914d045243",
+                            SecurityStamp = "350eee76-6a06-47f6-aa51-3bde16624ce2",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -289,42 +275,19 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d7a60b0e-2dbc-4861-9e00-2745bdf244f7",
+                            ConcurrencyStamp = "339a1964-ecdd-474b-8a3b-81dffcd91a5b",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
                             IsVerified = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "USER2@EXAMPLE.COM",
-                            NormalizedUserName = "USER2@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-
-                            PasswordHash = "AQAAAAIAAYagAAAAEERpBfeI2Nm5NgsUFm21Wkh1u/p8zH6Ays8zI7RTKsps2P2JeKeMIHuaFmobkp6TQQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFkFXZ+ecUCGJWmMaZzNat2JDQpb8BMD3RKBQLzxrp4lPU6Y4odWT0136fsNzpjcnA==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "b6e853d4-fb0a-447b-9695-a991ea1278cf",
+                            SecurityStamp = "83f5f9b3-c9fa-4e51-aaa9-5cf3af2ded74",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
-                        },
-                        new
-                        {
-                            Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "0d6c2c5a-91da-4ade-b3e6-ec5ba3e81c2d",
-                            Email = "admin@petnet.com",
-                            EmailConfirmed = true,
-                            IsPrivateSeller = false,
-                            IsVerified = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@PETNET.COM",
-                            NormalizedUserName = "ADMIN@PETNET.COM",
-                            OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEMvMCKFd5AbLGoXIEdRUeWnrsxyCv+lnRRRYlTMq2FWPJSsD93fsaxt8w9kvhzHImg==",
-                            PhoneNumberConfirmed = false,
-                            Postcode = 0,
-                            SecurityStamp = "5dbf2f26-f183-4cca-8dfd-b4d2b0082aca",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin@petnet.com"
                         });
                 });
 
@@ -1319,36 +1282,6 @@ namespace WebApi.Migrations
                             Reptile = "Reptiler är fascinerande och unika husdjur som kräver en speciell typ av skötsel. De kan vara ganska självständiga och är ofta mest lämpade för ägare som är intresserade av att skapa en specifik miljö och förstå deras unika behov.\r\n\r\nSkötsel:\r\nReptiler, såsom ormar, ödlor och sköldpaddor, kräver ett specialanpassat terrarium med rätt temperatur, belysning och luftfuktighet. Deras kost varierar beroende på art, från insekter till grönt foder. Regelbunden rengöring av terrariet och kontroll av deras miljö är avgörande för deras hälsa.\r\n\r\nSaker att tänka på:\r\nReptiler kan vara känsliga för förändringar i sin omgivning och kräver noggrann övervakning av deras livsmiljö. De är inte lika sociala som andra husdjur och kan vara mindre interaktiva, vilket är viktigt att överväga om du vill ha ett djur som du kan hantera ofta. Reptiler är bäst lämpade för dem som har ett särskilt intresse för dessa fascinerande djur och är villiga att investera tid i att skapa och underhålla deras miljö.\r\n\r\n",
                             Title = "Vilket djur passar dig bäst?"
                         });
-                });
-
-            modelBuilder.Entity("WebApi.Models.ReportModel", b =>
-                {
-                    b.Property<int>("ReportId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
-
-                    b.Property<string>("AdminComment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReasonOfReport")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReportedUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SendedReportUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("TimeReported")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ReportId");
-
-                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("WebApi.Models.ReviewModel", b =>

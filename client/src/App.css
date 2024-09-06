@@ -439,6 +439,7 @@ a {
 .postInput:disabled {
   opacity: 1;
   color: #000;
+  appearance: none;
 }
 
 .postInput:enabled {
@@ -498,6 +499,17 @@ a {
 
 .deleteButton {
   background-color: #729762;
+}
+
+.favoriteDiv {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.favIcon {
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 /* =======================================
