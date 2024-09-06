@@ -26,6 +26,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddScoped<PostRepo>();
 builder.Services.AddScoped<QuizRepo>();
 builder.Services.AddScoped<ReviewRepo>();
+builder.Services.AddScoped<ReportRepo>();
 
 //builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 //    .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -73,7 +74,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddScoped<PostRepo>();
+
+
 
 var app = builder.Build();
 

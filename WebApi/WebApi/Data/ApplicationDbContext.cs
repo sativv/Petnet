@@ -14,6 +14,7 @@ namespace WebApi.Data
         public DbSet<QuizModel> Quizzes { get; set; }
         public DbSet<OptionModel> Options { get; set; }
         public DbSet<FileModel> Files { get; set; }
+        public DbSet<ReportModel> Reports { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
