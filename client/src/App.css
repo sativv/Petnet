@@ -52,21 +52,21 @@ a {
    Home-page
    ======================================= */
 
-.filter-search{
+.filter-search {
   width: 100%;
-  background-color: #E7F0DC;
+  background-color: #e7f0dc;
   margin-bottom: 15px;
   padding: 15px;
 }
 
-.filter-container{
+.filter-container {
   display: flex;
   justify-content: space-evenly;
 
   /* padding: 15px; */
 }
 
-.search{
+.search {
   border-radius: 15px;
   border: 2px solid #658147;
   text-align: end;
@@ -74,26 +74,23 @@ a {
   height: 26px;
 }
 
-.filter-box{
+.filter-box {
   display: flex;
   flex-direction: column;
 }
-.filter-input{
+.filter-input {
   border: 1px solid #658147;
   border-radius: 5px;
   width: 25vw;
-  
 }
 
-
-.filter-input option{
+.filter-input option {
   padding: 0 5px;
   text-align: end;
 }
-.filter-input option:checked{
-  background-color: #E1E7DF;
+.filter-input option:checked {
+  background-color: #e1e7df;
   color: #000;
-  
 }
 
 .post-container {
@@ -201,18 +198,49 @@ a {
 }
 
 .forget-password-modal {
-  background-color: white;
+  background-color: #e7f0dc;
+
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border: 2px solid black;
+  border: 2px solid gray;
   padding: 1%;
+  color: #729762;
 }
 
 .forget-password-modal-close-btn {
-  background-color: white;
   align-self: end;
   border: none;
+}
+
+/* =======================================
+   ResetPassword-page
+   ======================================= */
+
+.reset-password-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  align-items: center;
+}
+
+.reset-password-input {
+  display: flex;
+  justify-content: space-between;
+  margin: 1%;
+}
+
+.label-reset-password {
+  margin-right: 3%;
+
+  width: 15vw;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.reset-password-button {
+  margin-top: 3%;
 }
 
 /* =======================================
@@ -619,7 +647,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   margin: 2% auto;
   max-width: 1200px;
@@ -628,19 +656,18 @@ a {
 /* Header för profil */
 .profile-header-wrapper {
   display: flex;
- flex-direction: column;
+  flex-direction: column;
   align-items: center;
 
   width: 60vw;
   height: min-content;
-
 }
 
 /* Penna ikon */
 .pen-img {
   width: 40px;
   cursor: pointer;
-  border: 2px solid #4CAF50;
+  border: 2px solid #4caf50;
   padding: 8px;
   border-radius: 10px;
   align-self: flex-end;
@@ -659,15 +686,14 @@ a {
   flex-direction: column;
 
   width: 60vw;
-  border: 1px solid #4CAF50;
+  border: 1px solid #4caf50;
   border-radius: 12px;
   background-color: #f9f9f9;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-.profile-img-and-username
-{
-  border-bottom: 1px solid #4CAF50;
+.profile-img-and-username {
+  border-bottom: 1px solid #4caf50;
   display: flex;
   align-items: center;
 }
@@ -680,14 +706,12 @@ a {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
 .verified-badge-container {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #4CAF50;
+  border-bottom: 1px solid #4caf50;
   width: 100%;
   justify-content: center;
-  
 }
 
 .badge-img {
@@ -698,29 +722,25 @@ a {
 .rating-container {
   display: flex;
 
- display: flex;
- justify-content: center;
- align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   padding: 2%;
 }
-
 
 .star-img {
   width: 30px;
   margin-right: 4px;
   transition: opacity 0.3s ease;
-
 }
 
 .star-img.filled {
   opacity: 1;
-
 }
 
 .star-img.empty {
   opacity: 0.2;
-
 }
 
 /* Om mig avsnitt */
@@ -728,7 +748,7 @@ a {
   width: 60vw;
   text-align: center;
   margin-bottom: 20px;
-  border: 1px solid #4CAF50;
+  border: 1px solid #4caf50;
   border-radius: 12px;
   background-color: #f9f9f9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -745,7 +765,7 @@ textarea {
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 8px;
@@ -757,7 +777,7 @@ button {
 }
 
 button:hover {
-  background-color: #388E3C;
+  background-color: #388e3c;
   transform: scale(1.05);
 }
 
@@ -774,7 +794,6 @@ button:hover {
   display: flex;
   flex-direction: column;
   width: 100%;
-
 }
 
 .edit-fields-wrapper label {
@@ -787,13 +806,11 @@ button:hover {
   font-size: 16px;
 }
 
-.review-counter
-{
+.review-counter {
   padding: 2%;
 }
 
 .edit-fields-wrapper input {
- 
   border-radius: 4px;
   border: 1px solid #ddd;
   font-size: 16px;
@@ -912,11 +929,9 @@ h2 {
   font-weight: bold;
 }
 
-
 .user-status {
   font-weight: bold;
 }
-
 
 /* =======================================
    Quiz page 
@@ -1103,28 +1118,27 @@ h2 {
   cursor: pointer;
 }
 
-
 /* =======================================
    Admin page 
    ======================================= */
 
-   .report-container{
-    border: 1px solid #729762;
-    max-width: 95%;
-    min-height: 10vh;
-    margin: auto;
-    
-    border-radius: 5px;
-    max-height: 50vh;
-    overflow-y: scroll;
-   }
+.report-container {
+  border: 1px solid #729762;
+  max-width: 95%;
+  min-height: 10vh;
+  margin: auto;
 
-   .verification-container{
-    border: 1px solid #729762;
-    max-width: 95%;
-    min-height: 10vh;
-    margin: auto;
-    border-radius: 5px;
-    max-height: 50vh;
-    overflow-y: scroll;
-   }
+  border-radius: 5px;
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+
+.verification-container {
+  border: 1px solid #729762;
+  max-width: 95%;
+  min-height: 10vh;
+  margin: auto;
+  border-radius: 5px;
+  max-height: 50vh;
+  overflow-y: scroll;
+}
