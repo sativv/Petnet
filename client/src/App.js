@@ -19,6 +19,7 @@ import AddPost from "./components/AddPost";
 import ProfileSearch from "./pages/ProfileSearch";
 import PostDetails from "./pages/PostDetails";
 import Admin from "./pages/Admin";
+import ContactFAQ from "./pages/ContactFAQ";
 
 // create user context
 export const userContext = createContext();
@@ -57,7 +58,7 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
-
+              <Route path="/questions" element={<ContactFAQ/>} />
               <Route
                 path="/login"
                 element={<Login setIsAuthenticated={setIsAuthenticated} />}
