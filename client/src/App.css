@@ -72,6 +72,7 @@ a {
   text-align: end;
   font-size: 16px;
   height: 26px;
+  text-align: center;
 }
 
 .filter-box {
@@ -215,6 +216,11 @@ a {
 /* =======================================
    Navbar 
    ======================================= */
+
+.noBtn {
+  background-color: transparent;
+  cursor: pointer;
+}
 
 .navbarContainer {
   display: flex;
