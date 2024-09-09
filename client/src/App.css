@@ -357,6 +357,9 @@ a {
   height: auto;
   width: 45%;
 }
+.footer-links {
+  color: white;
+}
 
 .adContainer {
   width: 300px;
@@ -1169,4 +1172,13 @@ h2 {
   align-items: start;
   padding: 5px;
   margin: 5px 0px 0px;
+}
+
+/* =======================================
+   FAQ / CONTACT
+   ======================================= */
+
+.faq-question {
+  border-bottom: 1px solid #1c5c00;
+  margin: 10px;
 }

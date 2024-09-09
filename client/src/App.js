@@ -58,11 +58,12 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/questions" element={<ContactFAQ/>} />
+              <Route path="/questions" element={<ContactFAQ />} />
               <Route
                 path="/login"
                 element={<Login setIsAuthenticated={setIsAuthenticated} />}
               />
+              <Route path="/contact" element={<ContactFAQ />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/register" element={<Register />} />
               <Route path="/profileSearch" element={<ProfileSearch />} />
