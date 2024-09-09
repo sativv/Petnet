@@ -199,18 +199,49 @@ a {
 }
 
 .forget-password-modal {
-  background-color: white;
+  background-color: #e7f0dc;
+
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border: 2px solid black;
+  border: 2px solid gray;
   padding: 1%;
+  color: #729762;
 }
 
 .forget-password-modal-close-btn {
-  background-color: white;
   align-self: end;
   border: none;
+}
+
+/* =======================================
+   ResetPassword-page
+   ======================================= */
+
+.reset-password-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  align-items: center;
+}
+
+.reset-password-input {
+  display: flex;
+  justify-content: space-between;
+  margin: 1%;
+}
+
+.label-reset-password {
+  margin-right: 3%;
+
+  width: 15vw;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.reset-password-button {
+  margin-top: 3%;
 }
 
 /* =======================================
@@ -1129,6 +1160,7 @@ h2 {
   max-height: 50vh;
   overflow-y: scroll;
 }
+
 .report-card {
   border-bottom: solid 1px #388e3c;
   font-size: 14px;
@@ -1137,4 +1169,5 @@ h2 {
   align-items: start;
   padding: 5px;
   margin: 5px 0px 0px;
-}
+
+
