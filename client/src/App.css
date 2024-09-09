@@ -52,48 +52,46 @@ a {
    Home-page
    ======================================= */
 
-.filter-search{
+.filter-search {
   width: 100%;
-  background-color: #E7F0DC;
+  background-color: #e7f0dc;
   margin-bottom: 15px;
   padding: 15px;
 }
 
-.filter-container{
+.filter-container {
   display: flex;
   justify-content: space-evenly;
 
   /* padding: 15px; */
 }
 
-.search{
+.search {
   border-radius: 15px;
   border: 2px solid #658147;
   text-align: end;
   font-size: 16px;
   height: 26px;
+  text-align: center;
 }
 
-.filter-box{
+.filter-box {
   display: flex;
   flex-direction: column;
 }
-.filter-input{
+.filter-input {
   border: 1px solid #658147;
   border-radius: 5px;
   width: 25vw;
-  
 }
 
-
-.filter-input option{
+.filter-input option {
   padding: 0 5px;
   text-align: end;
 }
-.filter-input option:checked{
-  background-color: #E1E7DF;
+.filter-input option:checked {
+  background-color: #e1e7df;
   color: #000;
-  
 }
 
 .post-container {
@@ -186,8 +184,74 @@ a {
 }
 
 /* =======================================
+   ForgetPasswordModal
+   ======================================= */
+
+.forget-password-modal-outer-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.forget-password-modal {
+  background-color: #e7f0dc;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 2px solid gray;
+  padding: 1%;
+  color: #729762;
+}
+
+.forget-password-modal-close-btn {
+  align-self: end;
+  border: none;
+}
+
+/* =======================================
+   ResetPassword-page
+   ======================================= */
+
+.reset-password-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  align-items: center;
+}
+
+.reset-password-input {
+  display: flex;
+  justify-content: space-between;
+  margin: 1%;
+}
+
+.label-reset-password {
+  margin-right: 3%;
+
+  width: 15vw;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.reset-password-button {
+  margin-top: 3%;
+}
+
+/* =======================================
    Navbar 
    ======================================= */
+
+.noBtn {
+  background-color: transparent;
+  cursor: pointer;
+}
 
 .navbarContainer {
   display: flex;
@@ -412,6 +476,7 @@ a {
 .postInput:disabled {
   opacity: 1;
   color: #000;
+  appearance: none;
 }
 
 .postInput:enabled {
@@ -471,6 +536,17 @@ a {
 
 .deleteButton {
   background-color: #729762;
+}
+
+.favoriteDiv {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.favIcon {
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 /* =======================================
@@ -589,7 +665,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   margin: 2% auto;
   max-width: 1200px;
@@ -598,19 +674,18 @@ a {
 /* Header för profil */
 .profile-header-wrapper {
   display: flex;
- flex-direction: column;
+  flex-direction: column;
   align-items: center;
 
   width: 60vw;
   height: min-content;
-
 }
 
 /* Penna ikon */
 .pen-img {
   width: 40px;
   cursor: pointer;
-  border: 2px solid #4CAF50;
+  border: 2px solid #4caf50;
   padding: 8px;
   border-radius: 10px;
   align-self: flex-end;
@@ -629,15 +704,14 @@ a {
   flex-direction: column;
 
   width: 60vw;
-  border: 1px solid #4CAF50;
+  border: 1px solid #4caf50;
   border-radius: 12px;
   background-color: #f9f9f9;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-.profile-img-and-username
-{
-  border-bottom: 1px solid #4CAF50;
+.profile-img-and-username {
+  border-bottom: 1px solid #4caf50;
   display: flex;
   align-items: center;
 }
@@ -650,14 +724,12 @@ a {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-
 .verified-badge-container {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #4CAF50;
+  border-bottom: 1px solid #4caf50;
   width: 100%;
   justify-content: center;
-  
 }
 
 .badge-img {
@@ -668,29 +740,25 @@ a {
 .rating-container {
   display: flex;
 
- display: flex;
- justify-content: center;
- align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   padding: 2%;
 }
-
 
 .star-img {
   width: 30px;
   margin-right: 4px;
   transition: opacity 0.3s ease;
-
 }
 
 .star-img.filled {
   opacity: 1;
-
 }
 
 .star-img.empty {
   opacity: 0.2;
-
 }
 
 /* Om mig avsnitt */
@@ -698,7 +766,7 @@ a {
   width: 60vw;
   text-align: center;
   margin-bottom: 20px;
-  border: 1px solid #4CAF50;
+  border: 1px solid #4caf50;
   border-radius: 12px;
   background-color: #f9f9f9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -715,7 +783,7 @@ textarea {
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 8px;
@@ -727,7 +795,7 @@ button {
 }
 
 button:hover {
-  background-color: #388E3C;
+  background-color: #388e3c;
   transform: scale(1.05);
 }
 
@@ -744,7 +812,6 @@ button:hover {
   display: flex;
   flex-direction: column;
   width: 100%;
-
 }
 
 .edit-fields-wrapper label {
@@ -757,13 +824,11 @@ button:hover {
   font-size: 16px;
 }
 
-.review-counter
-{
+.review-counter {
   padding: 2%;
 }
 
 .edit-fields-wrapper input {
- 
   border-radius: 4px;
   border: 1px solid #ddd;
   font-size: 16px;
@@ -917,10 +982,12 @@ h2 {
   border-radius: 12px;
   font-size: 0.9em;
   text-transform: uppercase;
+
+.user-status {
+
   font-weight: bold;
 
 }
-
 /* Responsive styles */
 @media (max-width: 600px) {
   .profile-search-container {
@@ -965,6 +1032,7 @@ h2 {
 
   }
 }
+
 
 /* =======================================
    Quiz page 
@@ -1149,4 +1217,39 @@ h2 {
   font-size: 1rem;
   font-weight: 400;
   cursor: pointer;
+}
+
+/* =======================================
+   Admin page 
+   ======================================= */
+
+.report-container {
+  border: 1px solid #729762;
+  max-width: 95%;
+  min-height: 10vh;
+  margin: auto;
+
+  border-radius: 5px;
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+
+.verification-container {
+  border: 1px solid #729762;
+  max-width: 95%;
+  min-height: 10vh;
+  margin: auto;
+  border-radius: 5px;
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+
+.report-card {
+  border-bottom: solid 1px #388e3c;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 5px;
+  margin: 5px 0px 0px;
 }
