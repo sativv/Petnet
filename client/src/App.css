@@ -592,7 +592,7 @@ a {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   margin: 2% auto;
-  max-width: 1200px;
+
 }
 
 /* Header för profil */
@@ -600,8 +600,7 @@ a {
   display: flex;
  flex-direction: column;
   align-items: center;
-
-  width: 60vw;
+  width: 90vw;
   height: min-content;
 
 }
@@ -628,7 +627,7 @@ a {
   display: flex;
   flex-direction: column;
 
-  width: 60vw;
+  width: 80vw;
   border: 1px solid #4CAF50;
   border-radius: 12px;
   background-color: #f9f9f9;
@@ -695,7 +694,7 @@ a {
 
 /* Om mig avsnitt */
 .profile-aboutme-wrapper {
-  width: 60vw;
+  width: 80vw;
   text-align: center;
   margin-bottom: 20px;
   border: 1px solid #4CAF50;
@@ -921,11 +920,23 @@ h2 {
 
 }
 
-/* Responsive styles */
-@media (max-width: 600px) {
-  .profile-search-container {
+@media (max-width: 600px) 
+{
+  .profile-search-container 
+  {
     padding: 15px;
   }
+
+  .username-profile
+  {
+    font-size: .9rem;
+  }
+
+   .profile-img-and-username 
+    {
+      flex-direction: column;
+
+    }
 
   .user-list-item {
     flex-direction: column;
@@ -962,8 +973,12 @@ h2 {
     font-size: 0.8em;
 
     padding: 4px 8px;
-
   }
+    .profile-img-and-username 
+    {
+      flex-direction: column;
+
+    }
 }
 
 /* =======================================
