@@ -832,30 +832,45 @@ button:hover {
   margin-top: 10px;
 }
 
-/* profile search */
+/* Profile search container */
 .profile-search-container {
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
+
 }
 
+/* Header */
 h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+
+}
+
+/* Error message */
+.error-message {
+  color: red;
   text-align: center;
   margin-bottom: 20px;
 }
 
-.error-message {
-  color: red;
+/* Filter checkbox */
+.filter-checkbox {
+  margin-bottom: 20px;
   text-align: center;
 }
 
+/* User list */
 .user-list {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
+/* User list item */
 .user-list-item {
-  background: #f9f9f9;
+  background: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-bottom: 10px;
@@ -863,30 +878,93 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: background-color 0.3s ease;
+
 }
 
+.user-list-item:hover {
+  background-color: #f0f8ff;
+}
+
+/* User link */
 .user-link {
   text-decoration: none;
   color: #333;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
 }
 
+/* User info */
 .user-info {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+
 }
 
+/* User name */
 .user-name {
   font-weight: bold;
+  margin-right: 10px;
+
 }
 
-
-.user-status {
+/* Verified badge */
+.verified-badge {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.9em;
+  text-transform: uppercase;
   font-weight: bold;
+
 }
 
+/* Responsive styles */
+@media (max-width: 600px) {
+  .profile-search-container {
+    padding: 15px;
+  }
+
+  .user-list-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .user-link {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .user-info {
+    width: 100%;
+  }
+
+  .user-name {
+    margin-bottom: 5px;
+
+  }
+
+  .verified-badge {
+    margin-top: 5px;
+
+  }
+}
+
+@media (max-width: 400px) {
+  .user-name {
+    font-size: 0.9em;
+
+  }
+
+  .verified-badge {
+    font-size: 0.8em;
+
+    padding: 4px 8px;
+
+  }
+}
 
 /* =======================================
    Quiz page 
