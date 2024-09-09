@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240909133105_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240909140055_hejhej")]
+    partial class hejhej
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -272,7 +272,7 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ed03eb56-6bae-4cbd-9d48-e2a5a414984a",
+                            ConcurrencyStamp = "e9e273b1-65ae-424b-ac57-a9c887766cea",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
@@ -281,10 +281,10 @@ namespace WebApi.Migrations
                             NormalizedEmail = "USER1@EXAMPLE.COM",
                             NormalizedUserName = "USER1@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAECzSMh4xEngeeuPt5Nh+QEs0XeoK/eHBd310IKaR5j5xKaIrYWorzegHqpe0+h4WeA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBkDFv+ZWBAC615uRIZaSuB86DvfdGJXjgJ3Qzm5zlaSiwaFQYgip4LYZnsh8hrC6g==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "0af08f3f-92d8-4525-8436-719114f9f490",
+                            SecurityStamp = "39bd5a96-f001-4184-af26-953e0ffe9b6e",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -292,7 +292,7 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a5b34efe-3251-4c4b-b9ee-88687bc0eebc",
+                            ConcurrencyStamp = "81db3356-daaf-41e4-8059-f47c38040efa",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
@@ -301,10 +301,10 @@ namespace WebApi.Migrations
                             NormalizedEmail = "USER2@EXAMPLE.COM",
                             NormalizedUserName = "USER2@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEDZP6UiH7sY/QZdtAlsOzE69dCAlnTJATyc125Caj/TheQUqkhszYkJdrsulKj5qWA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN7lP63N9VAmJ5KgaAvMFB+AsBw5AmPf6yJ08K/uI8pzOyhdoMW7B5tnrde9JT9pNQ==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "dcafaded-9711-4f11-ae9c-a239b7afa261",
+                            SecurityStamp = "96de7638-91b6-4d58-a4e9-e0fb418a0ebe",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         },
@@ -312,7 +312,7 @@ namespace WebApi.Migrations
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "35d38e42-6eab-491e-b046-ae3a0adae518",
+                            ConcurrencyStamp = "1974251e-be03-4b97-ab49-49282feffad7",
                             Email = "admin@petnet.com",
                             EmailConfirmed = true,
                             IsPrivateSeller = false,
@@ -321,13 +321,28 @@ namespace WebApi.Migrations
                             NormalizedEmail = "ADMIN@PETNET.COM",
                             NormalizedUserName = "ADMIN@PETNET.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEJw3A0r3Ne2b1oWM93izJ4SSIoWElA8FtRkEGOMFZocLQFgV8ngEjHgLxKJartf7Ew==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAPaMlmuOrzSValcslzg/Lg3SWRLQ2NyHTsktEBwkMZaYE1HwT1BlMYLQQya1wn9+A==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "4ea4a8aa-e15e-4b5d-8c95-37388da9566e",
+                            SecurityStamp = "c767371a-0760-4f7f-a791-8bd6000fa17d",
                             TwoFactorEnabled = false,
                             UserName = "Admin@petnet.com"
                         });
+                });
+
+            modelBuilder.Entity("WebApi.Models.BookmarkModel", b =>
+                {
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("PostModelId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ApplicationUserId", "PostModelId");
+
+                    b.HasIndex("PostModelId");
+
+                    b.ToTable("Bookmarks");
                 });
 
             modelBuilder.Entity("WebApi.Models.FileModel", b =>
@@ -1441,6 +1456,25 @@ namespace WebApi.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WebApi.Models.BookmarkModel", b =>
+                {
+                    b.HasOne("WebApi.Data.ApplicationUser", "User")
+                        .WithMany("Bookmarks")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.PostModel", "PostModel")
+                        .WithMany("Bookmarks")
+                        .HasForeignKey("PostModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PostModel");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WebApi.Models.FileModel", b =>
                 {
                     b.HasOne("WebApi.Data.ApplicationUser", null)
@@ -1521,6 +1555,8 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Data.ApplicationUser", b =>
                 {
+                    b.Navigation("Bookmarks");
+
                     b.Navigation("Interests");
 
                     b.Navigation("MyFiles");
@@ -1534,6 +1570,8 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Models.PostModel", b =>
                 {
+                    b.Navigation("Bookmarks");
+
                     b.Navigation("Interests");
                 });
 

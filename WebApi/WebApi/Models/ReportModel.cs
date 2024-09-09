@@ -8,11 +8,16 @@ namespace WebApi.Models
         [Key]
         public int ReportId { get; set; }
 
+
         public string ReasonOfReport { get; set; } = null!;
         public string AdminComment { get; set; }
         public string SendedReportUserId { get; set; }
 
         public string ReportedUserId { get; set; }
+
+  
+   
+
 
         public DateTime TimeReported { get; set; }
        

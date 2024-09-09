@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class hejhej : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -305,6 +305,30 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Bookmarks",
+                columns: table => new
+                {
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PostModelId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bookmarks", x => new { x.ApplicationUserId, x.PostModelId });
+                    table.ForeignKey(
+                        name: "FK_Bookmarks_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bookmarks_Posts_PostModelId",
+                        column: x => x.PostModelId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Interests",
                 columns: table => new
                 {
@@ -359,9 +383,9 @@ namespace WebApi.Migrations
                 columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "35d38e42-6eab-491e-b046-ae3a0adae518", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAEJw3A0r3Ne2b1oWM93izJ4SSIoWElA8FtRkEGOMFZocLQFgV8ngEjHgLxKJartf7Ew==", null, false, 0, null, "4ea4a8aa-e15e-4b5d-8c95-37388da9566e", false, "Admin@petnet.com" },
-                    { "user1", null, 0, null, null, null, "ed03eb56-6bae-4cbd-9d48-e2a5a414984a", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAECzSMh4xEngeeuPt5Nh+QEs0XeoK/eHBd310IKaR5j5xKaIrYWorzegHqpe0+h4WeA==", null, false, 0, null, "0af08f3f-92d8-4525-8436-719114f9f490", false, "user1@example.com" },
-                    { "user2", null, 0, null, null, null, "a5b34efe-3251-4c4b-b9ee-88687bc0eebc", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEDZP6UiH7sY/QZdtAlsOzE69dCAlnTJATyc125Caj/TheQUqkhszYkJdrsulKj5qWA==", null, false, 0, null, "dcafaded-9711-4f11-ae9c-a239b7afa261", false, "user2@example.com" }
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "1974251e-be03-4b97-ab49-49282feffad7", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAEAPaMlmuOrzSValcslzg/Lg3SWRLQ2NyHTsktEBwkMZaYE1HwT1BlMYLQQya1wn9+A==", null, false, 0, null, "c767371a-0760-4f7f-a791-8bd6000fa17d", false, "Admin@petnet.com" },
+                    { "user1", null, 0, null, null, null, "e9e273b1-65ae-424b-ac57-a9c887766cea", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEBkDFv+ZWBAC615uRIZaSuB86DvfdGJXjgJ3Qzm5zlaSiwaFQYgip4LYZnsh8hrC6g==", null, false, 0, null, "39bd5a96-f001-4184-af26-953e0ffe9b6e", false, "user1@example.com" },
+                    { "user2", null, 0, null, null, null, "81db3356-daaf-41e4-8059-f47c38040efa", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEN7lP63N9VAmJ5KgaAvMFB+AsBw5AmPf6yJ08K/uI8pzOyhdoMW7B5tnrde9JT9pNQ==", null, false, 0, null, "96de7638-91b6-4d58-a4e9-e0fb418a0ebe", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -560,6 +584,11 @@ namespace WebApi.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bookmarks_PostModelId",
+                table: "Bookmarks",
+                column: "PostModelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Files_ApplicationUserId",
                 table: "Files",
                 column: "ApplicationUserId");
@@ -612,6 +641,9 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Bookmarks");
 
             migrationBuilder.DropTable(
                 name: "Files");
