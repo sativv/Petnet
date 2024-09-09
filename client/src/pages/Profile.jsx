@@ -22,12 +22,16 @@ function Profile() {
   const [newReview, setNewReview] = useState({ rating: 1, content: "" });
   const reviewsRef = useRef(null);
   const editRef = useRef(null); // New ref for the edit section
+  const [files, setFiles] = useState([]);
+
   const nav = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch(`http://localhost:5054/api/Account/user/${profileId}`);
+        const response = await fetch(
+          `http://localhost:5054/api/Account/user/${profileId}`
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -44,12 +48,33 @@ function Profile() {
         setCity(data.city || "");
 
         // Fetch reviews
-        const reviewResponse = await fetch(`http://localhost:5054/Review/user/${profileId}/reviews`);
+        const reviewResponse = await fetch(
+          `http://localhost:5054/Review/user/${profileId}/reviews`
+        );
         if (reviewResponse.ok) {
           const reviewData = await reviewResponse.json();
           setReviews(reviewData);
         } else {
           console.error("Failed to fetch reviews");
+        }
+
+        // Fetch uploaded files
+        const fileResponse = await fetch(
+          `https://localhost:7072/api/Files/UserFilesByUser/${profileId}`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (fileResponse.ok) {
+          const fileData = await fileResponse.json();
+          console.log(profileId);
+          setFiles(fileData);
+        } else {
+          console.error("Failed to fetch files" + profileId);
         }
       } catch (error) {
         console.error("Error fetching profile:", error);
@@ -69,22 +94,25 @@ function Profile() {
 
   const handleSaveClick = async () => {
     try {
-      const response = await fetch("http://localhost:5054/api/Account/me/about", {
-        method: "PATCH",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          aboutMe,
-          organizationNumber,
-          organizationName,
-          buisnessContact,
-          adress,
-          postcode: parseInt(postcode, 10),
-          city,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:5054/api/Account/me/about",
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            aboutMe,
+            organizationNumber,
+            organizationName,
+            buisnessContact,
+            adress,
+            postcode: parseInt(postcode, 10),
+            city,
+          }),
+        }
+      );
 
       if (response.ok) {
         setCurrentUser((prevUser) => ({
@@ -137,40 +165,43 @@ function Profile() {
     }));
   };
 
- const handleAddReview = async () => {
-  if (newReview.rating < 1 || newReview.rating > 5) {
-    alert("Rating must be between 1 and 5.");
-    return;
-  }
-
-  try {
-    const response = await fetch("http://localhost:5054/review/AddReview", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        content: newReview.comment,
-        rating: newReview.rating,
-        reviewerId: currentUser.id,
-        reviewedSellerId: profileId
-      }),
-    });
-
-    if (response.ok) {
-      const addedReview = await response.json();
-      setReviews((prevReviews) => [...prevReviews, addedReview]);
-      setNewReview({ rating: 1, comment: "" });
-    } else {
-      const errorText = await response.text();
-      console.error("Failed to add review:", response.status, response.statusText, errorText);
+  const handleAddReview = async () => {
+    if (newReview.rating < 1 || newReview.rating > 5) {
+      alert("Rating must be between 1 and 5.");
+      return;
     }
-  } catch (error) {
-    console.error("Error adding review:", error);
-  }
-};
 
+    try {
+      const response = await fetch("http://localhost:5054/review/AddReview", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: newReview.comment,
+          rating: newReview.rating,
+          reviewerId: currentUser.id,
+          reviewedSellerId: profileId,
+        }),
+      });
 
+      if (response.ok) {
+        const addedReview = await response.json();
+        setReviews((prevReviews) => [...prevReviews, addedReview]);
+        setNewReview({ rating: 1, comment: "" });
+      } else {
+        const errorText = await response.text();
+        console.error(
+          "Failed to add review:",
+          response.status,
+          response.statusText,
+          errorText
+        );
+      }
+    } catch (error) {
+      console.error("Error adding review:", error);
+    }
+  };
 
   if (!currentUser) {
     nav("/login");
@@ -179,13 +210,42 @@ function Profile() {
 
   const averageRating = calculateAverageRating();
 
+  const DisplayFiles = ({ files }) => {
+    return (
+      <div>
+        {files.map((file, index) => (
+          <div key={index} style={{ marginBottom: "20px" }}>
+            {file.type.startsWith("image/") ? (
+              <img
+                src={file.url}
+                alt={file.name}
+                style={{ maxWidth: "200px", height: "auto" }}
+              />
+            ) : (
+              <a href={file.url} download>
+                {file.name}
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="profile-wrapper">
       <div className="profile-header-wrapper">
         {profile?.id === currentUser.id && (
-          <img src={pen} alt="pen-img" className="pen-img" onClick={handleEditClick} />
+          <img
+            src={pen}
+            alt="pen-img"
+            className="pen-img"
+            onClick={handleEditClick}
+          />
         )}
-        <h1>{profile?.id === currentUser.id ? "Min profil" : "Användarprofil"}</h1>
+        <h1>
+          {profile?.id === currentUser.id ? "Min profil" : "Användarprofil"}
+        </h1>
       </div>
 
       <div className="profile-introduction-wrapper">
@@ -319,6 +379,12 @@ function Profile() {
                 <p>{profile.city}</p>
               </div>
             )}
+            {files && (
+              <div>
+                <h3>Dokument:</h3>
+                <DisplayFiles files={files} />{" "}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -329,8 +395,12 @@ function Profile() {
           <ul>
             {reviews.map((review) => (
               <li key={review.id}>
-              <p><strong>Betyg:</strong> {review.rating}</p>
-              <p><strong>Kommentar:</strong> {review.content}</p>
+                <p>
+                  <strong>Betyg:</strong> {review.rating}
+                </p>
+                <p>
+                  <strong>Kommentar:</strong> {review.content}
+                </p>
               </li>
             ))}
           </ul>
@@ -374,4 +444,3 @@ function Profile() {
 }
 
 export default Profile;
-

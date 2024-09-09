@@ -65,7 +65,7 @@ function Login() {
 
         const data = await meResponse.json();
         console.log(data);
-        await setCurrentUser(data);
+        setCurrentUser(data);
 
         nav(`/profile/${currentUser.id}`);
       }
