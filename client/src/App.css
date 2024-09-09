@@ -56,7 +56,26 @@ a {
   width: 100%;
   background-color: #e7f0dc;
   margin-bottom: 15px;
-  padding: 15px;
+  padding-bottom: 15px;
+}
+
+.picture-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+.filter-pic {
+  width: 100vw;
+  opacity: 30%;
+  height: 40vh;
+  object-fit: cover;
+}
+
+.quiz-btn {
+  position: absolute;
+  top: 50%;
+  margin: auto;
 }
 
 .filter-container {
