@@ -251,7 +251,7 @@ function Profile() {
       <div className="profile-introduction-wrapper">
         <div className="profile-img-and-username">
           <img src={profile1} alt="profile1" className="profile-img" />
-          <h2>{profile?.email}</h2>
+          <h2 className="username-profile">{profile?.email}</h2>
         </div>
         {(profile?.isVerified || profile?.isPrivateSeller) && (
           <div>
