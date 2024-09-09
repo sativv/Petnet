@@ -269,7 +269,7 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "baf656cb-df3a-426b-ac64-ebf172379139",
+                            ConcurrencyStamp = "e9e273b1-65ae-424b-ac57-a9c887766cea",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
@@ -278,10 +278,10 @@ namespace WebApi.Migrations
                             NormalizedEmail = "USER1@EXAMPLE.COM",
                             NormalizedUserName = "USER1@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAELXDmqUR9wQ95fby9WVtwjb29So3HEdW0Qsb/AL9XzqHJRa4Fv3m16UoRjE8f3vtxw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBkDFv+ZWBAC615uRIZaSuB86DvfdGJXjgJ3Qzm5zlaSiwaFQYgip4LYZnsh8hrC6g==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "7421ff3a-456d-40f9-8960-eb914d045243",
+                            SecurityStamp = "39bd5a96-f001-4184-af26-953e0ffe9b6e",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -289,7 +289,7 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d7a60b0e-2dbc-4861-9e00-2745bdf244f7",
+                            ConcurrencyStamp = "81db3356-daaf-41e4-8059-f47c38040efa",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
@@ -298,11 +298,10 @@ namespace WebApi.Migrations
                             NormalizedEmail = "USER2@EXAMPLE.COM",
                             NormalizedUserName = "USER2@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-
-                            PasswordHash = "AQAAAAIAAYagAAAAEERpBfeI2Nm5NgsUFm21Wkh1u/p8zH6Ays8zI7RTKsps2P2JeKeMIHuaFmobkp6TQQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN7lP63N9VAmJ5KgaAvMFB+AsBw5AmPf6yJ08K/uI8pzOyhdoMW7B5tnrde9JT9pNQ==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "b6e853d4-fb0a-447b-9695-a991ea1278cf",
+                            SecurityStamp = "96de7638-91b6-4d58-a4e9-e0fb418a0ebe",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         },
@@ -310,7 +309,7 @@ namespace WebApi.Migrations
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0d6c2c5a-91da-4ade-b3e6-ec5ba3e81c2d",
+                            ConcurrencyStamp = "1974251e-be03-4b97-ab49-49282feffad7",
                             Email = "admin@petnet.com",
                             EmailConfirmed = true,
                             IsPrivateSeller = false,
@@ -319,10 +318,10 @@ namespace WebApi.Migrations
                             NormalizedEmail = "ADMIN@PETNET.COM",
                             NormalizedUserName = "ADMIN@PETNET.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEMvMCKFd5AbLGoXIEdRUeWnrsxyCv+lnRRRYlTMq2FWPJSsD93fsaxt8w9kvhzHImg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAPaMlmuOrzSValcslzg/Lg3SWRLQ2NyHTsktEBwkMZaYE1HwT1BlMYLQQya1wn9+A==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "5dbf2f26-f183-4cca-8dfd-b4d2b0082aca",
+                            SecurityStamp = "c767371a-0760-4f7f-a791-8bd6000fa17d",
                             TwoFactorEnabled = false,
                             UserName = "Admin@petnet.com"
                         });
@@ -1330,9 +1329,11 @@ namespace WebApi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
 
                     b.Property<string>("AdminComment")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReasonOfReport")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReportedUserId")

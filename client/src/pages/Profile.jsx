@@ -216,210 +216,212 @@ function Profile() {
             </Link>
           )}
 
-
           <h1>
             {profile?.id === currentUser.id ? "Min profil" : "Användarprofil"}
           </h1>
 
-      <div className="profile-introduction-wrapper">
-        <div className="profile-img-and-username">
-          <img src={profile1} alt="profile1" className="profile-img" />
-          <h2 className="username-profile">{profile?.email}</h2>
- main
-        </div>
-
-        <div className="profile-introduction-wrapper">
-          <div className="profile-img-and-username">
-            <img src={profile1} alt="profile1" className="profile-img" />
-            <h2>{profile?.email}</h2>
-          </div>
-          {(profile?.isVerified || profile?.isPrivateSeller) && (
-            <div>
-              {profile?.isVerified && (
-                <div className="verified-badge-container">
-                  <h3>Verifierad</h3>
-                  <img src={badge} alt="badge" className="badge-img" />
-                </div>
-              )}
-              <div className="average-rating">
-                <h3>Genomsnittligt betyg: {averageRating}</h3>
-              </div>
-              <div className="rating-container" onClick={handleStarClick}>
-                {renderStars(averageRating)}
-              </div>
-              <div className="review-counter">
-                <span>Baserat på: {reviews.length} recensioner</span>
-              </div>
+          <div className="profile-introduction-wrapper">
+            <div className="profile-img-and-username">
+              <img src={profile1} alt="profile1" className="profile-img" />
+              <h2 className="username-profile">{profile?.email}</h2>
             </div>
-          )}
-        </div>
 
-        <div className="profile-aboutme-wrapper" ref={editRef}>
-          <h2>Om mig</h2>
-          {isEditing ? (
-            <div className="edit-mode">
-              <textarea
-                value={aboutMe}
-                onChange={(e) => setAboutMe(e.target.value)}
-                rows="4"
-                cols="50"
-              />
-              <div className="edit-fields-wrapper">
-                <h3>Uppfödaruppgifter</h3>
-                <label>
-                  Organisationsnummer:
-                  <input
-                    type="text"
-                    value={organizationNumber}
-                    onChange={(e) => setOrganizationNumber(e.target.value)}
-                  />
-                </label>
-                <label>
-                  Organisationsnamn:
-                  <input
-                    type="text"
-                    value={organizationName}
-                    onChange={(e) => setOrganizationName(e.target.value)}
-                  />
-                </label>
-                <label>
-                  Affärskontakt:
-                  <input
-                    type="text"
-                    value={buisnessContact}
-                    onChange={(e) => setBuisnessContact(e.target.value)}
-                  />
-                </label>
-                <label>
-                  Adress:
-                  <input
-                    type="text"
-                    value={adress}
-                    onChange={(e) => setAdress(e.target.value)}
-                  />
-                </label>
-                <label>
-                  Postnummer:
-                  <input
-                    type="number"
-                    value={postcode}
-                    onChange={(e) => setPostcode(e.target.value)}
-                  />
-                </label>
-                <label>
-                  Stad:
-                  <input
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                  />
-                </label>
-                <div className="edit-buttons">
-                  <button onClick={() => setIsEditing(false)}>Avbryt</button>
-                  <button onClick={handleSaveClick}>Spara</button>
-                </div>
+            <div className="profile-introduction-wrapper">
+              <div className="profile-img-and-username">
+                <img src={profile1} alt="profile1" className="profile-img" />
+                <h2>{profile?.email}</h2>
               </div>
-            </div>
-          ) : (
-            <div>
-              <p>{aboutMe || "Ingen information tillgänglig."}</p>
-              {profile?.organizationNumber && (
+              {(profile?.isVerified || profile?.isPrivateSeller) && (
                 <div>
-                  <h3>Organisationsnummer:</h3>
-                  <p>{profile.organizationNumber}</p>
-                </div>
-              )}
-              {profile?.organizationName && (
-                <div>
-                  <h3>Organisationsnamn:</h3>
-                  <p>{profile.organizationName}</p>
-                </div>
-              )}
-              {profile?.buisnessContact && (
-                <div>
-                  <h3>Affärskontakt:</h3>
-                  <p>{profile.buisnessContact}</p>
-                </div>
-              )}
-              {profile?.adress && (
-                <div>
-                  <h3>Adress:</h3>
-                  <p>{profile.adress}</p>
-                </div>
-              )}
-              {profile?.postcode && (
-                <div>
-                  <h3>Postnummer:</h3>
-                  <p>{profile.postcode}</p>
-                </div>
-              )}
-              {profile?.city && (
-                <div>
-                  <h3>Stad:</h3>
-                  <p>{profile.city}</p>
+                  {profile?.isVerified && (
+                    <div className="verified-badge-container">
+                      <h3>Verifierad</h3>
+                      <img src={badge} alt="badge" className="badge-img" />
+                    </div>
+                  )}
+                  <div className="average-rating">
+                    <h3>Genomsnittligt betyg: {averageRating}</h3>
+                  </div>
+                  <div className="rating-container" onClick={handleStarClick}>
+                    {renderStars(averageRating)}
+                  </div>
+                  <div className="review-counter">
+                    <span>Baserat på: {reviews.length} recensioner</span>
+                  </div>
                 </div>
               )}
             </div>
-          )}
-        </div>
 
-        <div className="profile-reviews-wrapper" ref={reviewsRef}>
-          <h2>Recensioner</h2>
-          {reviews.length > 0 ? (
-            <ul>
-              {reviews.map((review) => (
-                <li key={review.id}>
-                  <p>
-                    <strong>Betyg:</strong> {review.rating}
-                  </p>
-                  <p>
-                    <strong>Kommentar:</strong> {review.content}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>Inga recensioner.</p>
-          )}
+            <div className="profile-aboutme-wrapper" ref={editRef}>
+              <h2>Om mig</h2>
+              {isEditing ? (
+                <div className="edit-mode">
+                  <textarea
+                    value={aboutMe}
+                    onChange={(e) => setAboutMe(e.target.value)}
+                    rows="4"
+                    cols="50"
+                  />
+                  <div className="edit-fields-wrapper">
+                    <h3>Uppfödaruppgifter</h3>
+                    <label>
+                      Organisationsnummer:
+                      <input
+                        type="text"
+                        value={organizationNumber}
+                        onChange={(e) => setOrganizationNumber(e.target.value)}
+                      />
+                    </label>
+                    <label>
+                      Organisationsnamn:
+                      <input
+                        type="text"
+                        value={organizationName}
+                        onChange={(e) => setOrganizationName(e.target.value)}
+                      />
+                    </label>
+                    <label>
+                      Affärskontakt:
+                      <input
+                        type="text"
+                        value={buisnessContact}
+                        onChange={(e) => setBuisnessContact(e.target.value)}
+                      />
+                    </label>
+                    <label>
+                      Adress:
+                      <input
+                        type="text"
+                        value={adress}
+                        onChange={(e) => setAdress(e.target.value)}
+                      />
+                    </label>
+                    <label>
+                      Postnummer:
+                      <input
+                        type="number"
+                        value={postcode}
+                        onChange={(e) => setPostcode(e.target.value)}
+                      />
+                    </label>
+                    <label>
+                      Stad:
+                      <input
+                        type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                      />
+                    </label>
+                    <div className="edit-buttons">
+                      <button onClick={() => setIsEditing(false)}>
+                        Avbryt
+                      </button>
+                      <button onClick={handleSaveClick}>Spara</button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <p>{aboutMe || "Ingen information tillgänglig."}</p>
+                  {profile?.organizationNumber && (
+                    <div>
+                      <h3>Organisationsnummer:</h3>
+                      <p>{profile.organizationNumber}</p>
+                    </div>
+                  )}
+                  {profile?.organizationName && (
+                    <div>
+                      <h3>Organisationsnamn:</h3>
+                      <p>{profile.organizationName}</p>
+                    </div>
+                  )}
+                  {profile?.buisnessContact && (
+                    <div>
+                      <h3>Affärskontakt:</h3>
+                      <p>{profile.buisnessContact}</p>
+                    </div>
+                  )}
+                  {profile?.adress && (
+                    <div>
+                      <h3>Adress:</h3>
+                      <p>{profile.adress}</p>
+                    </div>
+                  )}
+                  {profile?.postcode && (
+                    <div>
+                      <h3>Postnummer:</h3>
+                      <p>{profile.postcode}</p>
+                    </div>
+                  )}
+                  {profile?.city && (
+                    <div>
+                      <h3>Stad:</h3>
+                      <p>{profile.city}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
 
-          {profile?.id !== currentUser.id && (
-            <div className="add-review-form">
-              <h3>Lägg till en recension</h3>
-              <label>
-                Betyg:
-                <select
-                  name="rating"
-                  value={newReview.rating}
-                  onChange={handleReviewChange}
-                >
-                  {Array.from({ length: 5 }, (_, index) => (
-                    <option key={index + 1} value={index + 1}>
-                      {index + 1}
-                    </option>
+            <div className="profile-reviews-wrapper" ref={reviewsRef}>
+              <h2>Recensioner</h2>
+              {reviews.length > 0 ? (
+                <ul>
+                  {reviews.map((review) => (
+                    <li key={review.id}>
+                      <p>
+                        <strong>Betyg:</strong> {review.rating}
+                      </p>
+                      <p>
+                        <strong>Kommentar:</strong> {review.content}
+                      </p>
+                    </li>
                   ))}
-                </select>
-              </label>
-              <label>
-                Kommentar:
-                <textarea
-                  name="comment"
-                  value={newReview.comment}
-                  onChange={handleReviewChange}
-                  rows="4"
-                  cols="50"
-                />
-              </label>
-              <button onClick={handleAddReview}>Skicka Recension</button>
+                </ul>
+              ) : (
+                <p>Inga recensioner.</p>
+              )}
+
+              {profile?.id !== currentUser.id && (
+                <div className="add-review-form">
+                  <h3>Lägg till en recension</h3>
+                  <label>
+                    Betyg:
+                    <select
+                      name="rating"
+                      value={newReview.rating}
+                      onChange={handleReviewChange}
+                    >
+                      {Array.from({ length: 5 }, (_, index) => (
+                        <option key={index + 1} value={index + 1}>
+                          {index + 1}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Kommentar:
+                    <textarea
+                      name="comment"
+                      value={newReview.comment}
+                      onChange={handleReviewChange}
+                      rows="4"
+                      cols="50"
+                    />
+                  </label>
+                  <button onClick={handleAddReview}>Skicka Recension</button>
+                </div>
+              )}
             </div>
-          )}
+            {showReportProfileModal ? (
+              <ReportProfileModal
+                currentUserId={currentUser.id}
+                userProfileId={profile.id}
+                closeModal={CloseModal}
+              />
+            ) : null}
+          </div>
         </div>
-        {showReportProfileModal ? (
-          <ReportProfileModal
-            currentUserId={currentUser.id}
-            userProfileId={profile.id}
-            closeModal={CloseModal}
-          />
-        ) : null}
       </div>
     </>
   );

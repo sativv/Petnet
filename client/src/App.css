@@ -692,7 +692,6 @@ a {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   margin: 2% auto;
-
 }
 
 /* Header för profil */
@@ -775,7 +774,7 @@ a {
   flex-direction: column;
 
   width: 80vw;
-  border: 1px solid #4CAF50;
+  border: 1px solid #4caf50;
 
   border-radius: 12px;
   background-color: #f9f9f9;
@@ -974,7 +973,6 @@ button {
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
-
 }
 
 /* Header */
@@ -982,7 +980,6 @@ h2 {
   text-align: center;
   margin-bottom: 20px;
   color: #333;
-
 }
 
 /* Error message */
@@ -990,7 +987,6 @@ h2 {
   color: red;
   text-align: center;
   margin-bottom: 20px;
-
 }
 
 /* Filter checkbox */
@@ -998,9 +994,6 @@ h2 {
   margin-bottom: 20px;
   text-align: center;
 }
-
-
-
 
 /* Filter checkbox */
 .filter-checkbox {
@@ -1026,15 +1019,11 @@ h2 {
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.3s ease;
-
-
 }
 
 .user-list-item:hover {
   background-color: #f0f8ff;
 }
-
-
 
 .user-list-item:hover {
   background-color: #f0f8ff;
@@ -1053,58 +1042,40 @@ h2 {
 .user-info {
   display: flex;
   align-items: center;
-
 }
 
 /* User name */
 .user-name {
   font-weight: bold;
   margin-right: 10px;
-
-
 }
 
 /* Verified badge */
 .verified-badge {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 5px 10px;
   border-radius: 12px;
   font-size: 0.9em;
   text-transform: uppercase;
-
+}
 .user-status {
-
   font-weight: bold;
-
 }
 /* Responsive styles */
+
 @media (max-width: 600px) {
   .profile-search-container {
     padding: 15px;
   }
 
-
-
-
-@media (max-width: 600px) 
-{
-  .profile-search-container 
-  {
-    padding: 15px;
+  .username-profile {
+    font-size: 0.9rem;
   }
 
-  .username-profile
-  {
-    font-size: .9rem;
+  .profile-img-and-username {
+    flex-direction: column;
   }
-
-   .profile-img-and-username 
-    {
-      flex-direction: column;
-
-    }
-
 
   .user-list-item {
     flex-direction: column;
@@ -1122,36 +1093,27 @@ h2 {
 
   .user-name {
     margin-bottom: 5px;
-
   }
 
   .verified-badge {
     margin-top: 5px;
-
   }
 }
 
 @media (max-width: 400px) {
   .user-name {
     font-size: 0.9em;
-
   }
 
   .verified-badge {
     font-size: 0.8em;
     padding: 4px 8px;
-
-
   }
 
-    .profile-img-and-username 
-    {
-      flex-direction: column;
-
-    }
-
+  .profile-img-and-username {
+    flex-direction: column;
+  }
 }
-
 
 /* =======================================
    Quiz page 
