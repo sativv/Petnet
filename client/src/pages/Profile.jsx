@@ -216,9 +216,16 @@ function Profile() {
             </Link>
           )}
 
+
           <h1>
             {profile?.id === currentUser.id ? "Min profil" : "Användarprofil"}
           </h1>
+
+      <div className="profile-introduction-wrapper">
+        <div className="profile-img-and-username">
+          <img src={profile1} alt="profile1" className="profile-img" />
+          <h2 className="username-profile">{profile?.email}</h2>
+ main
         </div>
 
         <div className="profile-introduction-wrapper">
