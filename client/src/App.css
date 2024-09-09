@@ -668,7 +668,7 @@ a {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   margin: 2% auto;
-  max-width: 1200px;
+
 }
 
 /* Header för profil */
@@ -676,8 +676,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  width: 60vw;
+  width: 90vw;
   height: min-content;
 }
 
@@ -703,8 +702,9 @@ a {
   display: flex;
   flex-direction: column;
 
-  width: 60vw;
-  border: 1px solid #4caf50;
+  width: 80vw;
+  border: 1px solid #4CAF50;
+
   border-radius: 12px;
   background-color: #f9f9f9;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -763,7 +763,7 @@ a {
 
 /* Om mig avsnitt */
 .profile-aboutme-wrapper {
-  width: 60vw;
+  width: 80vw;
   text-align: center;
   margin-bottom: 20px;
   border: 1px solid #4caf50;
@@ -918,7 +918,17 @@ h2 {
   color: red;
   text-align: center;
   margin-bottom: 20px;
+
 }
+
+/* Filter checkbox */
+.filter-checkbox {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+
+
 
 /* Filter checkbox */
 .filter-checkbox {
@@ -945,7 +955,14 @@ h2 {
   align-items: center;
   transition: background-color 0.3s ease;
 
+
 }
+
+.user-list-item:hover {
+  background-color: #f0f8ff;
+}
+
+
 
 .user-list-item:hover {
   background-color: #f0f8ff;
@@ -972,6 +989,7 @@ h2 {
   font-weight: bold;
   margin-right: 10px;
 
+
 }
 
 /* Verified badge */
@@ -993,6 +1011,28 @@ h2 {
   .profile-search-container {
     padding: 15px;
   }
+
+
+
+
+@media (max-width: 600px) 
+{
+  .profile-search-container 
+  {
+    padding: 15px;
+  }
+
+  .username-profile
+  {
+    font-size: .9rem;
+  }
+
+   .profile-img-and-username 
+    {
+      flex-direction: column;
+
+    }
+
 
   .user-list-item {
     flex-direction: column;
@@ -1027,10 +1067,17 @@ h2 {
 
   .verified-badge {
     font-size: 0.8em;
-
     padding: 4px 8px;
 
+
   }
+
+    .profile-img-and-username 
+    {
+      flex-direction: column;
+
+    }
+
 }
 
 
