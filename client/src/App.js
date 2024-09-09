@@ -13,11 +13,13 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ResetPassword from "./pages/ResetPassword";
 import Quiz from "./pages/Quiz";
 import AddPost from "./components/AddPost";
 import ProfileSearch from "./pages/ProfileSearch";
-
 import PostDetails from "./pages/PostDetails";
+import Admin from "./pages/Admin";
+import ContactFAQ from "./pages/ContactFAQ";
 
 // create user context
 export const userContext = createContext();
@@ -51,23 +53,24 @@ function App() {
   return (
     <>
       <userContext.Provider value={{ currentUser, setCurrentUser }}>
- 
         <div className="App">
           <Router>
-                   <Navbar />
+            <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
-
+              <Route path="/questions" element={<ContactFAQ/>} />
               <Route
                 path="/login"
                 element={<Login setIsAuthenticated={setIsAuthenticated} />}
               />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/register" element={<Register />} />
-               <Route path="/profileSearch" element={<ProfileSearch />} />
+              <Route path="/profileSearch" element={<ProfileSearch />} />
               <Route path="/post/:postId" element={<PostDetails />} />
               <Route element={<ProtectedRoute />}>
-             <Route path="/profile/:id" element={<Profile />} />
+                <Route path="/profile/:id" element={<Profile />} />
                 <Route path="/quiz" element={<Quiz />} />
+                <Route path="/admin" element={<Admin />} />
               </Route>
               <Route element={<ProtectedRoute />}>
                 <Route path="/addpost" element={<AddPost />} />

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 using WebApi.Repositories;
 
@@ -74,6 +76,15 @@ namespace WebApi.Controllers
 
             return Ok(updatedPost);
         }
+
+        [HttpGet("AdminTest")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdminTest()
+        {
+            return Ok("Ur admin");
+        }
+
+
 
 
         // Make post 

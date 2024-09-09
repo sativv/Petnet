@@ -9,6 +9,7 @@ using WebApi.Data.NewFolder;
 using WebApi.Models;
 
 using WebApi.Models.APIModels;
+using WebApi.Repositories;
 using WebApi.Service.Models;
 using WebApi.Service.Services;
 
@@ -21,16 +22,18 @@ namespace WebApi.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailService _emailService;
+        private readonly BookmarkRepo _bookmarkRepo;
 
 
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService, ILogger<AccountController> logger)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService, ILogger<AccountController> logger, BookmarkRepo bookmarkRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
             _logger = logger;
+            _bookmarkRepo = bookmarkRepo;
         }
 
         [HttpGet("user/{id}")]
@@ -137,11 +140,14 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
+            bool isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
             var userDTO = new
             {
                 user.Id,
                 user.Email,
                 user.UserName,
+                isAdmin,         
                 user.IsPrivateSeller,
                 user.IsVerified,
                 user.OrganizationName,
@@ -152,11 +158,11 @@ namespace WebApi.Controllers
                 user.BuisnessContact,
                 user.Postcode,
                 user.AboutMe
-
             };
 
             return Ok(userDTO);
         }
+
 
         [HttpPost("logout")]
         [Authorize]
@@ -182,6 +188,7 @@ namespace WebApi.Controllers
 
             return Ok(new { exists = false });
         }
+
 
 
         [HttpPost("register")]
@@ -324,8 +331,12 @@ namespace WebApi.Controllers
 
 
 
-            // generar en länk som användaren kan trycka med som kommer innehålla en email och en token 
-            var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Authentication", new { token, email = user.Email }, Request.Scheme);
+            ////generar en länk som användaren kan trycka med som kommer innehålla en email och en token
+            //var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
+
+
+            var forgotPasswordLink = $"http://localhost:3000/reset-password?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(user.Email)}";
+
 
 
             if (string.IsNullOrEmpty(forgotPasswordLink))
@@ -391,6 +402,81 @@ namespace WebApi.Controllers
 
             return StatusCode(StatusCodes.Status400BadRequest,
                 new Response { Status = "Error", Message = "Something went wrong" });
+        }
+
+
+
+        [HttpGet("me/bookmarks")]
+        [Authorize]
+
+        public async Task<IActionResult> GetAllBookmarksAsync()
+        {
+            // hämta användaren
+            var user = await _userManager.GetUserIdAsync(await _userManager.GetUserAsync(User));
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            //get favorites
+
+            var bookmarks = await _bookmarkRepo.GetAllBookmarksAsync(user);
+
+
+            return Ok(bookmarks);
+        }
+
+
+
+
+
+
+        [HttpPost("AddBookmark")]
+        [Authorize]
+
+        public async Task<IActionResult> AddBookmarkAsync([FromBody] int postId)
+        {
+            if (postId == null)
+            {
+                return BadRequest();
+            }
+
+
+            var user = await _userManager.GetUserAsync(User);
+            BookmarkModel bookmarkToAdd = new BookmarkModel()
+            {
+                ApplicationUserId = user.Id,
+                PostModelId = postId
+            };
+
+            var addedBookmark = await _bookmarkRepo.AddBookmarkAsync(bookmarkToAdd);
+            await _bookmarkRepo.SaveChangesAsync();
+
+            return Ok(addedBookmark);
+
+        }
+
+
+        [HttpDelete("RemoveBookmark/{Id}")]
+        [Authorize]
+
+        public async Task<IActionResult> RemoveBookmarkAsync(string Id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var bookmarkToRemove = await _bookmarkRepo.GetById(user.Id + Id);
+            if (bookmarkToRemove == null)
+            {
+                return NotFound();
+
+            }
+
+            _bookmarkRepo.RemoveBookmarkAsync(bookmarkToRemove);
+            await _bookmarkRepo.SaveChangesAsync();
+
+
+            return Ok();
+
         }
 
 
