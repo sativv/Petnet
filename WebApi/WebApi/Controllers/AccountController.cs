@@ -237,7 +237,7 @@ namespace WebApi.Controllers
 
             if (files.Count > 0)
             {
-                var uploadDir = Path.Combine("wwwroot", "FileUploads");
+                var uploadDir = Path.Combine("FileUploads");
                 if (!Directory.Exists(uploadDir))
                 {
                     Directory.CreateDirectory(uploadDir);
