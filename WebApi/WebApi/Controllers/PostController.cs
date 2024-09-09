@@ -40,6 +40,20 @@ namespace WebApi.Controllers
 
         }
 
+        [HttpPost("AllPostByIds")]
+        public async Task<IActionResult> GetPostsByIds([FromBody] List<int> PostIds)
+        {
+            if (PostIds == null || PostIds.Count == 0)
+            {
+                return BadRequest("Post ids are required");
+            }
+
+            var posts = await _postRepo.GetAllPostsAsync();
+            var matchingPosts = posts.Where(p => PostIds.Contains(p.Id)).ToList();
+
+            return Ok(matchingPosts);
+        }
+
         // Get all posts
         [HttpGet]
         public async Task<IActionResult> GetAllPostsAsync()
