@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import "../App.css";
 
 function ResetPassword() {
   const [password, setPassword] = useState("");
@@ -72,8 +73,8 @@ function ResetPassword() {
     <div className="reset-password-container">
       <h2>Reset Password</h2>
       <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label>New Password:</label>
+        <div className="reset-password-input">
+          <label className="label-reset-password">New Password:</label>
           <input
             type="password"
             value={password}
@@ -81,8 +82,8 @@ function ResetPassword() {
             required
           />
         </div>
-        <div className="input-group">
-          <label>Confirm Password:</label>
+        <div className="reset-password-input">
+          <label className="label-reset-password">Confirm Password:</label>
           <input
             type="password"
             value={confirmPassword}
@@ -90,7 +91,9 @@ function ResetPassword() {
             required
           />
         </div>
-        <button type="submit">Reset Password</button>
+        <button className="reset-password-button" type="submit">
+          Reset Password
+        </button>
       </form>
       {message && <p>{message}</p>}
     </div>

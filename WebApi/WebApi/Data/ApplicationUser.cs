@@ -18,6 +18,7 @@ namespace WebApi.Data
         public List<FileModel> MyFiles { get; set; } = new List<FileModel>();
         public List<PostModel> Posts { get; set; } = new List<PostModel>();
         public List<InterestModel> Interests { get; set; } = new List<InterestModel>();
+        public List<BookmarkModel> Bookmarks { get; set; } = new List<BookmarkModel>();
         public List<ReviewModel> ReviewsWritten { get; set; } = new List<ReviewModel>();
         public List<ReviewModel> ReviewsRecieved { get; set; } = new List<ReviewModel>();
 

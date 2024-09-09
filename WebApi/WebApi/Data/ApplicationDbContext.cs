@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using WebApi.Models;
 
 namespace WebApi.Data
@@ -8,6 +9,7 @@ namespace WebApi.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<InterestModel> Interests { get; set; }
+        public DbSet<BookmarkModel> Bookmarks { get; set; }
         public DbSet<PostModel> Posts { get; set; }
         public DbSet<ReviewModel> Reviews { get; set; }
         public DbSet<QuestionModel> Questions { get; set; }
@@ -324,6 +326,18 @@ namespace WebApi.Data
                     ReviewedSellerId = "user1"
                 }
             );
+
+
+
+
+
+
+            // Configure composite key for BookmarkModel
+            modelBuilder.Entity<BookmarkModel>()
+                .HasKey(i => new { i.ApplicationUserId, i.PostModelId });
+
+
+
 
             // ApplicationUser to PostModel (1 to Many)
             modelBuilder.Entity<ApplicationUser>()
