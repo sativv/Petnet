@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240905084918_classReport")]
-    partial class classReport
+    [Migration("20240906080257_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,14 @@ namespace WebApi.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -137,6 +145,13 @@ namespace WebApi.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
+                            RoleId = "b4280b6a-0613-4cbd-a9e6-f1701e926e73"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -257,17 +272,19 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "27baf54c-7725-457b-8c78-a4f002b2f9ff",
+                            ConcurrencyStamp = "baf656cb-df3a-426b-ac64-ebf172379139",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
                             IsVerified = true,
                             LockoutEnabled = false,
+                            NormalizedEmail = "USER1@EXAMPLE.COM",
+                            NormalizedUserName = "USER1@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEBh3aDbV9cSnVXTNiw1TIFr30gOK98l1JW7G8ZRsWQV+IWWiSdJmvDHr3jaYwzFQAg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELXDmqUR9wQ95fby9WVtwjb29So3HEdW0Qsb/AL9XzqHJRa4Fv3m16UoRjE8f3vtxw==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "eb2b7da7-bb38-484a-b5b8-99860a2361d7",
+                            SecurityStamp = "7421ff3a-456d-40f9-8960-eb914d045243",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -275,19 +292,41 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "65f3ba02-8212-4f5d-9fc0-18324568780f",
+                            ConcurrencyStamp = "d7a60b0e-2dbc-4861-9e00-2745bdf244f7",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
                             IsVerified = false,
                             LockoutEnabled = false,
+                            NormalizedEmail = "USER2@EXAMPLE.COM",
+                            NormalizedUserName = "USER2@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEEDL8cFhzBMF243XFGt3m8BeZQJnkXnSHFUV2DZ9ujpKfidMWJs5qV8twyMDn3xRBw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEERpBfeI2Nm5NgsUFm21Wkh1u/p8zH6Ays8zI7RTKsps2P2JeKeMIHuaFmobkp6TQQ==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "e8634cd9-2dcd-4432-a075-f3f43b116ffb",
+                            SecurityStamp = "b6e853d4-fb0a-447b-9695-a991ea1278cf",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
+                        },
+                        new
+                        {
+                            Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "0d6c2c5a-91da-4ade-b3e6-ec5ba3e81c2d",
+                            Email = "admin@petnet.com",
+                            EmailConfirmed = true,
+                            IsPrivateSeller = false,
+                            IsVerified = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@PETNET.COM",
+                            NormalizedUserName = "ADMIN@PETNET.COM",
+                            OrganizationNumber = 0L,
+                            PasswordHash = "AQAAAAIAAYagAAAAEMvMCKFd5AbLGoXIEdRUeWnrsxyCv+lnRRRYlTMq2FWPJSsD93fsaxt8w9kvhzHImg==",
+                            PhoneNumberConfirmed = false,
+                            Postcode = 0,
+                            SecurityStamp = "5dbf2f26-f183-4cca-8dfd-b4d2b0082aca",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin@petnet.com"
                         });
                 });
 
@@ -1277,15 +1316,19 @@ namespace WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
 
+                    b.Property<string>("AdminComment")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ReasonOfReport")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReportedUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReportedUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SendedReportUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("SendedReportUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("TimeReported")
                         .HasColumnType("datetime2");

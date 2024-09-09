@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class classReport : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -88,9 +88,10 @@ namespace WebApi.Migrations
                 {
                     ReportId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ReasonOfReport = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SendedReportUserId = table.Column<int>(type: "int", nullable: false),
-                    ReportedUserId = table.Column<int>(type: "int", nullable: false),
+                    ReasonOfReport = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdminComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SendedReportUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReportedUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TimeReported = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -349,18 +350,29 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "user1", null, 0, null, null, null, "27baf54c-7725-457b-8c78-a4f002b2f9ff", "user1@example.com", false, true, true, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEBh3aDbV9cSnVXTNiw1TIFr30gOK98l1JW7G8ZRsWQV+IWWiSdJmvDHr3jaYwzFQAg==", null, false, 0, null, "eb2b7da7-bb38-484a-b5b8-99860a2361d7", false, "user1@example.com" },
-                    { "user2", null, 0, null, null, null, "65f3ba02-8212-4f5d-9fc0-18324568780f", "user2@example.com", false, false, false, false, null, null, null, null, 0L, "AQAAAAIAAYagAAAAEEDL8cFhzBMF243XFGt3m8BeZQJnkXnSHFUV2DZ9ujpKfidMWJs5qV8twyMDn3xRBw==", null, false, 0, null, "e8634cd9-2dcd-4432-a075-f3f43b116ffb", false, "user2@example.com" }
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "0d6c2c5a-91da-4ade-b3e6-ec5ba3e81c2d", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAEMvMCKFd5AbLGoXIEdRUeWnrsxyCv+lnRRRYlTMq2FWPJSsD93fsaxt8w9kvhzHImg==", null, false, 0, null, "5dbf2f26-f183-4cca-8dfd-b4d2b0082aca", false, "Admin@petnet.com" },
+                    { "user1", null, 0, null, null, null, "baf656cb-df3a-426b-ac64-ebf172379139", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAELXDmqUR9wQ95fby9WVtwjb29So3HEdW0Qsb/AL9XzqHJRa4Fv3m16UoRjE8f3vtxw==", null, false, 0, null, "7421ff3a-456d-40f9-8960-eb914d045243", false, "user1@example.com" },
+                    { "user2", null, 0, null, null, null, "d7a60b0e-2dbc-4861-9e00-2745bdf244f7", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEERpBfeI2Nm5NgsUFm21Wkh1u/p8zH6Ays8zI7RTKsps2P2JeKeMIHuaFmobkp6TQQ==", null, false, 0, null, "b6e853d4-fb0a-447b-9695-a991ea1278cf", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Quizzes",
                 columns: new[] { "QuizId", "Aquarium", "Bird", "Cat", "Dog", "Info", "Rabbit", "Reptile", "Title" },
                 values: new object[] { 1, "Ett akvarium med fiskar kan vara en lugnande och vacker del av ditt hem. Fiskar är tysta och kräver inte mycket interaktion, men de behöver en välskött miljö för att trivas.\r\n\r\nSkötsel:\r\nSkötsel av ett akvarium innebär att regelbundet byta vatten, kontrollera vattenkvaliteten och se till att filtren fungerar korrekt. Fiskar behöver rätt typ av mat, och det är viktigt att välja fiskar som trivs tillsammans. Ett akvarium kräver också en noggrann inställning till temperatur och belysning.\r\n\r\nSaker att tänka på:\r\nFiskar är känsliga för förändringar i sin miljö, så det är viktigt att vara noggrann med vattenkvalitet och skötsel. Ett akvarium kan vara ett vackert tillskott till ditt hem, men det kräver tid och engagemang för att underhålla. Fundera på om du vill ha ett sötvatten- eller saltvattenakvarium, då de har olika krav.\r\n", "Fåglar är färgglada, intelligenta och kan vara mycket sociala. De älskar att interagera med sina ägare och vissa arter kan till och med lära sig att prata. Fåglar kräver dock mycket mental stimulans och ett tryggt hem.\r\n\r\nSkötsel:\r\nAtt ta hand om en fågel innebär att ge dem en stor, säker bur med utrymme att flyga och leka. Deras kost ska vara varierad och näringsrik, inklusive fröer, frukt och grönsaker. Fåglar behöver daglig uppmärksamhet och interaktion, samt leksaker för att hålla dem underhållna.\r\n\r\nSaker att tänka på:\r\nFåglar kan leva länge, ibland upp till flera decennier beroende på art, så det är ett långsiktigt åtagande. De kan också vara högljudda och röriga, så se till att du är beredd på detta. Det är viktigt att förstå fåglars sociala behov och att de kan bli stressade om de lämnas ensamma för länge.\r\n", "Katter är självständiga och nyfikna djur som älskar att utforska och samtidigt njuta av långa stunder av vila. De kan vara kärleksfulla och sociala, men de har också en stark egen vilja och uppskattar ofta sitt eget sällskap.\r\n\r\nSkötsel:\r\nKatter är relativt lättskötta jämfört med många andra husdjur. De behöver daglig mat, vatten, och en ren kattlåda. Katter kräver också lite lektid och mental stimulans, särskilt inomhuskatter. Regelbunden veterinärvård är också viktigt för att hålla din katt frisk.\r\n\r\nSaker att tänka på:\r\nKatter kan vara ganska självständiga, vilket gör dem idealiska för människor med hektiska scheman. Men de behöver fortfarande uppmärksamhet och omsorg. Tänk på att katter kan ha olika personligheter, från väldigt sociala till mer reserverade. Fundera på om du vill ha en inomhus- eller utomhuskatt och hur du kan göra ditt hem kattvänligt.\r\n", "Hundar är sociala, lojala och ofta fulla av energi. De är fantastiska följeslagare för dem som gillar att vara aktiva och spendera tid utomhus. Hundar kräver dagliga promenader, mental stimulans, och en hel del uppmärksamhet och kärlek.\r\n\r\nSkötsel:\r\nAtt ha en hund innebär ett stort ansvar. Förutom dagliga promenader och regelbunden motion behöver hundar också träning, socialisering, och regelbunden veterinärvård. Hundar älskar att vara en del av familjen och kräver mycket tid och engagemang från sina ägare.\r\n\r\nSaker att tänka på:\r\nInnan du skaffar en hund, tänk på att de behöver mycket tid och energi. De flesta hundar gillar inte att vara ensamma under längre perioder, så se till att din livsstil kan anpassas efter deras behov. Räkna också med kostnader för mat, veterinärbesök, försäkringar och eventuella oväntade utgifter.\r\n", "Välkommen till vårt husdjursquiz! Att välja rätt husdjur är ett stort beslut som bör baseras på din livsstil, personlighet och preferenser. I det här testet kommer du att besvara 15 frågor som hjälper dig att upptäcka vilket djur som passar bäst för just dig. Oavsett om du är en aktiv person som älskar att vara utomhus eller om du föredrar en lugn och stillsam miljö, så finns det ett husdjur som passar din vardag perfekt. Svara ärligt på frågorna, så får du snart veta vilken typ av husdjur som skulle bli din bästa vän!", "Kaniner är tysta, sällskapliga djur som trivs bäst i ett lugnt och säkert hem. De är ofta lekfulla och kan skapa starka band med sina ägare, men de är också känsliga och kräver ett särskilt omhändertagande.\r\n\r\nSkötsel:\r\nKaniner behöver en rymlig bur eller ett område där de kan röra sig fritt. Deras kost består främst av hö, grönsaker och pellets. Det är också viktigt att erbjuda dem leksaker och aktiviteter för att hålla dem mentalt stimulerade. Regelbunden rengöring av deras bur och veterinärbesök är också nödvändiga.\r\n\r\nSaker att tänka på:\r\nKaniner är känsliga djur som kräver en lugn miljö. De passar bra för personer som kan erbjuda en stabil och tyst hemmiljö. Kaniner kan leva ganska länge, så det är viktigt att vara beredd på ett långsiktigt åtagande. De är också sociala djur och kan ibland må bäst av att ha en annan kanin som sällskap.", "Reptiler är fascinerande och unika husdjur som kräver en speciell typ av skötsel. De kan vara ganska självständiga och är ofta mest lämpade för ägare som är intresserade av att skapa en specifik miljö och förstå deras unika behov.\r\n\r\nSkötsel:\r\nReptiler, såsom ormar, ödlor och sköldpaddor, kräver ett specialanpassat terrarium med rätt temperatur, belysning och luftfuktighet. Deras kost varierar beroende på art, från insekter till grönt foder. Regelbunden rengöring av terrariet och kontroll av deras miljö är avgörande för deras hälsa.\r\n\r\nSaker att tänka på:\r\nReptiler kan vara känsliga för förändringar i sin omgivning och kräver noggrann övervakning av deras livsmiljö. De är inte lika sociala som andra husdjur och kan vara mindre interaktiva, vilket är viktigt att överväga om du vill ha ett djur som du kan hantera ofta. Reptiler är bäst lämpade för dem som har ett särskilt intresse för dessa fascinerande djur och är villiga att investera tid i att skapa och underhålla deras miljö.\r\n\r\n", "Vilket djur passar dig bäst?" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "b4280b6a-0613-4cbd-a9e6-f1701e926e73" });
 
             migrationBuilder.InsertData(
                 table: "Posts",
