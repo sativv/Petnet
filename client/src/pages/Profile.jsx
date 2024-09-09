@@ -381,7 +381,7 @@ function Profile() {
             )}
             {files && (
               <div>
-                <h3>Dokument:</h3>
+                <h3>Mina dokument:</h3>
                 <DisplayFiles files={files} />{" "}
               </div>
             )}

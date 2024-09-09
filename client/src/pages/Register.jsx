@@ -134,6 +134,7 @@ function Register() {
       alert(
         "Välkommen, du är nu registrerad! Vänligen logga in med ditt nya konto "
       );
+
       nav("/login");
     } catch (e) {
       console.error("Error during registration:", e);

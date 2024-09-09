@@ -190,7 +190,7 @@ function Quiz() {
             <button
               onClick={() => {
                 HandleResult();
-                nav("/profile");
+                nav(`/profile/${currentUser.Id}`);
               }}
             >
               Lägg till i min profil
