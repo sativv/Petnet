@@ -918,7 +918,17 @@ h2 {
   color: red;
   text-align: center;
   margin-bottom: 20px;
+
 }
+
+/* Filter checkbox */
+.filter-checkbox {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+
+
 
 /* Filter checkbox */
 .filter-checkbox {
@@ -945,7 +955,14 @@ h2 {
   align-items: center;
   transition: background-color 0.3s ease;
 
+
 }
+
+.user-list-item:hover {
+  background-color: #f0f8ff;
+}
+
+
 
 .user-list-item:hover {
   background-color: #f0f8ff;
@@ -989,6 +1006,13 @@ h2 {
   font-weight: bold;
 
 }
+/* Responsive styles */
+@media (max-width: 600px) {
+  .profile-search-container {
+    padding: 15px;
+  }
+
+
 
 
 @media (max-width: 600px) 
@@ -1008,6 +1032,7 @@ h2 {
       flex-direction: column;
 
     }
+
 
   .user-list-item {
     flex-direction: column;
@@ -1042,15 +1067,19 @@ h2 {
 
   .verified-badge {
     font-size: 0.8em;
-
     padding: 4px 8px;
+
+
   }
+
     .profile-img-and-username 
     {
       flex-direction: column;
 
     }
+
 }
+
 
 /* =======================================
    Quiz page 
