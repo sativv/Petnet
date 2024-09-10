@@ -325,6 +325,30 @@ a {
   margin-right: 10px;
 }
 
+@media (max-width: 768px) {
+  .navbarMenu {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #e7f0dc;
+    flex-direction: column;
+    width: 100%;
+    max-width: 200px;
+    display: none;
+    padding: 10px;
+    border-radius: 0 0 5px 5px;
+  }
+
+  .navbarMenu.active {
+    display: flex;
+    z-index: 1;
+  }
+
+  .burgerIcon {
+    display: flex;
+  }
+}
+
 /* =======================================
    Footer 
    ======================================= */
@@ -422,27 +446,31 @@ a {
   font-size: 1em;
 }
 
-@media (max-width: 768px) {
-  .navbarMenu {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    background-color: #e7f0dc;
-    flex-direction: column;
-    width: 100%;
-    max-width: 200px;
-    display: none;
-    padding: 10px;
-    border-radius: 0 0 5px 5px;
+.footerTitle {
+  color: white;
+  text-align: left;
+}
+
+/* CSS */
+
+.button-33:hover {
+  box-shadow: rgba(44, 187, 99, 0.35) 0 -25px 18px -14px inset,
+    rgba(44, 187, 99, 0.25) 0 1px 2px, rgba(44, 187, 99, 0.25) 0 2px 4px,
+    rgba(44, 187, 99, 0.25) 0 4px 8px, rgba(44, 187, 99, 0.25) 0 8px 16px,
+    rgba(44, 187, 99, 0.25) 0 16px 32px;
+  transform: scale(1.05) rotate(-1deg);
+}
+
+@media (min-width: 768px) {
+  .footerLogo {
+    width: 10%;
   }
 
-  .navbarMenu.active {
-    display: flex;
-    z-index: 1;
+  .footerLeftColumn {
+    margin-left: 10%;
   }
-
-  .burgerIcon {
-    display: flex;
+  .footerRightColumn {
+    margin-right: 10%;
   }
 }
 /* =======================================
@@ -516,6 +544,7 @@ a {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
   box-sizing: border-box;
+  font-weight: 600;
 }
 
 .postDescriptionInput {
@@ -523,6 +552,7 @@ a {
   height: 80px;
   margin-top: 0.5rem;
   box-sizing: border-box;
+  font-weight: 600;
 }
 
 .postDescription {
@@ -571,6 +601,30 @@ a {
 .favIcon {
   margin-right: 5px;
   margin-left: 5px;
+}
+.save {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.author {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+}
+
+@media (min-width: 768px) {
+  .postInput {
+    text-align: right;
+  }
+
+  .postTitleInput {
+    text-align: center;
+  }
+  .postDescriptionInput {
+    text-align: center;
+  }
 }
 
 /* =======================================
