@@ -1078,35 +1078,34 @@ h2 {
   }
 }
 
-  .username-profile {
-    font-size: 0.9rem;
-  }
+.username-profile {
+  font-size: 0.9rem;
+}
 
-  .profile-img-and-username {
-    flex-direction: column;
-  }
+.profile-img-and-username {
+  flex-direction: column;
+}
 
-  .user-list-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.user-list-item {
+  flex-direction: column;
+  align-items: flex-start;
+}
 
-  .user-link {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.user-link {
+  flex-direction: column;
+  align-items: flex-start;
+}
 
-  .user-info {
-    width: 100%;
-  }
+.user-info {
+  width: 100%;
+}
 
-  .user-name {
-    margin-bottom: 5px;
-  }
+.user-name {
+  margin-bottom: 5px;
+}
 
-  .verified-badge {
-    margin-top: 5px;
-  }
+.verified-badge {
+  margin-top: 5px;
 }
 
 @media (max-width: 400px) {
