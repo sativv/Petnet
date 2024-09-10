@@ -194,6 +194,7 @@ function PostDetails() {
             className="favIcon"
           />
         </div>
+        <a href="/profile/{post.applicationUserId}">{post.applicationUserId}</a>
       </div>
       <div className="postContent">
         <form onSubmit={handleSaveChanges}>

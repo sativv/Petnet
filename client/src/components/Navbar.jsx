@@ -53,8 +53,8 @@ function Navbar() {
         <a href="/quiz">Quiz</a>
         <a href="/addpost">Ny annons</a>
         <a href="/profileSearch">Sök profil</a>
+        <a href="/bookmarks">Bokmärken</a>
 
-        {/* Show 'Min profil' if user is logged in, otherwise 'Registrering' */}
         {currentUser ? (
           <a onClick={goToProfile} className="noBtn">
             Min profil

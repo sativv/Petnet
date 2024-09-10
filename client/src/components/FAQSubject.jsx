@@ -3,9 +3,11 @@ import React, { Children, useState } from "react";
 function FAQSubject({ title, children }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div onClick={() => setIsOpen(!isOpen)}>
+    <div className="faq-question" onClick={() => setIsOpen(!isOpen)}>
       <div>
-        <p>{title}</p>
+        <p>
+          <strong>{title}</strong>
+        </p>
       </div>
       {isOpen ? (
         <div>

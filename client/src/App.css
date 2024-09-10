@@ -56,7 +56,26 @@ a {
   width: 100%;
   background-color: #e7f0dc;
   margin-bottom: 15px;
-  padding: 15px;
+  padding-bottom: 15px;
+}
+
+.picture-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+.filter-pic {
+  width: 100vw;
+  opacity: 30%;
+  height: 40vh;
+  object-fit: cover;
+}
+
+.quiz-btn {
+  position: absolute;
+  top: 50%;
+  margin: auto;
 }
 
 .filter-container {
@@ -212,6 +231,8 @@ a {
 .forget-password-modal-close-btn {
   align-self: end;
   border: none;
+  background-color: transparent;
+  color: black;
 }
 
 /* =======================================
@@ -356,6 +377,9 @@ a {
   z-index: 1;
   height: auto;
   width: 45%;
+}
+.footer-links {
+  color: white;
 }
 
 .adContainer {
@@ -686,6 +710,54 @@ a {
   height: min-content;
 }
 
+.report-profile-link {
+  align-self: flex-end;
+}
+
+.report-profile-modal-outer-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000000;
+}
+.report-profile-modal {
+  background-color: #e7f0dc;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 2px solid gray;
+  padding: 1%;
+  color: #729762;
+}
+
+.report-profile-modal-close-btn {
+  align-self: end;
+  border: none;
+  background-color: transparent;
+  color: black;
+
+  margin-right: 2%;
+  padding: 0;
+}
+
+.input-report-container {
+  display: flex;
+}
+
+.report-profile-modal-header {
+  margin-top: 0;
+  margin-bottom: 10%;
+}
+
+.report-profile-submit-button {
+  margin-bottom: 3%;
+}
+
 /* Penna ikon */
 .pen-img {
   width: 40px;
@@ -800,10 +872,10 @@ button {
   transition: background-color 0.3s, transform 0.2s;
 }
 
-button:hover {
+/* button:hover {
   background-color: #388e3c;
   transform: scale(1.05);
-}
+} */
 
 /* Editeringsläge */
 .edit-mode {
@@ -999,16 +1071,12 @@ h2 {
   font-weight: bold;
 }
 /* Responsive styles */
-@media (max-width: 600px) {
-  .profile-search-container {
-    padding: 15px;
-  }
-}
 
 @media (max-width: 600px) {
   .profile-search-container {
     padding: 15px;
   }
+}
 
   .username-profile {
     font-size: 0.9rem;
@@ -1274,4 +1342,13 @@ h2 {
   align-items: start;
   padding: 5px;
   margin: 5px 0px 0px;
+}
+
+/* =======================================
+   FAQ / CONTACT
+   ======================================= */
+
+.faq-question {
+  border-bottom: 1px solid #1c5c00;
+  margin: 10px;
 }

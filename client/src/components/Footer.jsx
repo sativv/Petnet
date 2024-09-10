@@ -29,8 +29,12 @@ function Footer() {
       </div>
       <div className="footerRightColumn">
         <h2>Länkar</h2>
-        <h3>Hemsida</h3>
-        <h3>Hemsida</h3>
+        <a className="footer-links" href="/contact">
+          <h3>Vanliga frågor</h3>
+        </a>
+        <a className="footer-links" href="/contact">
+          <h3>Kontakta oss</h3>
+        </a>
         <h3>Hemsida</h3>
       </div>
       <img className="footerLogo" src="/images/Logo.png" alt="" />
