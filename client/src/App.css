@@ -52,6 +52,24 @@ a {
    Home-page
    ======================================= */
 
+@media (min-width: 768px) {
+  .main-content {
+    margin: auto;
+    max-width: 50%;
+  }
+  .filter-container {
+  }
+  .filter-box {
+    max-width: 25%;
+  }
+  .filter-input {
+    max-width: 100%;
+  }
+  .filter-search {
+    margin-top: 50px;
+  }
+}
+
 .filter-search {
   width: 100%;
   background-color: #e7f0dc;
@@ -92,6 +110,7 @@ a {
   font-size: 16px;
   height: 26px;
   text-align: center;
+  width: 50%;
 }
 
 .filter-box {
@@ -102,6 +121,7 @@ a {
   border: 1px solid #658147;
   border-radius: 5px;
   width: 25vw;
+  overflow-y: hidden;
 }
 
 .filter-input option {
@@ -390,6 +410,27 @@ a {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   margin-bottom: 5%;
+}
+
+.bigAdContainer {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-bottom: 5%;
+  display: flex;
+  height: 50vh;
+}
+
+.bigAdImgContainer {
+  width: 100%;
+}
+.bigAdSide {
+  text-align: left;
+  background-color: #e7f0dc;
+  width: 100%;
+  padding: 15px;
 }
 
 .adImgContainer {

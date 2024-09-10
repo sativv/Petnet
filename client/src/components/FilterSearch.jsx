@@ -12,7 +12,7 @@ function FilterSearch({ filterAndSearch }) {
   return (
     <div className="filter-search">
       <div className="picture-container">
-        <img className="filter-pic" src="/images/SearchPic.png" alt="" />
+        <img className="filter-pic" src="/images/SearchPic.jpg" alt="" />
         <a href="/quiz" className="quiz-btn">
           <button onclick>
             Vilket djur är rätt för mig <br />
