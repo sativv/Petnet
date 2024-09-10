@@ -22,17 +22,19 @@ namespace WebApi.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailService _emailService;
+        private readonly ApplicationDbContext _context;
         private readonly BookmarkRepo _bookmarkRepo;
 
 
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService, ILogger<AccountController> logger, BookmarkRepo bookmarkRepo)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService, ILogger<AccountController> logger, ApplicationDbContext _context, BookmarkRepo bookmarkRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
             _logger = logger;
+            this._context = _context;
             _bookmarkRepo = bookmarkRepo;
         }
 
@@ -147,7 +149,7 @@ namespace WebApi.Controllers
                 user.Id,
                 user.Email,
                 user.UserName,
-                isAdmin,         
+                isAdmin,
                 user.IsPrivateSeller,
                 user.IsVerified,
                 user.OrganizationName,
@@ -189,34 +191,109 @@ namespace WebApi.Controllers
             return Ok(new { exists = false });
         }
 
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadFile(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Please select a file.");
+            }
+
+            var filePath = Path.Combine("wwwroot/FileUploads", file.FileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return Ok(new { Message = "File uploaded successfully." });
+        }
+
 
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUser userObject)
+        public async Task<IActionResult> Register([FromForm] IFormCollection form)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
 
+            // Extrahera textfält från form-data
+            var email = form["Email"];
+            var password = form["Password"];
+            var isPrivateSeller = bool.TryParse(form["IsPrivateSeller"], out var privateeSeller) ? privateeSeller : (bool?)null;
+            var isVerified = bool.TryParse(form["IsVerified"], out var verified) ? verified : (bool?)null;
+            var organizationNumber = long.TryParse(form["OrganizationNumber"], out var orgNum) ? orgNum : (long?)null;
+            var organizationName = form["OrganizationName"];
+            var buisnessContact = form["BuisnessContact"];
+            var adress = form["Adress"];
+            var postcode = int.TryParse(form["Postcode"], out var postCode) ? postCode : (int?)null;
+            var city = form["City"];
+            var phoneNumber = form["PhoneNumber"];
+
+            // Extrahera filer från form-data
+            var files = form.Files;
+            var fileModels = new List<FileModel>();
+
+            if (files.Count > 0)
+            {
+                var uploadDir = Path.Combine("FileUploads");
+                if (!Directory.Exists(uploadDir))
+                {
+                    Directory.CreateDirectory(uploadDir);
+                }
+
+                foreach (var file in files)
+                {
+                    if (file != null)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);
+                        var filePath = Path.Combine(uploadDir, fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+
+                        fileModels.Add(new FileModel
+                        {
+                            Name = fileName,
+                            Type = file.ContentType,
+                            Path = Path.Combine("/FileUploads", fileName),
+                            UploadDate = DateTime.UtcNow
+                        });
+                    }
+                }
+
+            }
             var user = new ApplicationUser
             {
-                UserName = userObject.Email,
-                Email = userObject.Email,
-                IsPrivateSeller = userObject.IsPrivateSeller ?? false,
-                IsVerified = userObject.IsVerified ?? false,
-                OrganizationNumber = userObject.OrganizationNumber ?? 0,
-                OrganizationName = userObject.OrganizationName,
-                BuisnessContact = userObject.BuisnessContact,
-                Adress = userObject.Adress,
-                Postcode = userObject.Postcode ?? 0,
-                City = userObject.City,
-                PhoneNumber = userObject.PhoneNumber
+                UserName = email,
+                Email = email,
+                IsPrivateSeller = isPrivateSeller ?? false,
+                IsVerified = isVerified ?? false,
+                OrganizationNumber = organizationNumber ?? 0,
+                OrganizationName = organizationName,
+                BuisnessContact = buisnessContact,
+                Adress = adress,
+                Postcode = postcode ?? 0,
+                City = city,
+                PhoneNumber = phoneNumber
             };
 
-            var result = await _userManager.CreateAsync(user, userObject.Password);
+            var result = await _userManager.CreateAsync(user, password);
 
             if (result.Succeeded)
             {
+                // Koppla filerna till den nya användaren
+                foreach (var fileModel in fileModels)
+                {
+                    fileModel.ApplicationUserId = user.Id;
+                }
+
+                // Spara filerna i databasen
+                _context.Files.AddRange(fileModels);
+                await _context.SaveChangesAsync();
                 return Ok("User registered successfully");
             }
 

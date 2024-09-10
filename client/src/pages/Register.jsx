@@ -26,25 +26,27 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const newUser = {
-      Email: email,
-      Password: password,
-      IsPrivateSeller: true,
-    };
+    const formData = new FormData();
 
-    const newUserBreeder = {
-      Email: email,
-      Password: password,
-      OrganizationNumber: organizationNumber,
-      OrganizationName: organizationName,
-      BuisnessContact: buisnessContact,
-      Adress: adress,
-      Postcode: postcode,
-      City: city,
-      Phonenumber: phone,
-      IsPrivateSeller: false,
-      IsVerified: true
-    };
+    // Lägg till registreringsdata
+    formData.append("Email", email);
+    formData.append("Password", password);
+    formData.append("IsPrivateSeller", isBreeder ? "false" : "true");
+    formData.append("IsVerified", isBreeder ? "false" : "");
+    formData.append("OrganizationNumber", isBreeder ? organizationNumber : "");
+    formData.append("OrganizationName", isBreeder ? organizationName : "");
+    formData.append("BuisnessContact", isBreeder ? buisnessContact : "");
+    formData.append("Adress", isBreeder ? adress : "");
+    formData.append("Postcode", isBreeder ? postcode : "");
+    formData.append("City", isBreeder ? city : "");
+    formData.append("PhoneNumber", isBreeder ? phone : "");
+
+    // Lägg till filen om den finns
+    if (registration) {
+      for (let i = 0; i < registration.length; i++) {
+        formData.append("Files", registration[i]);
+      }
+    }
 
     if (email.length < 10 || containsSwedishLetters.test(email)) {
       alert(
@@ -107,6 +109,12 @@ function Register() {
         );
         return;
       }
+
+      // Kontrollera antal filer
+      if (registration.length > 3) {
+        alert(`Du kan ladda upp högst 3 filer!`);
+        return;
+      }
     }
 
     try {
@@ -114,10 +122,7 @@ function Register() {
         "https://localhost:7072/api/Account/register",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(isBreeder ? newUserBreeder : newUser),
+          body: formData,
         }
       );
 
@@ -129,6 +134,7 @@ function Register() {
       alert(
         "Välkommen, du är nu registrerad! Vänligen logga in med ditt nya konto "
       );
+
       nav("/login");
     } catch (e) {
       console.error("Error during registration:", e);
@@ -137,22 +143,44 @@ function Register() {
   };
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setRegistration(file);
+    const MAX_FILE_SIZE_MB = 5; // Max filstorlek i megabyte
 
-    // Förhandsvisning av uppladdade filer, fungerar endast med bildformat
-    if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const preview = document.getElementById("preview");
-        preview.src = e.target.result;
-        preview.style.display = "block";
-      };
-      reader.readAsDataURL(file);
-    } else {
-      const preview = document.getElementById("preview");
-      preview.style.display = "none";
-    }
+    const files = event.target.files; // FileList objekt
+    setRegistration(files); // Spara alla valda filer i state
+
+    const preview = document.getElementById("preview");
+    preview.innerHTML = ""; // Rensa tidigare förhandsvisningar
+
+    Array.from(files).forEach((file) => {
+      // Kontrollera filstorlek
+      if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+        alert(
+          `${file.name} är för stor. Max storlek är ${MAX_FILE_SIZE_MB} MB.`
+        );
+        return;
+      }
+
+      // Förhandsvisning av PDF eller bild
+      if (file && file.type === "application/pdf") {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const embed = document.createElement("embed");
+          embed.src = e.target.result;
+          embed.type = "application/pdf";
+          preview.appendChild(embed);
+        };
+        reader.readAsDataURL(file);
+      } else if (file && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = document.createElement("img");
+          img.src = e.target.result;
+          img.style.maxWidth = "200px";
+          preview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
   };
 
   const handleCheckboxChange = () => {
@@ -275,14 +303,11 @@ function Register() {
                   name="registration"
                   type="file"
                   accept=".pdf, image/*"
+                  multiple
                   onChange={handleFileChange}
+                  required
                 />
-                <img
-                  id="preview"
-                  src=""
-                  alt="Förhandsgranskning"
-                  style={{ display: "none", maxWidth: "200px" }}
-                />
+                <div id="preview"></div>
               </>
             )}
 

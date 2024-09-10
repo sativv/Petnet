@@ -75,7 +75,7 @@ namespace WebApi.Data
 
             PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
             user1.PasswordHash = passwordHasher.HashPassword(user1, "user1*123");
-            user2.PasswordHash = passwordHasher.HashPassword(user2, "user2*123");   
+            user2.PasswordHash = passwordHasher.HashPassword(user2, "user2*123");
             admin.PasswordHash = passwordHasher.HashPassword(null, "Admin1!");
             builder.Entity<ApplicationUser>().HasData(user1, user2, admin);
 

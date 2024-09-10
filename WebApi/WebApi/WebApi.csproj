@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="FileUploads\Firefly en logga med en hund och en katt och en kanin 85200.jpg" />
+    <Content Include="FileUploads\projekt-viktigadatum.pdf" />
+    <Content Include="FileUploads\Projektuppgift-ÄMN-2024.pdf" />
+    <Content Include="FileUploads\reptile.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" NoWarn="NU1605" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.8" NoWarn="NU1605" />
     <PackageReference Include="microsoft.aspnetcore.identity.entityframeworkcore" Version="8.0.8" />
@@ -29,6 +36,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebApi.Service\WebApi.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Uploads\" />
+    <Folder Include="FileUploads\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

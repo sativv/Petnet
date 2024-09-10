@@ -15,6 +15,5 @@
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
 
-        public List<FileModel> MyFiles { get; set; } = new List<FileModel>();
     }
 }

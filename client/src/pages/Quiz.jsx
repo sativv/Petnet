@@ -17,7 +17,6 @@ function Quiz() {
 
   console.log("current user: " + currentUser.id);
 
-
   useEffect(() => {
     const getQuiz = async () => {
       try {
@@ -68,6 +67,10 @@ function Quiz() {
       setCounter(counter + 1);
     }
     setAnimal("");
+
+    if (animal === "" || animal === null) {
+      alert("Oj då, du glömde att välja ett svarsalternativ!");
+    }
   }
 
   /* Sortera listan med djur för att få fram vilket djur som passar bäst */
@@ -187,7 +190,7 @@ function Quiz() {
             <button
               onClick={() => {
                 HandleResult();
-                nav("/profile");
+                nav(`/profile/${currentUser.Id}`);
               }}
             >
               Lägg till i min profil

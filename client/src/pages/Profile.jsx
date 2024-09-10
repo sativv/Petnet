@@ -25,6 +25,8 @@ function Profile() {
   const [newReview, setNewReview] = useState({ rating: 1, content: "" });
   const reviewsRef = useRef(null);
   const editRef = useRef(null); // New ref for the edit section
+  const [files, setFiles] = useState([]);
+
   const nav = useNavigate();
 
   useEffect(() => {
@@ -57,6 +59,25 @@ function Profile() {
           setReviews(reviewData);
         } else {
           console.error("Failed to fetch reviews");
+        }
+
+        // Fetch uploaded files
+        const fileResponse = await fetch(
+          `https://localhost:7072/api/Files/UserFilesByUser/${profileId}`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (fileResponse.ok) {
+          const fileData = await fileResponse.json();
+          console.log(profileId);
+          setFiles(fileData);
+        } else {
+          console.error("Failed to fetch files" + profileId);
         }
       } catch (error) {
         console.error("Error fetching profile:", error);
@@ -192,6 +213,43 @@ function Profile() {
 
   const averageRating = calculateAverageRating();
 
+  const DisplayFiles = ({ files }) => {
+    return (
+      <div>
+        {files.map((file, index) => (
+          <div key={index} style={{ marginBottom: "20px" }}>
+            {file.type.startsWith("image/") ? (
+              <img
+                src={file.url}
+                alt={file.name}
+                style={{ maxWidth: "200px", height: "auto" }}
+              />
+            ) : (
+              <a href={file.url} download>
+                {file.name}
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  return (
+    <div className="profile-wrapper">
+      <div className="profile-header-wrapper">
+        {profile?.id === currentUser.id && (
+          <img
+            src={pen}
+            alt="pen-img"
+            className="pen-img"
+            onClick={handleEditClick}
+          />
+        )}
+        <h1>
+          {profile?.id === currentUser.id ? "Min profil" : "Användarprofil"}
+        </h1>
+      </div>
   function CloseModal() {
     setReportProfileModal(false);
   }
@@ -362,6 +420,73 @@ function Profile() {
                 </div>
               )}
             </div>
+        ) : (
+          <div>
+            <p>{aboutMe || "Ingen information tillgänglig."}</p>
+            {profile?.organizationNumber && (
+              <div>
+                <h3>Organisationsnummer:</h3>
+                <p>{profile.organizationNumber}</p>
+              </div>
+            )}
+            {profile?.organizationName && (
+              <div>
+                <h3>Organisationsnamn:</h3>
+                <p>{profile.organizationName}</p>
+              </div>
+            )}
+            {profile?.buisnessContact && (
+              <div>
+                <h3>Affärskontakt:</h3>
+                <p>{profile.buisnessContact}</p>
+              </div>
+            )}
+            {profile?.adress && (
+              <div>
+                <h3>Adress:</h3>
+                <p>{profile.adress}</p>
+              </div>
+            )}
+            {profile?.postcode && (
+              <div>
+                <h3>Postnummer:</h3>
+                <p>{profile.postcode}</p>
+              </div>
+            )}
+            {profile?.city && (
+              <div>
+                <h3>Stad:</h3>
+                <p>{profile.city}</p>
+              </div>
+            )}
+            {files && (
+              <div>
+                <h3>Mina dokument:</h3>
+                <DisplayFiles files={files} />{" "}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="profile-reviews-wrapper" ref={reviewsRef}>
+        <h2>Recensioner</h2>
+        {reviews.length > 0 ? (
+          <ul>
+            {reviews.map((review) => (
+              <li key={review.id}>
+                <p>
+                  <strong>Betyg:</strong> {review.rating}
+                </p>
+                <p>
+                  <strong>Kommentar:</strong> {review.content}
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>Inga recensioner.</p>
+        )}
 
             <div className="profile-reviews-wrapper" ref={reviewsRef}>
               <h2>Recensioner</h2>
