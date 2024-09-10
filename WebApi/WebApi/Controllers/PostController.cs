@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Data;
 using WebApi.Models;
 using WebApi.Repositories;
 
@@ -11,12 +13,12 @@ namespace WebApi.Controllers
     public class PostController : ControllerBase
     {
         private readonly PostRepo _postRepo;
+        private readonly UserManager<ApplicationUser> _usermanager;
 
-
-
-        public PostController(PostRepo postRepo)
+        public PostController(PostRepo postRepo, UserManager<ApplicationUser> usermanager)
         {
             _postRepo = postRepo;
+            _usermanager = usermanager;
         }
 
         //Get one post
@@ -104,12 +106,14 @@ namespace WebApi.Controllers
         // Make post 
 
         [HttpPost("AddPost")]
+        [Authorize]
         public async Task<IActionResult> AddPostAsync([FromBody] PostModel postModel)
         {
             if (postModel == null)
             {
                 return BadRequest();
             }
+            postModel.ApplicationUser = await _usermanager.GetUserAsync(User);
 
             var addedPost = await _postRepo.AddPostModelAsync(postModel);
             await _postRepo.SaveChangesAsync();  // Se till att spara ändringarna i databasen
