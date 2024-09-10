@@ -24,11 +24,11 @@ namespace WebApi.Controllers
             _postRepo = postRepo;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            return Ok(await _interestRepo.GetAll());
-        }
+        //[HttpGet] // Testing purposes
+        //public async Task<IActionResult> GetAll()
+        //{
+        //    return Ok(await _interestRepo.GetAll());
+        //}
 
         [HttpPost]
         [Authorize]
@@ -73,7 +73,7 @@ namespace WebApi.Controllers
 
             if(post.ApplicationUserId != await _usermanager.GetUserIdAsync(await _usermanager.GetUserAsync(User)))
             {
-                return BadRequest();
+                return BadRequest("Not your post");
             }
             
             return Ok(await _interestRepo.GetByPost(postId));
