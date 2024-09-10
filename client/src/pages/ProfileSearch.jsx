@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 const ProfileSearch = () => {
-  const [users, setUsers] = useState([]); 
-  const [filteredUsers, setFilteredUsers] = useState([]); 
-  const [error, setError] = useState(null); 
+  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [error, setError] = useState(null);
   const [showVerified, setShowVerified] = useState(false);
 
   const fetchUsers = async () => {
@@ -12,9 +12,9 @@ const ProfileSearch = () => {
       const response = await fetch('http://localhost:5054/api/account/all-users');
       if (response.ok) {
         const data = await response.json();
-        setUsers(data); 
-        setFilteredUsers(data); 
-        setError(null); 
+        setUsers(data);
+        setFilteredUsers(data);
+        setError(null);
       } else {
         setError('Failed to load users.');
       }
@@ -23,13 +23,13 @@ const ProfileSearch = () => {
     }
   };
 
-  const filterUsers = () => {
+  const filterUsers = useCallback(() => {
     if (showVerified) {
       setFilteredUsers(users.filter(user => user.isVerified));
     } else {
       setFilteredUsers(users);
     }
-  };
+  }, [users, showVerified]);
 
   const handleCheckboxChange = (event) => {
     setShowVerified(event.target.checked);
@@ -39,10 +39,9 @@ const ProfileSearch = () => {
     fetchUsers();
   }, []);
 
-
   useEffect(() => {
     filterUsers();
-  }, [users, showVerified]);
+  }, [filterUsers]); // Update dependency array
 
   return (
     <div className="profile-search-container">
@@ -55,7 +54,7 @@ const ProfileSearch = () => {
             checked={showVerified}
             onChange={handleCheckboxChange}
           />
-          Visa endast verifierade uppfödare 
+          Visa endast verifierade uppfödare
         </label>
       </div>
       <ul className="user-list">
