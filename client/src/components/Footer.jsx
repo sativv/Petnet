@@ -12,7 +12,7 @@ function Footer() {
   return (
     <div className="footerContainer">
       <div className="footerLeftColumn">
-        <h2>Petnet Info</h2>
+        <h2 className="footerTitle">Petnet Info</h2>
         <div className="brandDiv">
           <FontAwesomeIcon icon={faEnvelope} className="brandIcon" />
 
@@ -28,7 +28,7 @@ function Footer() {
         </div>
       </div>
       <div className="footerRightColumn">
-        <h2>Länkar</h2>
+        <h2 className="footerTitle">Länkar</h2>
         <a className="footer-links" href="/contact">
           <h3>Vanliga frågor</h3>
         </a>

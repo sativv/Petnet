@@ -30,12 +30,23 @@ namespace WebApi.Repositories
         {
             _context.Remove(interestToremove);
             await _context.SaveChangesAsync();
-            
+
         }
 
         public async Task<List<InterestModel>> GetByPost(int postId)
         {
             return await _context.Interests.Where(i => i.PostId == postId).ToListAsync();
+        }
+
+        public async Task<List<int>> GetAllInterestsAsync(string userId)
+        {
+            List<int> interests = new();
+
+            await _context.Interests.Where(i => i.ApplicationUserId == userId).ForEachAsync(i =>
+            {
+                interests.Add(i.PostId);
+            });
+            return interests;
         }
     }
 }

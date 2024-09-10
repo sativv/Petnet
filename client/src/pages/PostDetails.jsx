@@ -10,12 +10,38 @@ function PostDetails() {
   const [isEditable, setIsEditable] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isInterested, setIsInterested] = useState(false);
   const { currentUser, setCurrentUser } = useContext(userContext);
   const [postCreator, setPostCreator] = useState(``);
 
   const nav = useNavigate();
   var datenow = new Date();
   var currentDate = datenow.toISOString().substring(0, 10);
+
+  const sendInterest = async () => {
+    try {
+      const payload = {
+        postId: post.id,
+        applicationUserId: "",
+      };
+
+      const response = await fetch(`https://localhost:7072/api/Interest/`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (response.ok) {
+        setIsInterested(true);
+      } else {
+        alert("Failed to add interest");
+      }
+    } catch (error) {
+      console.error("Error adding interest:", error);
+    }
+  };
 
   const unlockEdit = () => {
     setIsEditable(true);
@@ -24,6 +50,24 @@ function PostDetails() {
 
   const cancelEdit = () => {
     setIsEditable(false);
+  };
+
+  const checkIfInterested = async () => {
+    try {
+      const response = await fetch(
+        "https://localhost:7072/api/Account/me/interests",
+        { method: "GET", credentials: "include" }
+      );
+      if (response.ok) {
+        const interests = await response.json();
+        const isInterested = interests.includes(parseInt(postId));
+        setIsInterested(isInterested);
+      } else {
+        console.error("Failed to fetch interests");
+      }
+    } catch (error) {
+      console.error("Error checking interests", error);
+    }
   };
 
   const checkIfBookmarked = async () => {
@@ -92,6 +136,29 @@ function PostDetails() {
     }
   };
 
+  const deleteInterest = async () => {
+    try {
+      const payload = {
+        postId: post.id,
+        applicationUserId: currentUser.id,
+      };
+
+      const response = await fetch(`https://localhost:7072/api/Interest`, {
+        method: "DELETE",
+        credentials: "include",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        setIsInterested(false);
+      }
+    } catch (error) {
+      console.error("failed to remove interest");
+    }
+  };
+
   const deletePost = async () => {
     const isConfirmed = window.confirm(
       "Är du säker på att du vill ta bort annonsen?"
@@ -128,6 +195,7 @@ function PostDetails() {
 
     fetchPost();
     checkIfBookmarked();
+    checkIfInterested();
   }, [postId]);
 
   useEffect(() => {
@@ -215,15 +283,18 @@ function PostDetails() {
             className="favIcon"
           />
         </div>
-        <a href={`/profile/${post.applicationUserId}`}>
-          {postCreator || "Loading..."}
-        </a>
+        <div className="author">
+          <strong>Annonsör</strong>
+          <a href={`/profile/${post.applicationUserId}`} className="postInput">
+            {postCreator || "Loading..."}
+          </a>
+        </div>
       </div>
       <div className="postContent">
         <form onSubmit={handleSaveChanges}>
           <div className="postInfo">
             <label>
-              <strong>Djur:</strong>
+              <strong>Djur</strong>
               <select
                 value={post.animalType}
                 disabled={!isEditable}
@@ -243,7 +314,7 @@ function PostDetails() {
             </label>
 
             <label>
-              <strong>Ras:</strong>
+              <strong>Ras</strong>
               <input
                 type="text"
                 value={post.animalBreed}
@@ -255,7 +326,7 @@ function PostDetails() {
               />
             </label>
             <label>
-              <strong>Kön:</strong>
+              <strong>Kön</strong>
               <select
                 value={post.gender}
                 disabled={!isEditable}
@@ -269,7 +340,7 @@ function PostDetails() {
               </select>
             </label>
             <label>
-              <strong>Ålder:</strong>
+              <strong>Ålder</strong>
               <input
                 type="text"
                 value={post.age}
@@ -280,7 +351,7 @@ function PostDetails() {
             </label>
 
             <label>
-              <strong>Födelsedatum:</strong>
+              <strong>Födelsedatum</strong>
               <input
                 type="date"
                 value={post.birthdate || ""}
@@ -293,7 +364,7 @@ function PostDetails() {
             </label>
 
             <label>
-              <strong>Tidigast Adoption:</strong>
+              <strong>Tidigast Adoption</strong>
               <input
                 type="date"
                 value={post.earliestAdoption || ""}
@@ -308,7 +379,7 @@ function PostDetails() {
 
             {isEditable && (
               <label>
-                <strong>Bildlänk:</strong>
+                <strong>Bildlänk</strong>
                 <input
                   type="text"
                   value={imageUrl}
@@ -325,7 +396,7 @@ function PostDetails() {
                 value={post.title}
                 disabled={!isEditable}
                 onChange={(e) => setPost({ ...post, title: e.target.value })}
-                className="postInput postTitleInput add-textarea"
+                className=" postInput postTitleInput add-textarea"
               />
             </h1>
             <p className="postDescription">
@@ -339,11 +410,6 @@ function PostDetails() {
               />
             </p>
 
-            {currentUser.id !== post.applicationUserId && (
-              <button type="button" className="contactButton">
-                Ta Kontakt
-              </button>
-            )}
             {!isEditable && currentUser.id === post.applicationUserId && (
               <div className="actionButtons">
                 <button
@@ -365,20 +431,29 @@ function PostDetails() {
 
             {isEditable && (
               <div className="actionButtons">
-                <button type="submit" className="editButton postBtn">
+                <button type="submit" className=" ">
                   Spara Ändringar
                 </button>
-                <button
-                  type="button"
-                  className="cancelButton postBtn"
-                  onClick={cancelEdit}
-                >
+                <button type="button" className=" " onClick={cancelEdit}>
                   Avbryt
                 </button>
               </div>
             )}
           </div>
         </form>
+        {currentUser.id !== post.applicationUserId && (
+          <div className="interestBtn">
+            {isInterested ? (
+              <button onClick={() => deleteInterest()}>
+                Avbryt Intresseanmälan
+              </button>
+            ) : (
+              <button onClick={() => sendInterest()}>
+                Skicka Intresseanmälan
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
