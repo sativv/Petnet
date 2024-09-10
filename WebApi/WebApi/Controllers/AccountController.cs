@@ -24,11 +24,12 @@ namespace WebApi.Controllers
         private readonly IEmailService _emailService;
         private readonly ApplicationDbContext _context;
         private readonly BookmarkRepo _bookmarkRepo;
+        private readonly InterestRepo _interestRepo;
 
 
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService, ILogger<AccountController> logger, ApplicationDbContext _context, BookmarkRepo bookmarkRepo)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService, ILogger<AccountController> logger, ApplicationDbContext _context, BookmarkRepo bookmarkRepo, InterestRepo interestRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -36,6 +37,7 @@ namespace WebApi.Controllers
             _logger = logger;
             this._context = _context;
             _bookmarkRepo = bookmarkRepo;
+            _interestRepo = interestRepo;
         }
 
         [HttpGet("user/{id}")]
@@ -503,6 +505,28 @@ namespace WebApi.Controllers
 
             return Ok(bookmarks);
         }
+
+        [HttpGet("me/interests")]
+        [Authorize]
+
+        public async Task<IActionResult> GetAllInterestsAsync()
+        {
+            // hämta användaren
+            var user = await _userManager.GetUserIdAsync(await _userManager.GetUserAsync(User));
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            //get interests
+
+            var interests = await _interestRepo.GetAllInterestsAsync(user);
+
+
+            return Ok(interests);
+        }
+
 
 
 
