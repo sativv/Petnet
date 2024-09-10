@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class hejhej : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -215,7 +215,7 @@ namespace WebApi.Migrations
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UploadDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -224,7 +224,8 @@ namespace WebApi.Migrations
                         name: "FK_Files_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -383,9 +384,9 @@ namespace WebApi.Migrations
                 columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "1974251e-be03-4b97-ab49-49282feffad7", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAEAPaMlmuOrzSValcslzg/Lg3SWRLQ2NyHTsktEBwkMZaYE1HwT1BlMYLQQya1wn9+A==", null, false, 0, null, "c767371a-0760-4f7f-a791-8bd6000fa17d", false, "Admin@petnet.com" },
-                    { "user1", null, 0, null, null, null, "e9e273b1-65ae-424b-ac57-a9c887766cea", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEBkDFv+ZWBAC615uRIZaSuB86DvfdGJXjgJ3Qzm5zlaSiwaFQYgip4LYZnsh8hrC6g==", null, false, 0, null, "39bd5a96-f001-4184-af26-953e0ffe9b6e", false, "user1@example.com" },
-                    { "user2", null, 0, null, null, null, "81db3356-daaf-41e4-8059-f47c38040efa", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEN7lP63N9VAmJ5KgaAvMFB+AsBw5AmPf6yJ08K/uI8pzOyhdoMW7B5tnrde9JT9pNQ==", null, false, 0, null, "96de7638-91b6-4d58-a4e9-e0fb418a0ebe", false, "user2@example.com" }
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "436b8836-bbd7-4517-8140-a3ef726703df", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAENQB9I0jqWw2uTdOsDoJyItcLwoL7k/RNTqU62lHQFhvIh4l+/1jPHAaZGTUw351Bg==", null, false, 0, null, "5a61408f-c04f-48a9-b055-73b232443dc2", false, "Admin@petnet.com" },
+                    { "user1", null, 0, null, null, null, "f485154a-7305-4268-9f57-1f5fc3cbb249", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEL+xonjxsyXJ1EdBHM0ohwMCWDxV6GL8LazejPK0gemMD+hrwq7XtDz1qkHnrnjP4Q==", null, false, 0, null, "3148b8f9-3dba-4a6f-a0a4-e66c5096170a", false, "user1@example.com" },
+                    { "user2", null, 0, null, null, null, "4df6b5d4-53e7-41f1-9530-b682f77f1643", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEGxa08TP34iykXfb4Mnz1t4lRVhMUx5RWkksrR+hIWAdje6WK4tPeAxh7Gmldiu47A==", null, false, 0, null, "25bbb24e-4909-4a06-8ef0-f2bf0c6f24f4", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(

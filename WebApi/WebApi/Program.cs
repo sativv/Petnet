@@ -30,6 +30,7 @@ builder.Services.AddScoped<QuizRepo>();
 builder.Services.AddScoped<BookmarkRepo>();
 builder.Services.AddScoped<ReviewRepo>();
 builder.Services.AddScoped<ReportRepo>();
+builder.Services.AddScoped<InterestRepo>();
 
 //builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 //    .AddEntityFrameworkStores<ApplicationDbContext>()
