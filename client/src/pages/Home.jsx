@@ -10,37 +10,42 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [isFiltering, setIsFiltering] = useState(false);
 
-  function searchByValue(array, string){
-         return array.filter(o => {
-               	return Object.keys(o).some(k => {
-                         	if(typeof o[k] === 'string') return o[k].toLowerCase().includes(string.toLowerCase());
-                               });
-                            }); }
+  function searchByValue(array, string) {
+    return array.filter((o) => {
+      return Object.keys(o).some((k) => {
+        if (typeof o[k] === "string")
+          return o[k].toLowerCase().includes(string.toLowerCase());
+      });
+    });
+  }
 
-  function filterAndSearch(search, type, gender){
-    let filtered = []
+  function filterAndSearch(search, type, gender) {
+    let filtered = [];
     let currentlyFiltering = false;
     // if(search === "" && type === "" && gender === ""){
-      
+
     // }
 
-    
-    if(gender !== ""){
-      filtered = (filtered.length > 0 ? filtered : posts).filter((post) => post.gender.toLowerCase() === gender.toLowerCase());
+    if (gender !== "") {
+      filtered = (filtered.length > 0 ? filtered : posts).filter(
+        (post) => post.gender.toLowerCase() === gender.toLowerCase()
+      );
       currentlyFiltering = true;
     }
-    if(type !== ""){
-      filtered = (filtered.length > 0 ? filtered : posts).filter((post) =>post.animalType === type);
+    if (type !== "") {
+      filtered = (filtered.length > 0 ? filtered : posts).filter(
+        (post) => post.animalType === type
+      );
       currentlyFiltering = true;
     }
 
-    if(search !== ""){
-      filtered = searchByValue((filtered.length > 0 ? filtered : posts), search);
+    if (search !== "") {
+      filtered = searchByValue(filtered.length > 0 ? filtered : posts, search);
       currentlyFiltering = true;
     }
-    console.log(filtered)
-    setIsFiltering(currentlyFiltering)
-    setFilteredPosts(filtered)
+    console.log(filtered);
+    setIsFiltering(currentlyFiltering);
+    setFilteredPosts(filtered);
   }
 
   useEffect(() => {
@@ -59,8 +64,8 @@ function Home() {
   }, []);
 
   return (
-    <div>
-        <FilterSearch filterAndSearch={filterAndSearch}/>
+    <div className="main-content">
+      <FilterSearch filterAndSearch={filterAndSearch} />
       <div className="post-container">
         {loading && <p>Loading posts..</p>}
         {isFiltering && filteredPosts.length <= 0 ? <p>Inga result</p> : <></>}
