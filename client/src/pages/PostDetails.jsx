@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStar as faRegStar } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { userContext } from "../App";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -9,15 +10,20 @@ function PostDetails() {
   const [isEditable, setIsEditable] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [isFavorite, setIsFavorite] = useState(false);
+  const { currentUser, setCurrentUser } = useContext(userContext);
+  const [postCreator, setPostCreator] = useState(``);
 
   const nav = useNavigate();
-
   var datenow = new Date();
   var currentDate = datenow.toISOString().substring(0, 10);
 
   const unlockEdit = () => {
     setIsEditable(true);
     setImageUrl(post.images[0] || "");
+  };
+
+  const cancelEdit = () => {
+    setIsEditable(false);
   };
 
   const checkIfBookmarked = async () => {
@@ -31,7 +37,6 @@ function PostDetails() {
       );
       if (response.ok) {
         const bookmarks = await response.json();
-
         const isBookmarked = bookmarks.includes(parseInt(postId));
         setIsFavorite(isBookmarked);
       } else {
@@ -44,7 +49,6 @@ function PostDetails() {
 
   const toggleFavorite = async () => {
     if (isFavorite) {
-      // Remove bookmark
       try {
         const response = await fetch(
           `https://localhost:7072/api/Account/RemoveBookmark/${postId}`,
@@ -65,7 +69,6 @@ function PostDetails() {
         console.error("Error removing bookmark:", error);
       }
     } else {
-      // Add bookmark
       try {
         const response = await fetch(
           "https://localhost:7072/api/Account/AddBookmark",
@@ -93,7 +96,6 @@ function PostDetails() {
     const isConfirmed = window.confirm(
       "Är du säker på att du vill ta bort annonsen?"
     );
-
     if (isConfirmed) {
       const response = await fetch(
         `https://localhost:7072/api/Post/RemovePost/${post.id}`,
@@ -102,7 +104,6 @@ function PostDetails() {
           credentials: "include",
         }
       );
-
       if (response.ok) {
         nav("/");
       }
@@ -115,11 +116,9 @@ function PostDetails() {
         const response = await fetch(
           `https://localhost:7072/api/Post/SinglePost/${postId}`
         );
-
         if (!response.ok) {
           throw new Error("Failed to fetch post data");
         }
-
         const data = await response.json();
         setPost(data);
       } catch (error) {
@@ -128,12 +127,38 @@ function PostDetails() {
     };
 
     fetchPost();
-    checkIfBookmarked(); // Check if the post is bookmarked when the component loads
+    checkIfBookmarked();
   }, [postId]);
+
+  useEffect(() => {
+    const getPostCreator = async () => {
+      if (post && post.applicationUserId) {
+        try {
+          const response = await fetch(
+            `https://localhost:7072/api/Account/user/${post.applicationUserId}`,
+            {
+              method: "GET",
+              credentials: "include",
+            }
+          );
+
+          if (response.ok) {
+            const userData = await response.json();
+            setPostCreator(userData.email);
+          } else {
+            console.error("Failed to fetch post creator");
+          }
+        } catch (error) {
+          console.error("Error fetching post creator:", error);
+        }
+      }
+    };
+
+    getPostCreator();
+  }, [post]);
 
   const handleSaveChanges = async (e) => {
     e.preventDefault();
-
     if (
       post.title === "" ||
       post.description === "" ||
@@ -147,12 +172,9 @@ function PostDetails() {
       alert("Alla fält måste vara ifyllda!");
       return;
     }
-
     const updatedImages = [...post.images];
     updatedImages[0] = imageUrl;
-
     post.applicationUser = {};
-
     try {
       const response = await fetch(
         `https://localhost:7072/api/Post/UpdatePost/${post.id}`,
@@ -164,7 +186,6 @@ function PostDetails() {
           body: JSON.stringify({ ...post, images: updatedImages }),
         }
       );
-
       if (response.ok) {
         setIsEditable(false);
         alert("Annonsen har uppdaterats!");
@@ -194,7 +215,9 @@ function PostDetails() {
             className="favIcon"
           />
         </div>
-        <a href="/profile/{post.applicationUserId}">{post.applicationUserId}</a>
+        <a href={`/profile/${post.applicationUserId}`}>
+          {postCreator || "Loading..."}
+        </a>
       </div>
       <div className="postContent">
         <form onSubmit={handleSaveChanges}>
@@ -316,10 +339,12 @@ function PostDetails() {
               />
             </p>
 
-            <button type="button" className="contactButton">
-              Ta Kontakt
-            </button>
-            {!isEditable && (
+            {currentUser.id !== post.applicationUserId && (
+              <button type="button" className="contactButton">
+                Ta Kontakt
+              </button>
+            )}
+            {!isEditable && currentUser.id === post.applicationUserId && (
               <div className="actionButtons">
                 <button
                   type="button"
@@ -337,10 +362,18 @@ function PostDetails() {
                 </button>
               </div>
             )}
+
             {isEditable && (
               <div className="actionButtons">
                 <button type="submit" className="editButton postBtn">
                   Spara Ändringar
+                </button>
+                <button
+                  type="button"
+                  className="cancelButton postBtn"
+                  onClick={cancelEdit}
+                >
+                  Avbryt
                 </button>
               </div>
             )}
