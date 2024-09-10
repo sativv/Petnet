@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class start : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -88,8 +88,8 @@ namespace WebApi.Migrations
                 {
                     ReportId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ReasonOfReport = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AdminComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReasonOfReport = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AdminComment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SendedReportUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReportedUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TimeReported = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -384,9 +384,9 @@ namespace WebApi.Migrations
                 columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "a5dfde70-3991-41ce-84cc-248ff9fc5484", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAEH2sItY/xlHol989sqphCLdP0ZWyVYKiodFY/g+05QuwEl7j0aI5pOogNpD8UTOHgw==", null, false, 0, null, "c4f7bd05-9ddd-4a1a-86a9-5c1a64ad24ba", false, "Admin@petnet.com" },
-                    { "user1", null, 0, null, null, null, "15257a86-4bfc-4646-9130-188e5cbe9113", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEFpoeXx8WpbWuWeaFSI7Bxa46EqxDUWMH8Xi1LC3gCFfEA5QrBUveuzQhjHGGe8bxw==", null, false, 0, null, "02f21ee6-8d30-4773-9b11-194a899453ee", false, "user1@example.com" },
-                    { "user2", null, 0, null, null, null, "3eb10ea9-356e-4fd7-be7a-c801dc863be8", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEA+viHANWDggXJlVFLPJR0evE+/F7X40HfCB7f4/bkYq+4gB6yaZhnLX3pw6XentWg==", null, false, 0, null, "ab72a5d5-9a5f-4aa6-8c42-09ab40217acf", false, "user2@example.com" }
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "78141341-ad12-47a3-b200-703144e32eca", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAEAf9iwALSeiN6yX6uQ+ack6+xGyZb3t1MaT5x0UEWshoHgt3kBABn/KXsG99TIGpKw==", null, false, 0, null, "2c87b445-978b-4ba3-bdb6-6ccb142c61e6", false, "Admin@petnet.com" },
+                    { "user1", null, 0, null, null, null, "50ca916c-aa0e-4d8a-bfc4-5f6d814688b6", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEKRJ3p06Xp10nDdtC6oNX7acTHwLevhH5nNukJmmuqJoCUtBUpuW4HQxjt0rGNLCaw==", null, false, 0, null, "0f8afa52-5328-4971-8962-501c8eb177aa", false, "user1@example.com" },
+                    { "user2", null, 0, null, null, null, "7cf3ffe2-4b24-4eb0-8504-cffde6994709", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAELnZudQWCKFu6pRjeE1/rZc5KtQR8IcUd3c/CCVFg1qw7W78143c7NlnYA3PrRrdZg==", null, false, 0, null, "cd741db5-d5ec-4513-b9ff-67b7fe6e54a0", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(

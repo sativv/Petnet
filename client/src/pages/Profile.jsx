@@ -95,47 +95,49 @@ function Profile() {
     }
   };
 
-  const handleSaveClick = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:5054/api/Account/me/about",
-        {
-          method: "PATCH",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            aboutMe,
-            organizationNumber,
-            organizationName,
-            buisnessContact,
-            adress,
-            postcode: parseInt(postcode, 10),
-            city,
-          }),
-        }
-      );
+const handleSaveClick = async () => {
+  try {
+    // Prepare the data to send to the server
+    const requestBody = {
+      aboutMe,
+      organizationNumber: organizationNumber ? parseInt(organizationNumber, 10) : null, // Ensure it's either a number or null
+      organizationName,
+      buisnessContact,
+      adress,
+      postcode: parseInt(postcode, 10), // Make sure postcode is a number
+      city,
+    };
 
-      if (response.ok) {
-        setCurrentUser((prevUser) => ({
-          ...prevUser,
-          aboutMe,
-          organizationNumber,
-          organizationName,
-          buisnessContact,
-          adress,
-          postcode: parseInt(postcode, 10),
-          city,
-        }));
-        setIsEditing(false);
-      } else {
-        console.error("Failed to update user information");
+    // Send the PATCH request
+    const response = await fetch(
+      "http://localhost:5054/api/Account/me/about",
+      {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody), // Send the prepared data
       }
-    } catch (error) {
-      console.error("Error during update:", error);
+    );
+
+    if (response.ok) {
+      // Update user information in the local state
+      setCurrentUser((prevUser) => ({
+        ...prevUser,
+        ...requestBody,
+      }));
+      setIsEditing(false);
+    } else {
+      // Log detailed error message
+      const errorData = await response.json();
+      console.error("Failed to update user information. Status:", response.status, "Response body:", errorData);
     }
-  };
+  } catch (error) {
+    console.error("Error during update:", error);
+  }
+};
+
 
   const calculateAverageRating = () => {
     if (reviews.length === 0) return 0;
