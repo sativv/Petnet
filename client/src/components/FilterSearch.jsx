@@ -14,7 +14,7 @@ function FilterSearch({ filterAndSearch }) {
       <div className="picture-container">
         <img className="filter-pic" src="/images/SearchPic.png" alt="" />
         <a href="/quiz" className="quiz-btn">
-          <button onclick>
+          <button>
             Vilket djur är rätt för mig <br />
             Ta vårt quiz!
           </button>
@@ -45,7 +45,7 @@ function FilterSearch({ filterAndSearch }) {
             <option value="">Alla</option>
             <option value="Hund">Hund</option>
             <option value="Katt">Katt</option>
-            <option value="Fågeö">Fågel</option>
+            <option value="Fågel">Fågel</option>
             <option value="Gnagare">Gnagare</option>
             <option value="Akvarium">Akvarium</option>
             <option value="Reptil">Reptil</option>

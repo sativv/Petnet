@@ -38,8 +38,6 @@ describe("Navbar for user not logged in", () => {
     cy.url().should("include", "/profileSearch");
     cy.contains("Användarregister");
 
-    //cy.url().should("not.contain", "/quiz");
-
     cy.get(".burgerIcon").click();
     cy.get('[href="/bookmarks"]').should("be.visible").click();
     cy.url().should("include", "/login");
@@ -55,7 +53,6 @@ describe("Navbar for user not logged in", () => {
     cy.get('.navbarMenu > [href="/login"]').should("be.visible").click();
     cy.url().should("include", "/login");
     cy.contains("Logga in");
-    //cy.url().should("not.contain", "/quiz");
   });
 });
 
@@ -136,6 +133,7 @@ describe("Navbar for user logged in", () => {
     cy.get(".badge-img");
     cy.url().should("not.contain", "/login");
 
+    cy.contains("Logga ut");
     cy.get(".navbarMenu > :nth-child(7)").should("be.visible").click();
     cy.url().should("include", "/login");
     cy.contains("Logga in");

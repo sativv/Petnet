@@ -1,5 +1,5 @@
 describe("User login", () => {
-  it("should log in a user successfuly", () => {
+  it("should log in a user successfully", () => {
     cy.visit("http://localhost:3000/login");
 
     cy.get(":nth-child(2) > .login-input").type("private@private.private");
