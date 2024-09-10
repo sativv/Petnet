@@ -14,7 +14,7 @@ function FilterSearch({ filterAndSearch }) {
       <div className="picture-container">
         <img className="filter-pic" src="/images/SearchPic.jpg" alt="" />
         <a href="/quiz" className="quiz-btn">
-          <button onclick>
+          <button>
             Vilket djur är rätt för mig <br />
             Ta vårt quiz!
           </button>
@@ -35,7 +35,6 @@ function FilterSearch({ filterAndSearch }) {
           <label htmlFor="type">Djurtyp</label>
           <select
             className="filter-input"
-            defaultValue={""}
             value={animalType}
             name="type"
             id=""
@@ -55,7 +54,6 @@ function FilterSearch({ filterAndSearch }) {
           <label htmlFor="gender">Kön</label>
           <select
             className="filter-input"
-            defaultValue={""}
             value={gender}
             name="gender"
             id=""
