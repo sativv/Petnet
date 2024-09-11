@@ -316,6 +316,7 @@ namespace WebApi.Controllers
                 {
                     u.Id,
                     u.UserName,
+                    u.IsVerified,
                     u.Email
                 })
                 .ToListAsync();
