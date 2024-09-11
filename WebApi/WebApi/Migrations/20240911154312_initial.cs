@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class initialcreate : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -266,7 +266,8 @@ namespace WebApi.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false),
                     ReviewerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ReviewedSellerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ReviewedSellerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    WrittenByUsername = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -384,9 +385,9 @@ namespace WebApi.Migrations
                 columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "d681326e-e100-4634-8c56-037306e3c05b", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAEKxjiXjGsPsya/4dCXa9nklvMYHirsYM01Ay0e3LDYyrGX+rfOm9ypy0MizZrMzUaw==", null, false, 0, null, "e4cf4896-df22-4b8c-b40a-90b4b0e8f8fb", false, "Admin@petnet.com" },
-                    { "user1", null, 0, null, null, null, "6c74e96c-021a-4255-8916-4c5a8458e207", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEErR3TWMiqCIgnDeWXEDZoGMjhSSB79FqmbHVIUJVjiBosiBVjtr7msF6ptrXZEwfg==", null, false, 0, null, "9882001a-6160-4817-b2fe-9b680b858183", false, "user1@example.com" },
-                    { "user2", null, 0, null, null, null, "205065ba-e517-431f-94ca-287443f3d5ab", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEGBrd8NtXrILbTKhtdITIaK2sKgtD7vt3A4iYBIYfubZrS7hruEsQqweDmN8k3sqFg==", null, false, 0, null, "8a91dc4d-b9db-4dce-b14b-7908e92dee5b", false, "user2@example.com" }
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "218b5a27-93b3-4672-982a-7069388d7977", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAEI0pSj2yQ7esrgqrhmE+5SSZothPUl8bF+rHkhGLSWPgyUDuMzB5Uq8ohdWfERjSjQ==", null, false, 0, null, "ef7ed391-ef7e-444f-8056-8f27356b87e9", false, "Admin@petnet.com" },
+                    { "user1", null, 0, null, null, null, "03084cc3-2811-4485-b460-dd52a6a3333e", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEJ21QIFov4SpMVTCwl4QXHfMBXRtEX3ZJ7QnEABk4vFYsS3pCMn7OMdpJZqe20dCfw==", null, false, 0, null, "e95796da-9ee5-45d5-b08a-fa106476ee92", false, "user1@example.com" },
+                    { "user2", null, 0, null, null, null, "bdb8c411-190d-4f86-8341-86d7aa4257b3", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEBy5e2zSGw3LY0XbJKTtUJue0bhaCMlP9GVRQRee3JNzggg5r3+Y41d/4cgsVSojAw==", null, false, 0, null, "0f6a013a-afa8-45ef-a64f-c852baa34f38", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -432,11 +433,11 @@ namespace WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "Reviews",
-                columns: new[] { "ReviewId", "Content", "Rating", "ReviewedSellerId", "ReviewerId" },
+                columns: new[] { "ReviewId", "Content", "Rating", "ReviewedSellerId", "ReviewerId", "WrittenByUsername" },
                 values: new object[,]
                 {
-                    { 1, "Great post!", 5, "user2", "user1" },
-                    { 2, "Very helpful.", 4, "user1", "user2" }
+                    { 1, "Great post!", 5, "user2", "user1", null },
+                    { 2, "Very helpful.", 4, "user1", "user2", null }
                 });
 
             migrationBuilder.InsertData(
