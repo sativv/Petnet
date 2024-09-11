@@ -242,7 +242,13 @@ const handleSaveClick = async () => {
     setReportProfileModal(false);
   }
 
-  const handleDeleteReview = async (reviewId) => {
+const handleDeleteReview = async (reviewId) => {
+  console.log("Review ID to delete:", reviewId);
+  if (!reviewId) {
+    console.error("No review ID provided");
+    return;
+  }
+
   try {
     const response = await fetch(`http://localhost:5054/review/RemoveReview/${reviewId}`, {
       method: "DELETE",
@@ -252,8 +258,7 @@ const handleSaveClick = async () => {
     });
 
     if (response.ok) {
-    
-      setReviews((prevReviews) => prevReviews.filter((r) => r.id !== reviewId));
+      setReviews((prevReviews) => prevReviews.filter((r) => r.reviewId !== reviewId));
     } else {
       console.error("Failed to delete review", response.status);
     }
@@ -430,7 +435,9 @@ const handleSaveClick = async () => {
             {reviews.length > 0 ? (
               <ul>
                 {reviews.map((review) => (
+                  
                   <li key={review.id}>
+                  
                     <p>
                       <strong>Betyg:</strong> {review.rating}
                     </p>
@@ -440,10 +447,11 @@ const handleSaveClick = async () => {
                      {review.writtenByUsername && (
                      <p>
                    <strong>Skriven av:</strong> {review.writtenByUsername}
+                   <p>Recensions-id: {review.reviewId}</p>
                   </p>
           )}
             {review.writtenByUsername === currentUser.userName && (
-        <button onClick={() => handleDeleteReview(review.id)}>
+        <button onClick={() => handleDeleteReview(review.reviewId)}>
           Ta bort recension
         </button>
       )}
