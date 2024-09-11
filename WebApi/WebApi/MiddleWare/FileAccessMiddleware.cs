@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using WebApi.Data;
 
 namespace WebApi.MiddleWare
@@ -18,42 +17,92 @@ namespace WebApi.MiddleWare
 
         public async Task InvokeAsync(HttpContext context)
         {
+            var requestPath = context.Request.Path.Value;
             // Om det inte är en begäran om en fil i FileUploads, fortsätt
-            if (!context.Request.Path.StartsWithSegments("/FileUploads"))
+            if (requestPath.StartsWith("/FileUploads") && context.Request.Query.ContainsKey("token"))
             {
-                await _next(context);
-                return;
-            }
+                var token = context.Request.Query["token"].ToString();
+                if (!string.IsNullOrEmpty(token))
+                {
+                    try
+                    {
+                        var decodedToken = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(token));
+                        Console.WriteLine($"Decoded Token: {decodedToken}");
+                        var parts = decodedToken.Split(':');
+                        if (parts.Length != 2)
+                        {
+                            Console.WriteLine("Token format invalid.");
+                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            return;
+                        }
 
-            // Kontrollera att användaren är autentiserad
-            if (!context.User.Identity.IsAuthenticated)
-            {
+                        var fileId = parts[0];
+                        var userId = parts[1];
+
+                        Console.WriteLine($"Decoded Token - FileId: {fileId}, UserId: {userId}");
+
+                        var currentUserId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                        if (currentUserId != userId)
+                        {
+                            Console.WriteLine($"User with ID {userId} not found.");
+                            context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                            return;
+                        }
+
+                        // Använd en ny scope för att skapa en databaskontext
+                        using (var scope = _scopeFactory.CreateScope())
+                        {
+                            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+                            var file = await dbContext.Files.FindAsync(int.Parse(fileId));
+
+                            if (file == null)
+                            {
+                                Console.WriteLine($"File with ID {fileId} not found.");
+                                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                                return;
+                            }
+
+                            // Check if the user has access to the file
+                            if (file.ApplicationUserId != currentUserId && !context.User.IsInRole("Admin"))
+                            {
+                                Console.WriteLine("Access denied for the file.");
+                                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                                return;
+                            }
+
+                            // Filvägen baserat på den privata mappen
+                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "FileUploads", Path.GetFileName(requestPath));
+
+                            if (!System.IO.File.Exists(filePath))
+                            {
+                                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                                return;
+                            }
+
+                            context.Response.ContentType = "application/octet-stream";
+                            await context.Response.SendFileAsync(filePath);
+                            return;
+                        }
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Token decoding failed: {ex.Message}");
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        return;
+                    }
+
+                }
+
+                Console.WriteLine("Token is missing.");
                 context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 return;
             }
 
-            var currentUserId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // Använd en ny scope för att skapa en databaskontext
-            using (var scope = _scopeFactory.CreateScope())
-            {
-                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-                // Hämta filmetadata från databasen
-                var files = await dbContext.Files
-                    .Where(f => f.ApplicationUserId == currentUserId).ToListAsync();
-
-                if (files == null || files.Count < 1)
-                {
-                    // Kontrollera om användaren är administratör
-                    var isAdmin = context.User.IsInRole("Admin");
-                    if (files[0].ApplicationUserId != currentUserId && !isAdmin)
-                    {
-                        context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                        return;
-                    }
-                }
-            }
             // Om alla kontroller är godkända, fortsätt till nästa middleware
             await _next(context);
         }
