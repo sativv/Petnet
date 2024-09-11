@@ -7,6 +7,12 @@ import pen from "../profile-images/pen.png";
 import star from "../profile-images/star.png";
 import "../App.css";
 import ReportProfileModal from "../components/ReportProfileModal";
+import Bird from './quizBadges/Bird.svg';
+import Cat from './quizBadges/Cat.svg';
+import Dog from './quizBadges/Dog.svg';
+import Rabbit from './quizBadges/Rabbit.svg';
+import Aquarium from './quizBadges/Aquarium.svg';
+import Reptile from './quizBadges/Reptile.svg';
 
 function Profile() {
   const [showReportProfileModal, setReportProfileModal] = useState(false);
@@ -19,6 +25,7 @@ function Profile() {
   const [organizationName, setOrganizationName] = useState("");
   const [buisnessContact, setBuisnessContact] = useState("");
   const [adress, setAdress] = useState("");
+   const [animal, setAnimal] = useState("");
   const [postcode, setPostcode] = useState("");
   const [city, setCity] = useState("");
   const [reviews, setReviews] = useState([]);
@@ -39,14 +46,16 @@ function Profile() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
+ 
         setProfile(data);
-
+        console.log('Fetched profile data:', data);
         // Update local state with profile data
         setAboutMe(data.aboutMe || "");
         setOrganizationNumber(data.organizationNumber || "");
         setOrganizationName(data.organizationName || "");
         setBuisnessContact(data.buisnessContact || "");
         setAdress(data.adress || "");
+        setAnimal(data.quizResult || "");
         setPostcode(data.postcode || "");
         setCity(data.city || "");
 
@@ -242,6 +251,25 @@ const handleSaveClick = async () => {
     setReportProfileModal(false);
   }
 
+    const getImageSrc = (animal) => {
+    switch (animal) {
+      case 'Dog':
+        return Dog;
+      case 'Cat':
+        return Cat;
+      case 'Rabbit':
+        return Rabbit;
+      case 'Bird':
+        return Bird;
+      case 'Aquarium':
+        return Aquarium;
+      case 'Reptile':
+        return Reptile;
+      default:
+        return '/images/default.jpg';
+    }
+  };
+
 const handleDeleteReview = async (reviewId) => {
   console.log("Review ID to delete:", reviewId);
   if (!reviewId) {
@@ -271,6 +299,7 @@ const handleDeleteReview = async (reviewId) => {
   return (
     <>
       <div className="profile-wrapper">
+ 
         <div className="profile-header-wrapper">
           {profile?.id === currentUser.id ? (
             <img
@@ -290,8 +319,20 @@ const handleDeleteReview = async (reviewId) => {
           <h1>
             {profile?.id === currentUser.id ? "Min profil" : "Användarprofil"}
           </h1>
+             
           <div className="profile-introduction-wrapper">
             <div className="profile-img-and-username">
+                   {currentUser.quizResult && (
+        <div>
+    
+          <img 
+  src={getImageSrc(currentUser.quizResult)} 
+  className="animal-badge" 
+  alt={`Image for ${currentUser.quizResult}`}
+/>
+
+        </div>
+      )}
               <img src={profile1} alt="profile1" className="profile-img" />
               <h2 className="username-profile">{profile?.email}</h2>
             </div>

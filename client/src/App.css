@@ -1045,15 +1045,13 @@ button {
 
 .profile-reviews-wrapper {
   background-color: #f9f9f9;
-  /* Light background for the reviews section */
+ width: 80vw;
   padding: 20px;
   /* Add padding to the section */
   border-radius: 10px;
-  /* Rounded corners */
   margin-top: 20px;
-  /* Add space from the section above */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  /* Soft shadow for some depth */
+
 }
 
 .profile-reviews-wrapper h2 {
@@ -1194,9 +1192,17 @@ h2 {
   text-transform: uppercase;
 }
 
+.animal-badge
+{
+  width: 140px;
+  height: auto;
+ margin-top: 10%;
+}
+
 .user-status {
   font-weight: bold;
 }
+
 /* Responsive styles */
 
 @media (max-width: 600px) {
