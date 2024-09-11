@@ -28,6 +28,13 @@ namespace WebApi.Repositories
             return await _context.Posts.ToListAsync();
         }
 
+        // Get posts by user
+
+        public async Task<List<PostModel>> GetByUser(string id)
+        {
+            return await _context.Posts.Where(p => p.ApplicationUserId == id).ToListAsync();
+        }
+
 
         // Make a post 
 
