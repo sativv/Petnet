@@ -4,6 +4,7 @@ import Post from "../components/Post";
 function BookMarkView() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [ownPosts, setOwnPosts] = useState([]);
 
   useEffect(() => {
     const fetchBookmarks = async () => {
@@ -51,7 +52,27 @@ function BookMarkView() {
         setLoading(false);
       }
     };
+    const fetchOwnPosts = async () => {
+      try {
+        const ownPostsResponse = await fetch(
+          "https://localhost:7072/api/Post/Own",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
 
+        if (!ownPostsResponse.ok) {
+          throw new Error("Failed to fetch own posts");
+        }
+
+        const posts = await ownPostsResponse.json();
+        setOwnPosts(posts);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchOwnPosts();
     fetchBookmarks();
   }, []);
 
@@ -60,7 +81,14 @@ function BookMarkView() {
   }
 
   return (
-    <div className="post-container">
+    <div className="post-container main-content">
+      <h2>Dina skapade annonser</h2>
+      {ownPosts.length > 0 ? (
+        ownPosts.map((post) => <Post key={post.id} Post={post} />)
+      ) : (
+        <p>Du har inga skapade annonser</p>
+      )}
+
       <h2>Dina Sparade Annonser</h2>
       {posts.length > 0 ? (
         posts.map((post) => <Post key={post.id} Post={post} />)
