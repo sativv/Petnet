@@ -161,6 +161,7 @@ function AddPost() {
           name=""
           id=""
           value={dateOfBirth}
+          required
           onChange={(e) => setDateOfBirth(e.target.value)}
         />
 
