@@ -186,7 +186,8 @@ const handleSaveClick = async () => {
           content: newReview.comment,
           rating: newReview.rating,
           reviewerId: currentUser.id,
-          reviewedSellerId: profileId,
+          writtenByUsername: currentUser.userName,
+          reviewedSellerId: profileId
         }),
       });
 
@@ -240,6 +241,27 @@ const handleSaveClick = async () => {
   function CloseModal() {
     setReportProfileModal(false);
   }
+
+  const handleDeleteReview = async (reviewId) => {
+  try {
+    const response = await fetch(`http://localhost:5054/review/RemoveReview/${reviewId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+    
+      setReviews((prevReviews) => prevReviews.filter((r) => r.id !== reviewId));
+    } else {
+      console.error("Failed to delete review", response.status);
+    }
+  } catch (error) {
+    console.error("Error deleting review:", error);
+  }
+};
+
 
   return (
     <>
@@ -415,6 +437,16 @@ const handleSaveClick = async () => {
                     <p>
                       <strong>Kommentar:</strong> {review.content}
                     </p>
+                     {review.writtenByUsername && (
+                     <p>
+                   <strong>Skriven av:</strong> {review.writtenByUsername}
+                  </p>
+          )}
+            {review.writtenByUsername === currentUser.userName && (
+        <button onClick={() => handleDeleteReview(review.id)}>
+          Ta bort recension
+        </button>
+      )}
                   </li>
                 ))}
               </ul>

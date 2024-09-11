@@ -1043,6 +1043,44 @@ button {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.profile-reviews-wrapper {
+  background-color: #f9f9f9;
+  /* Light background for the reviews section */
+  padding: 20px;
+  /* Add padding to the section */
+  border-radius: 10px;
+  /* Rounded corners */
+  margin-top: 20px;
+  /* Add space from the section above */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* Soft shadow for some depth */
+}
+
+.profile-reviews-wrapper h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.profile-reviews-wrapper ul {
+  list-style-type: none;
+  /* Remove default bullet points */
+  padding: 0;
+}
+
+.profile-reviews-wrapper li {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.profile-reviews-wrapper li p {
+  margin: 5px 0;
+  color: #555;
+}
+
 .review-header {
   display: flex;
   justify-content: space-between;
