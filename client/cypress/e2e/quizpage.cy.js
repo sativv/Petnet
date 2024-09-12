@@ -46,8 +46,8 @@ describe("Taking the quiz as a logged in user", () => {
     for (let i = 0; i < 15; i++) {
       cy.get("button").should("have.length", 7);
 
-      cy.get(".quiz-cont-questions > :nth-child(7)").click(); // Klickar på den första knappen
-      cy.get(".counter-and-btn > button").click(); // Klickar på den andra knappen
+      cy.get(".quiz-cont-questions > :nth-child(7)").click(); // Klickar på den sista knappen
+      cy.get(".counter-and-btn > button").click(); // Klickar på knappen "nästa"
     }
 
     //Result
