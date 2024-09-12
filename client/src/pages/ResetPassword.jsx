@@ -20,7 +20,7 @@ function ResetPassword() {
 
     if (!passwordRegex.test(password)) {
       alert(
-        "Password must be at least 6 characters long and contain at least one number, one uppercase letter, and one lowercase letter."
+        "Lösenordet måste vara minst 6 tecken långt och innehålla minst ett nummer och ett specialtecken!"
       );
       return;
     }
@@ -61,7 +61,6 @@ function ResetPassword() {
         }, 2000);
       })
       .catch((error) => {
-        console.error("Error:", error);
         setMessage(
           error.message ||
             "An unexpected error occurred. Please try again later."
@@ -70,32 +69,34 @@ function ResetPassword() {
   };
 
   return (
-    <div className="reset-password-container">
-      <h2>Reset Password</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="reset-password-input">
-          <label className="label-reset-password">New Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="reset-password-input">
-          <label className="label-reset-password">Confirm Password:</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button className="reset-password-button" type="submit">
-          Reset Password
-        </button>
-      </form>
-      {message && <p>{message}</p>}
+    <div className="reset-password-outer">
+      <div className="reset-password-container">
+        <h2>Reset Password</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="reset-password-input">
+            <label className="label-reset-password">New Password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="reset-password-input">
+            <label className="label-reset-password">Confirm Password:</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button className="reset-password-button" type="submit">
+            Reset Password
+          </button>
+        </form>
+        {message && <p>{message}</p>}
+      </div>
     </div>
   );
 }

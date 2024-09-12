@@ -32,7 +32,6 @@ function ForgetPasswordModal(props) {
         setMessage(data.message || "Email sent to your email address.");
       })
       .catch((error) => {
-        console.error("Error:", error);
         setMessage(
           error.message ||
             "An unexpected error occurred. Please try again later."

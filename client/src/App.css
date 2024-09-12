@@ -246,43 +246,132 @@ a {
   border: 2px solid gray;
   padding: 1%;
   color: #729762;
+  max-width: 400px;
 }
 
 .forget-password-modal-close-btn {
-  align-self: end;
+  align-self: flex-end;
   border: none;
   background-color: transparent;
   color: black;
+  margin: 0;
+  padding: 0;
+}
+
+.email-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Lägger lite mellanrum mellan label och input */
+  flex-wrap: wrap; /* Gör att inputfältet bryts till nästa rad vid behov */
+}
+
+.email-input-container label {
+  flex-shrink: 0; /* Gör så att label inte krymper när skärmen blir mindre */
+  width: 80px; /* Fixerad bredd för label */
+}
+
+.email-input-container input {
+  flex-grow: 1; /* Gör så att input-rutan tar upp resterande utrymme */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* För att paddingen inte ska påverka bredden */
+  min-width: 0; /* Tillåter att input krymper om utrymmet är litet */
+}
+
+@media (max-width: 400px) {
+  .forget-password-modal {
+    width: 100%; /* Använd hela skärmbredden på väldigt små skärmar */
+    padding: 10px;
+  }
+
+  .email-input-container {
+    flex-direction: column; /* Ändra till vertikal layout på små skärmar */
+  }
+
+  .email-input-container label {
+    width: auto; /* Gör labeln flexibel på små skärmar */
+  }
 }
 
 /* =======================================
    ResetPassword-page
    ======================================= */
 
+.reset-password-outer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full höjd för att centrera vertikalt */
+}
 .reset-password-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-
   align-items: center;
-}
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto; /* Centera på sidan */
 
+  background-color: #fff;
+}
 .reset-password-input {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin: 1%;
+  width: 100%; /* Låt input fylla hela behållaren */
+  margin-bottom: 15px;
 }
 
-.label-reset-password {
-  margin-right: 3%;
+.reset-password-input label {
+  flex: 0 0 35%; /* Label tar 35% av tillgängligt utrymme */
+  text-align: right;
+  margin-right: 10px; /* Avstånd mellan label och input */
+}
 
-  width: 15vw;
-  display: flex;
-  justify-content: flex-end;
+.reset-password-input input {
+  flex: 1; /* Input tar upp resten av utrymmet */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Se till att padding inte påverkar bredden */
 }
 
 .reset-password-button {
-  margin-top: 3%;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.reset-password-button:hover {
+  background-color: #0056b3; /* Ändra färg vid hover */
+}
+
+@media (max-width: 400px) {
+  .reset-password-container {
+    padding: 10px;
+    max-width: 100%; /* Fyll skärmen på små enheter */
+  }
+
+  .reset-password-input {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reset-password-input label {
+    flex: none;
+    text-align: left;
+    margin-bottom: 5px;
+  }
+
+  .reset-password-input input {
+    width: 100%;
+  }
 }
 
 /* =======================================
@@ -491,10 +580,6 @@ a {
   color: white;
   text-align: left;
 }
-
-
-
-
 
 @media (min-width: 768px) {
   .footerLogo {
