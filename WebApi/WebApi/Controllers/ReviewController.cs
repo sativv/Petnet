@@ -50,6 +50,7 @@ namespace WebApi.Controllers
                 Content = reviewDto.Content,
                 Rating = reviewDto.Rating,
                 ReviewerId = reviewDto.ReviewerId,
+                WrittenByUsername = reviewDto.WrittenByUsername,
                 ReviewedSellerId = reviewDto.ReviewedSellerId,
             };
 
@@ -61,7 +62,7 @@ namespace WebApi.Controllers
         }
 
 
-        [HttpDelete("RemovePost/{id}")]
+        [HttpDelete("RemoveReview/{id}")]
         public async Task<IActionResult> RemoveReviewAsync(int id)
         {
             var reviewToRemove = await reviewRepo.GetReviewAsync(id);

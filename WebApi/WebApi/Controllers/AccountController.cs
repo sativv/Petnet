@@ -62,6 +62,7 @@ namespace WebApi.Controllers
                 user.OrganizationName,
                 user.OrganizationNumber,
                 user.PhoneNumber,
+                user.QuizResult,
                 user.City,
                 user.Adress,
                 user.BuisnessContact,
@@ -157,6 +158,7 @@ namespace WebApi.Controllers
                 user.OrganizationName,
                 user.OrganizationNumber,
                 user.PhoneNumber,
+                user.QuizResult,
                 user.City,
                 user.Adress,
                 user.BuisnessContact,
@@ -316,6 +318,7 @@ namespace WebApi.Controllers
                 {
                     u.Id,
                     u.UserName,
+                    u.IsVerified,
                     u.Email
                 })
                 .ToListAsync();
