@@ -8,14 +8,14 @@ describe("Home page should have serach functionality and adds", () => {
       // Klicka på logga in-knappen
       cy.get(".login-button").click();
       cy.wait(500);
-      // Verifiera att användaren är omdirigerad till dashboard eller en annan skyddad sida
+      // Användaren skickas till home
       cy.url().should("include", "/");
     });
   });
 
   it("should get you to quiz when pressing the take quiz button when user is logged in", () => {
     cy.visit("http://localhost:3000");
-    cy.wait(2000); // Vänta i 2 sekunder för autentisering
+    cy.wait(2000);
     cy.contains("Ta vårt quiz!").click();
     cy.contains("QUIZ");
     cy.contains("Vilket djur passar dig bäst?");
@@ -24,7 +24,7 @@ describe("Home page should have serach functionality and adds", () => {
 
   it("should have a functional searchbar", () => {
     cy.visit("http://localhost:3000");
-    cy.wait(1000); // Vänta i 2 sekunder för autentisering
+    cy.wait(1000);
     cy.get(".bigAdContainer").should("exist");
 
     cy.get(".bigAdContainer")
@@ -55,33 +55,35 @@ describe("Home page should have serach functionality and adds", () => {
       "Alla",
     ];
 
-    cy.wait(1000); // Vänta i 2 sekunder för autentisering
+    cy.wait(1000);
     cy.get(".bigAdContainer").should("exist");
+    //Räknar hur många bigAdContainers som genereras vid start och sätter variabeln beforeCount
     cy.get(".bigAdContainer")
       .its("length")
       .then((beforeCount) => {
+        //Loopar igenom valen av djur
         filterType.forEach((str) => {
           cy.contains(str).should("exist");
 
+          //Väljer valet i listan som stämmer överens med strängen som loopen är på
           //Ligger en div ovanför så behöver vara superspecifik
           cy.get(`select.filter-input[name="type"]`).select(`${str}`);
           cy.wait(500);
 
           cy.get("body").then(($body) => {
-            // Kontrollera om .bigAdContainer finns på sidan
+            // Kontrollera om .bigAdContainer finns på sidan efter sorteringen
             const hasBigAdContainer = $body.find(".bigAdContainer").length > 0;
             if (hasBigAdContainer) {
               // Räkna antalet element efter filtrering
               cy.get(".bigAdContainer")
                 .its("length")
                 .then((afterCount) => {
-                  // Exempel på jämförelse
                   if (str !== "Alla") {
+                    //Om strängen inte är alla borde det finnas färre element efter sorteringen
                     expect(afterCount).to.be.lessThan(beforeCount);
-                  } else expect(beforeCount).to.be.equal(afterCount);
+                  } //Om strängen är alla borde det finnas lika många element innan som efter filtreringen
+                  else expect(beforeCount).to.be.equal(afterCount);
                 });
-            } else {
-              expect(beforeCount).to.be.greaterThan(0); // Exempel på jämförelse
             }
           });
         });
@@ -94,7 +96,7 @@ describe("Home page should have serach functionality and adds", () => {
     const filterType = ["Hona", "Hane", "Båda"];
     let count = 0;
 
-    cy.wait(1000); // Vänta i 2 sekunder för autentisering
+    cy.wait(1000);
     cy.get(".bigAdContainer").should("exist");
     cy.get(".bigAdContainer")
       .its("length")
@@ -102,32 +104,31 @@ describe("Home page should have serach functionality and adds", () => {
         filterType.forEach((str) => {
           cy.contains(str).should("exist");
 
-          //Ligger en div ovanför så behöver vara superspecifik
           cy.get(`select.filter-input[name="gender"]`).select(`${str}`);
           cy.wait(500);
 
           cy.get("body").then(($body) => {
-            // Kontrollera om .bigAdContainer finns på sidan
             const countBigAdContainer = $body.find(".bigAdContainer").length;
             if (countBigAdContainer > 0) {
               for (let i = 1; countBigAdContainer >= i; i++) {
+                if (str !== "Båda") {
+                  cy.get(
+                    `:nth-child(${i}) > .bigAdSide > :nth-child(2)`
+                  ).should("contain", `Kön: ${str}`);
+                }
                 cy.get(`:nth-child(${i}) > .bigAdSide > :nth-child(2)`).should(
                   "contain",
-                  `Kön: ${str}` || "Kön: Båda"
+                  "Kön: Hona" || "Kön: Båda" || "Kön: Hane"
                 );
               }
 
-              // Räkna antalet element efter filtrering
               cy.get(".bigAdContainer")
                 .its("length")
                 .then((afterCount) => {
-                  // Exempel på jämförelse
                   if (str !== "Båda") {
                     expect(afterCount).to.be.lessThan(beforeCount);
                   } else expect(beforeCount).to.be.equal(afterCount);
                 });
-            } else {
-              expect(beforeCount).to.be.greaterThan(0); // Exempel på jämförelse
             }
           });
         });
