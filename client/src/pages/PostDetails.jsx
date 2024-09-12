@@ -3,6 +3,7 @@ import { faStar, faStar as faRegStar } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { userContext } from "../App";
+import InterestsModal from "../components/InterestsModal";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -13,6 +14,8 @@ function PostDetails() {
   const [isInterested, setIsInterested] = useState(false);
   const { currentUser, setCurrentUser } = useContext(userContext);
   const [postCreator, setPostCreator] = useState(``);
+  const [interests, setInterests] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const nav = useNavigate();
   var datenow = new Date();
@@ -62,6 +65,7 @@ function PostDetails() {
         const interests = await response.json();
         const isInterested = interests.includes(parseInt(postId));
         setIsInterested(isInterested);
+        setInterests(interests);
       } else {
         console.error("Failed to fetch interests");
       }
@@ -274,6 +278,13 @@ function PostDetails() {
     <div className="postCard">
       <div className="postImage">
         <img src={post.images[0]} alt={post.title} />
+        {currentUser.id === post.applicationUserId && (
+          <div>
+            <a onClick={() => setModalOpen(true)}>
+              Intressenter: {interests.length}{" "}
+            </a>
+          </div>
+        )}
         <div className="favoriteIcon favoriteDiv" onClick={toggleFavorite}>
           <p>Spara Annons</p>
           <FontAwesomeIcon
@@ -455,6 +466,13 @@ function PostDetails() {
           </div>
         )}
       </div>
+      <InterestsModal
+        isOpen={modalOpen}
+        postId={postId}
+        onClose={() => setModalOpen(false)}
+      >
+        <h2>Intressenter</h2>
+      </InterestsModal>
     </div>
   );
 }

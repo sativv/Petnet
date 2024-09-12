@@ -67,7 +67,7 @@ function Login() {
         console.log(data);
         setCurrentUser(data);
 
-        nav(`/profile/${currentUser.id}`);
+        nav(`/`);
       }
     } catch (error) {
       console.error("Error during fetch:", error);
