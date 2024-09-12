@@ -29,16 +29,19 @@ function Register() {
     const formData = new FormData();
 
     // Lägg till registreringsdata
-    formData.append("Email", email);
+    formData.append("Email", email.trim());
     formData.append("Password", password);
     formData.append("IsPrivateSeller", isBreeder ? "false" : "true");
     formData.append("IsVerified", isBreeder ? "false" : "");
     formData.append("OrganizationNumber", isBreeder ? organizationNumber : "");
-    formData.append("OrganizationName", isBreeder ? organizationName : "");
-    formData.append("BuisnessContact", isBreeder ? buisnessContact : "");
-    formData.append("Adress", isBreeder ? adress : "");
+    formData.append(
+      "OrganizationName",
+      isBreeder ? organizationName.trim() : ""
+    );
+    formData.append("BuisnessContact", isBreeder ? buisnessContact.trim() : "");
+    formData.append("Adress", isBreeder ? adress.trim() : "");
     formData.append("Postcode", isBreeder ? postcode : "");
-    formData.append("City", isBreeder ? city : "");
+    formData.append("City", isBreeder ? city.trim() : "");
     formData.append("PhoneNumber", isBreeder ? phone : "");
 
     // Lägg till filen om den finns
@@ -219,21 +222,21 @@ function Register() {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value.trim())}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
             <label>Lösenord</label>
             <input
               type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value.trim())}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             <label>Upprepa lösenord</label>
             <input
               type="password"
               value={passwordAgain}
-              onChange={(e) => setPasswordAgain(e.target.value.trim())}
+              onChange={(e) => setPasswordAgain(e.target.value)}
               required
             />
             {isBreeder && (
@@ -254,21 +257,21 @@ function Register() {
                 <input
                   type="text"
                   value={organizationName}
-                  onChange={(e) => setOrganizationName(e.target.value.trim())}
+                  onChange={(e) => setOrganizationName(e.target.value)}
                   required
                 />
                 <label>Kontaktperson</label>
                 <input
                   type="text"
                   value={buisnessContact}
-                  onChange={(e) => setBuisnessContact(e.target.value.trim())}
+                  onChange={(e) => setBuisnessContact(e.target.value)}
                   required
                 />
                 <label>Adress</label>
                 <input
                   type="text"
                   value={adress}
-                  onChange={(e) => setAdress(e.target.value.trim())}
+                  onChange={(e) => setAdress(e.target.value)}
                   required
                 />
                 <label>Postnummer</label>
@@ -285,7 +288,7 @@ function Register() {
                 <input
                   type="text"
                   value={city}
-                  onChange={(e) => setCity(e.target.value.trim())}
+                  onChange={(e) => setCity(e.target.value)}
                   required
                 />
                 <label>Telefonnummer</label>

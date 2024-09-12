@@ -60,19 +60,21 @@ describe("Navbar for user logged in", () => {
   beforeEach(() => {
     cy.session("user-session", () => {
       cy.visit("http://localhost:3000/login");
+      cy.url().should("include", "/login");
+
+      cy.get("form").should("be.visible");
+
       cy.get(":nth-child(2) > .login-input").type("user1@example.com");
       // Fyll i lösenord
       cy.get(":nth-child(3) > .login-input").type("user1*123");
       // Klicka på logga in-knappen
       cy.get(".login-button").click();
-      cy.wait(500);
-      // Klicka på logga in-knappen
-      cy.get(".login-button").click();
-      // Verifiera att användaren är omdirigerad till dashboard eller en annan skyddad sida
-      cy.url().should("include", "/profile");
+      // Användaren skickas till home
+      cy.url().should("include", "/");
 
-      // Verifiera att en viss text eller element finns på sidan, vilket bekräftar att användaren är inloggad
+      // Kolla efter element som endast visas om man är innloggad
       cy.contains("Min profil");
+      cy.contains("Logga ut");
     });
   });
   it("should have links and user should get access to all pages in navbar", () => {
