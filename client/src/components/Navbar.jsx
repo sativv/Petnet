@@ -50,10 +50,16 @@ function Navbar() {
 
       <div className={`navbarMenu ${isToggled ? "active" : ""}`}>
         <a href="/">Hemsida</a>
-        <a href="/quiz">Quiz</a>
-        <a href="/addpost">Ny annons</a>
-        <a href="/profileSearch">Sök profil</a>
-        <a href="/bookmarks">Bokmärken</a>
+        {currentUser ? (
+          <>
+            <a href="/quiz">Quiz</a>
+            <a href="/addpost">Ny annons</a>
+            <a href="/profileSearch">Sök profil</a>
+            <a href="/bookmarks">Mina annonser</a>
+          </>
+        ) : (
+          <></>
+        )}
 
         {currentUser ? (
           <a onClick={goToProfile} className="noBtn">
