@@ -44,7 +44,7 @@ function FilterSearch({ filterAndSearch }) {
             <option value="">Alla</option>
             <option value="Hund">Hund</option>
             <option value="Katt">Katt</option>
-            <option value="Fågeö">Fågel</option>
+            <option value="Fågel">Fågel</option>
             <option value="Gnagare">Gnagare</option>
             <option value="Akvarium">Akvarium</option>
             <option value="Reptil">Reptil</option>

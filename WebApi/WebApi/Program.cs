@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 using System.Text.Json.Serialization;
 using WebApi.Data;
 using WebApi.MiddleWare;
@@ -99,16 +98,12 @@ if (app.Environment.IsDevelopment())
 
 }
 app.UseHttpsRedirection();
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "FileUploads")),
-    RequestPath = "/FileUploads"
-});
-app.UseMiddleware<FileAccessMiddleware>();
+
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<FileAccessMiddleware>();
+
 
 app.MapIdentityApi<ApplicationUser>();
 app.MapControllers();
