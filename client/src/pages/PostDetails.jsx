@@ -182,6 +182,10 @@ function PostDetails() {
   };
 
   useEffect(() => {
+    // //Sidan krachar om man inte är inloggad, skickas nu till login
+    // if (currentUser === null) {
+    //   nav("/login");
+    // }
     const fetchPost = async () => {
       try {
         const response = await fetch(
@@ -344,9 +348,9 @@ function PostDetails() {
                 onChange={(e) => setPost({ ...post, gender: e.target.value })}
                 className="postInput"
               >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Mixed">Mixed</option>
+                <option value="Male">Hane</option>
+                <option value="Female">Hona</option>
+                <option value="Mixed">Båda</option>
                 <option value="N/A">N/A</option>
               </select>
             </label>

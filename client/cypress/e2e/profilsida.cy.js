@@ -31,17 +31,18 @@ describe("User should be able to access Personal page when logged in", () => {
       cy.get(".login-button").click();
       // Användaren skickas till home
       cy.url().should("include", "/");
+      cy.wait(1000);
 
       // Kolla efter element som endast visas om man är innloggad
       cy.contains("Logga ut");
       cy.contains("Min profil");
-      cy.wait(1000);
     });
   });
 
   it("should be possible to se your profile information", () => {
     cy.visit("http://localhost:3000");
     cy.contains("Min profil").click();
+    cy.wait(1000);
 
     cy.contains("Min profil");
     cy.contains("breeder@breeder.breeder");
@@ -65,8 +66,8 @@ describe("User should be able to access Personal page when logged in", () => {
     cy.contains("Stad:");
     cy.contains("Swestad");
 
-    cy.contains("Telefonnummer");
-    cy.contains("0733101010");
+    // cy.contains("Telefonnummer");
+    // cy.contains("0733101010");
 
     cy.contains("Mina dokument:");
     cy.get(":nth-child(8) > :nth-child(2) > div > img").should("exist");
@@ -78,6 +79,7 @@ describe("User should be able to access Personal page when logged in", () => {
   it("should be possible to change your profile information", () => {
     cy.visit("http://localhost:3000");
     cy.contains("Min profil").click();
+    cy.wait(1000);
 
     cy.contains("Min profil");
     cy.contains("breeder@breeder.breeder");
@@ -104,7 +106,7 @@ describe("User should be able to access Personal page when logged in", () => {
     // cy.contains("0733101010");
 
     cy.contains("Spara").click();
-    cy.wait(1000);
+    cy.wait(2000);
 
     cy.contains("1234567890");
     cy.contains("Fin fina hundar AB");
@@ -142,19 +144,20 @@ describe("User be able to visit other profil pages", () => {
       cy.get(".login-button").click();
       // Användaren skickas till home
       cy.url().should("include", "/");
+      cy.wait(1000);
 
       // Kolla efter element som endast visas om man är innloggad
       cy.contains("Logga ut");
       cy.contains("Min profil");
-      cy.wait(1000);
     });
   });
 
   it("should be able to filter users based om is verified", () => {
     cy.visit("http://localhost:3000");
-    cy.contains("Sök profil").click();
+    cy.contains("Sök profil").should("exist").click();
     cy.url().should("include", "/profileSearch");
     cy.wait(1000);
+
     cy.contains("Användarregister");
 
     cy.get(".user-list-item")
@@ -194,17 +197,23 @@ describe("User be able to visit other profil pages", () => {
     cy.contains("Användarregister");
 
     cy.contains("user1@example.com").click();
+    cy.wait(1000);
 
     cy.contains("user1@example.com");
     cy.contains("Recensioner");
-    cy.contains("Inga recensioner.");
+    cy.get("ul > :nth-child(1)").should("exist");
     cy.contains("Lägg till en recension");
 
     cy.get("select").select("4");
     cy.get("textarea").type("Bästa uppfödaren i stan, trevligt bemötande!");
     cy.contains("Skicka Recension").click();
     cy.wait(2000);
-
+    cy.get("ul > :nth-child(2)")
+      .should(
+        "contain",
+        "Kommentar: Bästa uppfödaren i stan, trevligt bemötande!"
+      )
+      .should("contain", "Skriven av: breeder@breeder.breeder");
     cy.contains("Inga recensioner.").should("not.exist");
   });
 

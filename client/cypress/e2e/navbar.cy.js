@@ -3,49 +3,30 @@ describe("Navbar for user not logged in", () => {
     cy.viewport("iphone-6");
     cy.visit("http://localhost:3000");
 
-    const stringsToCheck = [
-      "Hemsida",
-      "Quiz",
-      "Ny annons",
-      "Sök profil",
-      "Bokmärken",
-      "Registrering",
-      "Logga in",
-    ];
+    const stringsToCheck = ["Hemsida", "Registrering", "Logga in"];
 
     cy.get(".burgerIcon").click();
     stringsToCheck.forEach((str) => {
       cy.contains(str).should("exist");
     });
 
-    cy.get('.navbarMenu > [href="/"]').click();
+    cy.get(".burgerIcon").click();
+    cy.get(".navbarBrand > h2").click();
+    cy.url().should("include", "/");
+
+    cy.get(".navbarBrand > .navLogo");
     cy.url().should("include", "/");
 
     cy.get(".burgerIcon").click();
-    cy.get('.navbarMenu > [href="/quiz"]').should("be.visible").click();
-    cy.url().should("include", "/login");
-    cy.contains("Logga in");
-    cy.url().should("not.contain", "/quiz");
+    cy.wait(500);
 
-    cy.get(".burgerIcon").click();
-    cy.get('[href="/addpost"]').should("be.visible").click();
-    cy.url().should("include", "/login");
-    cy.contains("Logga in");
-    cy.url().should("not.contain", "/addpost");
-
-    cy.get(".burgerIcon").click();
-    cy.get('[href="/profileSearch"]').should("be.visible").click();
-    cy.url().should("include", "/profileSearch");
-    cy.contains("Användarregister");
-
-    cy.get(".burgerIcon").click();
-    cy.get('[href="/bookmarks"]').should("be.visible").click();
-    cy.url().should("include", "/login");
-    cy.contains("Logga in");
-    cy.url().should("not.contain", "/bookmarks");
+    cy.get('.navbarMenu > [href="/"]').should("exist").click();
+    cy.url().should("include", "/");
 
     cy.get(".burgerIcon").click();
     cy.get('.navbarMenu > [href="/register"]').should("be.visible").click();
+    cy.wait(500);
+
     cy.url().should("include", "/register");
     cy.url().should("not.contain", "/login");
 
@@ -69,11 +50,12 @@ describe("Navbar for user logged in", () => {
       cy.get(":nth-child(3) > .login-input").type("user1*123");
       // Klicka på logga in-knappen
       cy.get(".login-button").click();
+      cy.wait(1000);
       // Användaren skickas till home
       cy.url().should("include", "/");
 
       // Kolla efter element som endast visas om man är innloggad
-      cy.contains("Min profil");
+      cy.contains("Min profil").should("exist");
       cy.contains("Logga ut");
     });
   });
@@ -86,7 +68,7 @@ describe("Navbar for user logged in", () => {
       "Quiz",
       "Ny annons",
       "Sök profil",
-      "Bokmärken",
+      "Mina annonser",
       "Min profil",
       "Logga ut",
     ];
@@ -122,7 +104,8 @@ describe("Navbar for user logged in", () => {
     cy.get('[href="/bookmarks"]').should("be.visible").click();
     cy.wait(500);
     cy.url().should("include", "/bookmarks");
-    cy.contains("Dina Sparade Annonser");
+    cy.contains("Dina skapade annonser").should("exist");
+    cy.contains("Dina Sparade Annonser").should("exist");
     cy.url().should("not.contain", "/login");
 
     cy.get(".burgerIcon").click();

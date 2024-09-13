@@ -7,7 +7,7 @@ describe("Home page should have serach functionality and adds", () => {
       cy.get(":nth-child(3) > .login-input").type("user1*123");
       // Klicka på logga in-knappen
       cy.get(".login-button").click();
-      cy.wait(500);
+      cy.wait(2000);
       // Användaren skickas till home
       cy.url().should("include", "/");
     });
