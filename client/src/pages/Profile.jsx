@@ -7,6 +7,12 @@ import pen from "../profile-images/pen.png";
 import star from "../profile-images/star.png";
 import "../App.css";
 import ReportProfileModal from "../components/ReportProfileModal";
+import Bird from "./quizBadges/Bird.svg";
+import Cat from "./quizBadges/Cat.svg";
+import Dog from "./quizBadges/Dog.svg";
+import Rabbit from "./quizBadges/Rabbit.svg";
+import Aquarium from "./quizBadges/Aquarium.svg";
+import Reptile from "./quizBadges/Reptile.svg";
 
 function Profile() {
   const [showReportProfileModal, setReportProfileModal] = useState(false);
@@ -19,6 +25,7 @@ function Profile() {
   const [organizationName, setOrganizationName] = useState("");
   const [buisnessContact, setBuisnessContact] = useState("");
   const [adress, setAdress] = useState("");
+  const [animal, setAnimal] = useState("");
   const [postcode, setPostcode] = useState("");
   const [city, setCity] = useState("");
   const [reviews, setReviews] = useState([]);
@@ -39,14 +46,16 @@ function Profile() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setProfile(data);
 
+        setProfile(data);
+        console.log("Fetched profile data:", data);
         // Update local state with profile data
         setAboutMe(data.aboutMe || "");
         setOrganizationNumber(data.organizationNumber || "");
         setOrganizationName(data.organizationName || "");
         setBuisnessContact(data.buisnessContact || "");
         setAdress(data.adress || "");
+        setAnimal(data.quizResult || "");
         setPostcode(data.postcode || "");
         setCity(data.city || "");
 
@@ -192,6 +201,7 @@ function Profile() {
           content: newReview.comment,
           rating: newReview.rating,
           reviewerId: currentUser.id,
+          writtenByUsername: currentUser.userName,
           reviewedSellerId: profileId,
         }),
       });
@@ -247,6 +257,55 @@ function Profile() {
     setReportProfileModal(false);
   }
 
+  const getImageSrc = (animal) => {
+    switch (animal) {
+      case "Dog":
+        return Dog;
+      case "Cat":
+        return Cat;
+      case "Rabbit":
+        return Rabbit;
+      case "Bird":
+        return Bird;
+      case "Aquarium":
+        return Aquarium;
+      case "Reptile":
+        return Reptile;
+      default:
+        return "/images/default.jpg";
+    }
+  };
+
+  const handleDeleteReview = async (reviewId) => {
+    console.log("Review ID to delete:", reviewId);
+    if (!reviewId) {
+      console.error("No review ID provided");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:5054/review/RemoveReview/${reviewId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        setReviews((prevReviews) =>
+          prevReviews.filter((r) => r.reviewId !== reviewId)
+        );
+      } else {
+        console.error("Failed to delete review", response.status);
+      }
+    } catch (error) {
+      console.error("Error deleting review:", error);
+    }
+  };
+
   return (
     <>
       <div className="profile-wrapper">
@@ -269,8 +328,18 @@ function Profile() {
           <h1>
             {profile?.id === currentUser.id ? "Min profil" : "Användarprofil"}
           </h1>
+
           <div className="profile-introduction-wrapper">
             <div className="profile-img-and-username">
+              {currentUser.quizResult && (
+                <div>
+                  <img
+                    src={getImageSrc(currentUser.quizResult)}
+                    className="animal-badge"
+                    alt={`Image for ${currentUser.quizResult}`}
+                  />
+                </div>
+              )}
               <img src={profile1} alt="profile1" className="profile-img" />
               <h2 className="username-profile">{profile?.email}</h2>
             </div>
@@ -421,6 +490,19 @@ function Profile() {
                     <p>
                       <strong>Kommentar:</strong> {review.content}
                     </p>
+                    {review.writtenByUsername && (
+                      <p>
+                        <strong>Skriven av:</strong> {review.writtenByUsername}
+                        <p>Recensions-id: {review.reviewId}</p>
+                      </p>
+                    )}
+                    {review.writtenByUsername === currentUser.userName && (
+                      <button
+                        onClick={() => handleDeleteReview(review.reviewId)}
+                      >
+                        Ta bort recension
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
