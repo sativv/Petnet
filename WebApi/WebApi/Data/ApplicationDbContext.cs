@@ -258,13 +258,13 @@ namespace WebApi.Data
                     Id = 1,
                     Title = "Post 1",
                     Description = "Description for post 1",
-                    AnimalType = "Dog",
+                    AnimalType = "Hund",
                     AnimalBreed = "Labrador",
                     Age = 2,
                     IsAdoptionReady = true,
                     EarliestDelivery = DateOnly.Parse("2024-09-01"),
                     ApplicationUserId = "user1", // FK to ApplicationUser
-                    Gender = "Male",
+                    Gender = "Hane",
                     DateOfBirth = DateOnly.Parse("2020-11-01"),
                     Images = new List<string>
                     {
@@ -277,13 +277,13 @@ namespace WebApi.Data
                     Id = 2,
                     Title = "Post 2",
                     Description = "Description for post 2",
-                    AnimalType = "Cat",
+                    AnimalType = "Katt",
                     AnimalBreed = "Siamese",
                     Age = 1,
                     IsAdoptionReady = false,
                     EarliestDelivery = DateOnly.Parse("2024-10-01"),
                     ApplicationUserId = "user2", // FK to ApplicationUser
-                    Gender = "Female",
+                    Gender = "Hona",
                     DateOfBirth = DateOnly.Parse("2021-11-01"),
                     Images = new List<string>
                     {
