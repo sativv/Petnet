@@ -62,12 +62,30 @@ function PostDetails() {
         { method: "GET", credentials: "include" }
       );
       if (response.ok) {
-        const interests = await response.json();
         const isInterested = interests.includes(parseInt(postId));
         setIsInterested(isInterested);
-        setInterests(interests);
       } else {
         console.error("Failed to fetch interests");
+      }
+    } catch (error) {
+      console.error("Error checking interests", error);
+    }
+  };
+
+  const fetchInterestsById = async () => {
+    try {
+      const response = await fetch(
+        `https://localhost:7072/api/Interest/GetByPost/${postId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const interests = await response.json();
+        setInterests(interests);
+      } else {
+        console.error("failed to fetch interests");
       }
     } catch (error) {
       console.error("Error checking interests", error);
@@ -200,6 +218,7 @@ function PostDetails() {
     fetchPost();
     checkIfBookmarked();
     checkIfInterested();
+    fetchInterestsById();
   }, [postId]);
 
   useEffect(() => {
@@ -286,7 +305,9 @@ function PostDetails() {
           </div>
         )}
 
+
         {currentUser && currentUser.id !== post.applicationUserId && (
+
           <div className="favoriteIcon favoriteDiv" onClick={toggleFavorite}>
             <p>Spara Annons</p>
             <FontAwesomeIcon
