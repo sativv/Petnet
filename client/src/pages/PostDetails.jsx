@@ -306,7 +306,9 @@ function PostDetails() {
           </div>
         )}
 
-        {currentUser.id !== post.applicationUserId && (
+
+        {currentUser && currentUser.id !== post.applicationUserId && (
+
           <div className="favoriteIcon favoriteDiv" onClick={toggleFavorite}>
             <p>Spara Annons</p>
             <FontAwesomeIcon
