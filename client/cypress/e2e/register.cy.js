@@ -11,10 +11,10 @@ describe("New user private", () => {
     // Klicka på logga in-knappen
     cy.get("#register-btn").click();
 
-    // Verifiera att användaren är omdirigerad till dashboard eller en annan skyddad sida
+    // Kolla så man skickat till loginsidan
     cy.url().should("include", "/login");
 
-    // Verifiera att en viss text eller element finns på sidan, vilket bekräftar att användaren är registrerad
+    // Kolla så att det finns rätt text på sidan
     cy.contains("Logga in");
   });
 });
@@ -50,10 +50,8 @@ describe("New user breeder", () => {
     cy.get('input[type="file"]').attachFile(fileName);
 
     cy.get("#register-btn").click();
-    // Verifiera att användaren är omdirigerad till dashboard eller en annan skyddad sida
     cy.url().should("include", "/login");
 
-    // Verifiera att en viss text eller element finns på sidan, vilket bekräftar att användaren är registrerad
     cy.contains("Logga in");
   });
 });

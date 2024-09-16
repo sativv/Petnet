@@ -7,6 +7,12 @@ import pen from "../profile-images/pen.png";
 import star from "../profile-images/star.png";
 import "../App.css";
 import ReportProfileModal from "../components/ReportProfileModal";
+import Bird from "./quizBadges/Bird.svg";
+import Cat from "./quizBadges/Cat.svg";
+import Dog from "./quizBadges/Dog.svg";
+import Rabbit from "./quizBadges/Rabbit.svg";
+import Aquarium from "./quizBadges/Aquarium.svg";
+import Reptile from "./quizBadges/Reptile.svg";
 
 function Profile() {
   const [showReportProfileModal, setReportProfileModal] = useState(false);
@@ -19,6 +25,7 @@ function Profile() {
   const [organizationName, setOrganizationName] = useState("");
   const [buisnessContact, setBuisnessContact] = useState("");
   const [adress, setAdress] = useState("");
+  const [animal, setAnimal] = useState("");
   const [postcode, setPostcode] = useState("");
   const [city, setCity] = useState("");
   const [reviews, setReviews] = useState([]);
@@ -39,14 +46,16 @@ function Profile() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setProfile(data);
 
+        setProfile(data);
+        console.log("Fetched profile data:", data);
         // Update local state with profile data
         setAboutMe(data.aboutMe || "");
         setOrganizationNumber(data.organizationNumber || "");
         setOrganizationName(data.organizationName || "");
         setBuisnessContact(data.buisnessContact || "");
         setAdress(data.adress || "");
+        setAnimal(data.quizResult || "");
         setPostcode(data.postcode || "");
         setCity(data.city || "");
 
@@ -95,49 +104,55 @@ function Profile() {
     }
   };
 
-const handleSaveClick = async () => {
-  try {
-    // Prepare the data to send to the server
-    const requestBody = {
-      aboutMe,
-      organizationNumber: organizationNumber ? parseInt(organizationNumber, 10) : null, // Ensure it's either a number or null
-      organizationName,
-      buisnessContact,
-      adress,
-      postcode: parseInt(postcode, 10), // Make sure postcode is a number
-      city,
-    };
+  const handleSaveClick = async () => {
+    try {
+      // Prepare the data to send to the server
+      const requestBody = {
+        aboutMe,
+        organizationNumber: organizationNumber
+          ? parseInt(organizationNumber, 10)
+          : null, // Ensure it's either a number or null
+        organizationName,
+        buisnessContact,
+        adress,
+        postcode: parseInt(postcode, 10), // Make sure postcode is a number
+        city,
+      };
 
-    // Send the PATCH request
-    const response = await fetch(
-      "http://localhost:5054/api/Account/me/about",
-      {
-        method: "PATCH",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody), // Send the prepared data
+      // Send the PATCH request
+      const response = await fetch(
+        "http://localhost:5054/api/Account/me/about",
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody), // Send the prepared data
+        }
+      );
+
+      if (response.ok) {
+        // Update user information in the local state
+        setCurrentUser((prevUser) => ({
+          ...prevUser,
+          ...requestBody,
+        }));
+        setIsEditing(false);
+      } else {
+        // Log detailed error message
+        const errorData = await response.json();
+        console.error(
+          "Failed to update user information. Status:",
+          response.status,
+          "Response body:",
+          errorData
+        );
       }
-    );
-
-    if (response.ok) {
-      // Update user information in the local state
-      setCurrentUser((prevUser) => ({
-        ...prevUser,
-        ...requestBody,
-      }));
-      setIsEditing(false);
-    } else {
-      // Log detailed error message
-      const errorData = await response.json();
-      console.error("Failed to update user information. Status:", response.status, "Response body:", errorData);
+    } catch (error) {
+      console.error("Error during update:", error);
     }
-  } catch (error) {
-    console.error("Error during update:", error);
-  }
-};
-
+  };
 
   const calculateAverageRating = () => {
     if (reviews.length === 0) return 0;
@@ -186,6 +201,7 @@ const handleSaveClick = async () => {
           content: newReview.comment,
           rating: newReview.rating,
           reviewerId: currentUser.id,
+          writtenByUsername: currentUser.userName,
           reviewedSellerId: profileId,
         }),
       });
@@ -241,6 +257,55 @@ const handleSaveClick = async () => {
     setReportProfileModal(false);
   }
 
+  const getImageSrc = (animal) => {
+    switch (animal) {
+      case "Dog":
+        return Dog;
+      case "Cat":
+        return Cat;
+      case "Rabbit":
+        return Rabbit;
+      case "Bird":
+        return Bird;
+      case "Aquarium":
+        return Aquarium;
+      case "Reptile":
+        return Reptile;
+      default:
+        return "/images/default.jpg";
+    }
+  };
+
+  const handleDeleteReview = async (reviewId) => {
+    console.log("Review ID to delete:", reviewId);
+    if (!reviewId) {
+      console.error("No review ID provided");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:5054/review/RemoveReview/${reviewId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        setReviews((prevReviews) =>
+          prevReviews.filter((r) => r.reviewId !== reviewId)
+        );
+      } else {
+        console.error("Failed to delete review", response.status);
+      }
+    } catch (error) {
+      console.error("Error deleting review:", error);
+    }
+  };
+
   return (
     <>
       <div className="profile-wrapper">
@@ -263,8 +328,18 @@ const handleSaveClick = async () => {
           <h1>
             {profile?.id === currentUser.id ? "Min profil" : "Användarprofil"}
           </h1>
+
           <div className="profile-introduction-wrapper">
             <div className="profile-img-and-username">
+              {currentUser.quizResult && (
+                <div>
+                  <img
+                    src={getImageSrc(currentUser.quizResult)}
+                    className="animal-badge"
+                    alt={`Image for ${currentUser.quizResult}`}
+                  />
+                </div>
+              )}
               <img src={profile1} alt="profile1" className="profile-img" />
               <h2 className="username-profile">{profile?.email}</h2>
             </div>
@@ -415,6 +490,19 @@ const handleSaveClick = async () => {
                     <p>
                       <strong>Kommentar:</strong> {review.content}
                     </p>
+                    {review.writtenByUsername && (
+                      <p>
+                        <strong>Skriven av:</strong> {review.writtenByUsername}
+                        <p>Recensions-id: {review.reviewId}</p>
+                      </p>
+                    )}
+                    {review.writtenByUsername === currentUser.userName && (
+                      <button
+                        onClick={() => handleDeleteReview(review.reviewId)}
+                      >
+                        Ta bort recension
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>

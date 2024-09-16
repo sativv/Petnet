@@ -1,16 +1,20 @@
 describe("User login", () => {
-  it("should log in a user successfuly", () => {
+  it("should log in a user successfully", () => {
     cy.visit("http://localhost:3000/login");
+    cy.get("form").should("be.visible");
 
     cy.get(":nth-child(2) > .login-input").type("private@private.private");
     // Fyll i lösenord
     cy.get(":nth-child(3) > .login-input").type("Private1!");
+    cy.url().should("include", "/login");
+
     // Klicka på logga in-knappen
     cy.get(".login-button").click();
-    // Verifiera att användaren är omdirigerad till dashboard eller en annan skyddad sida
-    cy.url().should("include", "/profile");
+    // Användaren skickas till home
+    cy.url().should("include", "/");
 
-    // Verifiera att en viss text eller element finns på sidan, vilket bekräftar att användaren är inloggad
+    // Kolla efter element som endast visas om man är innloggad
     cy.contains("Min profil");
+    cy.contains("Logga ut");
   });
 });

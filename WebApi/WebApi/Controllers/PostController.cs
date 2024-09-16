@@ -93,12 +93,12 @@ namespace WebApi.Controllers
             return Ok(updatedPost);
         }
 
-        [HttpGet("AdminTest")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AdminTest()
-        {
-            return Ok("Ur admin");
-        }
+        //[HttpGet("AdminTest")]
+        //[Authorize(Roles = "Admin")]
+        //public async Task<IActionResult> AdminTest()
+        //{
+        //    return Ok("Ur admin");
+        //}
 
 
 
@@ -140,5 +140,21 @@ namespace WebApi.Controllers
             return Ok();
         }
 
+        // Get own posts
+
+        [HttpGet("Own")]
+        [Authorize]
+        public async Task<IActionResult> GetOwnPosts()
+        {
+            var currentUser = await _usermanager.GetUserAsync(User);
+
+            if(currentUser == null || currentUser.Id == null)
+            {
+                return BadRequest();
+            }
+
+
+            return Ok(await _postRepo.GetByUser(currentUser.Id));
+        }
     }
 }

@@ -38,11 +38,17 @@ namespace WebApi.Controllers
             }
 
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
-            var fileModels = userFiles.Select(file => new
+            var fileModels = userFiles.Select(file =>
             {
-                name = file.Name,
-                type = file.Type,
-                url = $"{baseUrl}{file.Path}"  // Generera URL för nedladdning
+                // Skapa en säker token för varje fil
+                var token = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{file.Id}:{currentUserId}"));
+
+                return new
+                {
+                    name = file.Name,
+                    type = file.Type,
+                    url = $"{baseUrl}{file.Path}?token={token}"
+                };
             });
 
             return Ok(fileModels);

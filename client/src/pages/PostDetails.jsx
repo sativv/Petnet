@@ -278,8 +278,8 @@ function PostDetails() {
   return (
     <div className="postCard">
       <div className="postImage">
-        <img src={post.images[0]} alt={post.title} />
-        {currentUser.id === post.applicationUserId && (
+        {post.images && <img src={post.images[0]} alt={post.title} />}
+        {currentUser && currentUser.id === post.applicationUserId && (
           <div>
             <a onClick={() => setModalOpen(true)}>
               Intressenter: {interests.length}{" "}
@@ -427,24 +427,26 @@ function PostDetails() {
               />
             </p>
 
-            {!isEditable && currentUser.id === post.applicationUserId && (
-              <div className="actionButtons">
-                <button
-                  type="button"
-                  className="editButton postBtn"
-                  onClick={unlockEdit}
-                >
-                  Redigera Annons
-                </button>
-                <button
-                  type="button"
-                  className="deleteButton postBtn"
-                  onClick={deletePost}
-                >
-                  Ta Bort Annons
-                </button>
-              </div>
-            )}
+            {!isEditable &&
+              currentUser &&
+              currentUser.id === post.applicationUserId && (
+                <div className="actionButtons">
+                  <button
+                    type="button"
+                    className="editButton postBtn"
+                    onClick={unlockEdit}
+                  >
+                    Redigera Annons
+                  </button>
+                  <button
+                    type="button"
+                    className="deleteButton postBtn"
+                    onClick={deletePost}
+                  >
+                    Ta Bort Annons
+                  </button>
+                </div>
+              )}
 
             {isEditable && (
               <div className="actionButtons">
@@ -458,7 +460,7 @@ function PostDetails() {
             )}
           </div>
         </form>
-        {currentUser.id !== post.applicationUserId && (
+        {currentUser && currentUser.id !== post.applicationUserId && (
           <div className="interestBtn">
             {isInterested ? (
               <button onClick={() => deleteInterest()}>

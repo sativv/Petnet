@@ -12,6 +12,8 @@ namespace WebApi.Models
         public string ReviewerId { get; set; }
         public ApplicationUser? Reviewer { get; set; }
         public string ReviewedSellerId { get; set; }
+
+        public string? WrittenByUsername { get; set; }
         public ApplicationUser? ReviewedSeller { get; set; }
 
 
