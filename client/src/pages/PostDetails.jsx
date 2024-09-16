@@ -209,7 +209,6 @@ function PostDetails() {
           throw new Error("Failed to fetch post data");
         }
         const data = await response.json();
-        console.log(data);
         setPost(data);
       } catch (error) {
         console.error(error.message);
