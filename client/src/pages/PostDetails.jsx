@@ -285,15 +285,19 @@ function PostDetails() {
             </a>
           </div>
         )}
-        <div className="favoriteIcon favoriteDiv" onClick={toggleFavorite}>
-          <p>Spara Annons</p>
-          <FontAwesomeIcon
-            icon={isFavorite ? faStar : faRegStar}
-            color={isFavorite ? "gold" : "gray"}
-            size="2x"
-            className="favIcon"
-          />
-        </div>
+
+        {currentUser.id !== post.applicationUserId && (
+          <div className="favoriteIcon favoriteDiv" onClick={toggleFavorite}>
+            <p>Spara Annons</p>
+            <FontAwesomeIcon
+              icon={isFavorite ? faStar : faRegStar}
+              color={isFavorite ? "gold" : "gray"}
+              size="2x"
+              className="favIcon"
+            />
+          </div>
+        )}
+
         <div className="author">
           <strong>Annonsör</strong>
           <a href={`/profile/${post.applicationUserId}`} className="postInput">
@@ -360,15 +364,14 @@ function PostDetails() {
                 className="postInput"
               />
             </label>
-
             <label>
               <strong>Födelsedatum</strong>
               <input
                 type="date"
-                value={post.birthdate || ""}
+                value={post.dateOfBirth ? post.dateOfBirth.toString() : ""}
                 disabled={!isEditable}
                 onChange={(e) =>
-                  setPost({ ...post, birthdate: e.target.value })
+                  setPost({ ...post, DateOfBirth: e.target.value })
                 }
                 className="postInput"
               />
@@ -378,10 +381,12 @@ function PostDetails() {
               <strong>Tidigast Adoption</strong>
               <input
                 type="date"
-                value={post.earliestAdoption || ""}
+                value={
+                  post.earliestDelivery ? post.earliestDelivery.toString() : ""
+                }
                 disabled={!isEditable}
                 onChange={(e) =>
-                  setPost({ ...post, earliestAdoption: e.target.value })
+                  setPost({ ...post, EarliestDelivery: e.target.value })
                 }
                 className="postInput"
                 min={currentDate}
