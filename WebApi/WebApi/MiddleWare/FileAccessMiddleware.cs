@@ -103,7 +103,6 @@ namespace WebApi.MiddleWare
             }
 
 
-            // Om alla kontroller är godkända, fortsätt till nästa middleware
             await _next(context);
         }
 
