@@ -200,10 +200,6 @@ function PostDetails() {
   };
 
   useEffect(() => {
-    // //Sidan krachar om man inte är inloggad, skickas nu till login
-    // if (currentUser === null) {
-    //   nav("/login");
-    // }
     const fetchPost = async () => {
       try {
         const response = await fetch(
@@ -309,9 +305,7 @@ function PostDetails() {
           </div>
         )}
 
-
         {currentUser && currentUser.id !== post.applicationUserId && (
-
           <div className="favoriteIcon favoriteDiv" onClick={toggleFavorite}>
             <p>Spara Annons</p>
             <FontAwesomeIcon
