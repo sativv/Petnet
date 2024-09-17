@@ -38,6 +38,7 @@ function PostDetails() {
       });
       if (response.ok) {
         setIsInterested(true);
+        alert("Intresseanmälan skickad!");
       } else {
         alert("Failed to add interest");
       }
@@ -62,10 +63,11 @@ function PostDetails() {
         { method: "GET", credentials: "include" }
       );
       if (response.ok) {
+        const interests = await response.json();
         const isInterested = interests.includes(parseInt(postId));
         setIsInterested(isInterested);
       } else {
-        console.error("Failed to fetch interests");
+        console.error("Unauthorized user or failed request");
       }
     } catch (error) {
       console.error("Error checking interests", error);
@@ -175,6 +177,7 @@ function PostDetails() {
       });
       if (response.ok) {
         setIsInterested(false);
+        alert("Intresseanmälan avbruten!");
       }
     } catch (error) {
       console.error("failed to remove interest");
@@ -218,7 +221,9 @@ function PostDetails() {
     fetchPost();
     checkIfBookmarked();
     checkIfInterested();
-    fetchInterestsById();
+    if (isEditable) {
+      fetchInterestsById();
+    }
   }, [postId]);
 
   useEffect(() => {
@@ -297,13 +302,16 @@ function PostDetails() {
     <div className="postCard">
       <div className="postImage">
         {post.images && <img src={post.images[0]} alt={post.title} />}
-        {currentUser && currentUser.id === post.applicationUserId && (
-          <div>
-            <a onClick={() => setModalOpen(true)}>
-              Intressenter: {interests.length}{" "}
-            </a>
-          </div>
-        )}
+
+  {currentUser &&
+          currentUser.id === post.applicationUserId &&
+          interests.length != 0 && (
+            <div>
+              <a onClick={() => setModalOpen(true)} className="intressenter">
+                Intressenter: {interests.length}{" "}
+              </a>
+            </div>
+          )}
 
         {currentUser && currentUser.id !== post.applicationUserId && (
           <div className="favoriteIcon favoriteDiv" onClick={toggleFavorite}>

@@ -22,7 +22,7 @@ function Login() {
       const response = await fetch("http://localhost:5054/manage/info", {
         method: "GET",
         credentials: "include",
-      }).then((res) => res.json().then((json) => console.log(json)));
+      }).then((res) => res.json().then((json) => console.log()));
     } catch {
       <></>;
     }
@@ -64,7 +64,7 @@ function Login() {
         }
 
         const data = await meResponse.json();
-        console.log(data);
+
         setCurrentUser(data);
 
         nav(`/`);
