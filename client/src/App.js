@@ -43,8 +43,6 @@ function App() {
       }
 
       const userData = await response.json();
-
-      console.log(userData);
       setCurrentUser(userData);
     };
 
