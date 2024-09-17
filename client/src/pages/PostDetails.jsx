@@ -62,12 +62,30 @@ function PostDetails() {
         { method: "GET", credentials: "include" }
       );
       if (response.ok) {
-        const interests = await response.json();
         const isInterested = interests.includes(parseInt(postId));
         setIsInterested(isInterested);
-        setInterests(interests);
       } else {
         console.error("Failed to fetch interests");
+      }
+    } catch (error) {
+      console.error("Error checking interests", error);
+    }
+  };
+
+  const fetchInterestsById = async () => {
+    try {
+      const response = await fetch(
+        `https://localhost:7072/api/Interest/GetByPost/${postId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        const interests = await response.json();
+        setInterests(interests);
+      } else {
+        console.error("failed to fetch interests");
       }
     } catch (error) {
       console.error("Error checking interests", error);
@@ -204,6 +222,7 @@ function PostDetails() {
     fetchPost();
     checkIfBookmarked();
     checkIfInterested();
+    fetchInterestsById();
   }, [postId]);
 
   useEffect(() => {
@@ -281,23 +300,29 @@ function PostDetails() {
   return (
     <div className="postCard">
       <div className="postImage">
-        <img src={post.images[0]} alt={post.title} />
-        {currentUser.id === post.applicationUserId && (
+        {post.images && <img src={post.images[0]} alt={post.title} />}
+        {currentUser && currentUser.id === post.applicationUserId && (
           <div>
             <a onClick={() => setModalOpen(true)}>
               Intressenter: {interests.length}{" "}
             </a>
           </div>
         )}
-        <div className="favoriteIcon favoriteDiv" onClick={toggleFavorite}>
-          <p>Spara Annons</p>
-          <FontAwesomeIcon
-            icon={isFavorite ? faStar : faRegStar}
-            color={isFavorite ? "gold" : "gray"}
-            size="2x"
-            className="favIcon"
-          />
-        </div>
+
+
+        {currentUser && currentUser.id !== post.applicationUserId && (
+
+          <div className="favoriteIcon favoriteDiv" onClick={toggleFavorite}>
+            <p>Spara Annons</p>
+            <FontAwesomeIcon
+              icon={isFavorite ? faStar : faRegStar}
+              color={isFavorite ? "gold" : "gray"}
+              size="2x"
+              className="favIcon"
+            />
+          </div>
+        )}
+
         <div className="author">
           <strong>Annonsör</strong>
           <a href={`/profile/${post.applicationUserId}`} className="postInput">
@@ -364,15 +389,14 @@ function PostDetails() {
                 className="postInput"
               />
             </label>
-
             <label>
               <strong>Födelsedatum</strong>
               <input
                 type="date"
-                value={post.birthdate || ""}
+                value={post.dateOfBirth ? post.dateOfBirth.toString() : ""}
                 disabled={!isEditable}
                 onChange={(e) =>
-                  setPost({ ...post, birthdate: e.target.value })
+                  setPost({ ...post, DateOfBirth: e.target.value })
                 }
                 className="postInput"
               />
@@ -382,10 +406,12 @@ function PostDetails() {
               <strong>Tidigast Adoption</strong>
               <input
                 type="date"
-                value={post.earliestAdoption || ""}
+                value={
+                  post.earliestDelivery ? post.earliestDelivery.toString() : ""
+                }
                 disabled={!isEditable}
                 onChange={(e) =>
-                  setPost({ ...post, earliestAdoption: e.target.value })
+                  setPost({ ...post, EarliestDelivery: e.target.value })
                 }
                 className="postInput"
                 min={currentDate}
@@ -425,24 +451,26 @@ function PostDetails() {
               />
             </p>
 
-            {!isEditable && currentUser.id === post.applicationUserId && (
-              <div className="actionButtons">
-                <button
-                  type="button"
-                  className="editButton postBtn"
-                  onClick={unlockEdit}
-                >
-                  Redigera Annons
-                </button>
-                <button
-                  type="button"
-                  className="deleteButton postBtn"
-                  onClick={deletePost}
-                >
-                  Ta Bort Annons
-                </button>
-              </div>
-            )}
+            {!isEditable &&
+              currentUser &&
+              currentUser.id === post.applicationUserId && (
+                <div className="actionButtons">
+                  <button
+                    type="button"
+                    className="editButton postBtn"
+                    onClick={unlockEdit}
+                  >
+                    Redigera Annons
+                  </button>
+                  <button
+                    type="button"
+                    className="deleteButton postBtn"
+                    onClick={deletePost}
+                  >
+                    Ta Bort Annons
+                  </button>
+                </div>
+              )}
 
             {isEditable && (
               <div className="actionButtons">
@@ -456,7 +484,7 @@ function PostDetails() {
             )}
           </div>
         </form>
-        {currentUser.id !== post.applicationUserId && (
+        {currentUser && currentUser.id !== post.applicationUserId && (
           <div className="interestBtn">
             {isInterested ? (
               <button onClick={() => deleteInterest()}>
