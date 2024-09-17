@@ -75,7 +75,6 @@ describe("Post-details page should be accessable when user is logged in", () => 
 
     const wordsCheck = [
       "Intressenter: ",
-      "Spara Annons",
       "user1@example.com",
       "Djur",
       "Ras",

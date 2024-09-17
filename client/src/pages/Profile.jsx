@@ -139,6 +139,7 @@ function Profile() {
           ...requestBody,
         }));
         setIsEditing(false);
+        window.location.reload();
       } else {
         // Log detailed error message
         const errorData = await response.json();
