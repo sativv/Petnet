@@ -305,9 +305,7 @@ function PostDetails() {
           </div>
         )}
 
-
         {currentUser && currentUser.id !== post.applicationUserId && (
-
           <div className="favoriteIcon favoriteDiv" onClick={toggleFavorite}>
             <p>Spara Annons</p>
             <FontAwesomeIcon
@@ -369,9 +367,9 @@ function PostDetails() {
                 onChange={(e) => setPost({ ...post, gender: e.target.value })}
                 className="postInput"
               >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Mixed">Mixed</option>
+                <option value="Male">Hane</option>
+                <option value="Female">Hona</option>
+                <option value="Mixed">Båda</option>
                 <option value="N/A">N/A</option>
               </select>
             </label>

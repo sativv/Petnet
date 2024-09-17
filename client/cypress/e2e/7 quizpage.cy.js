@@ -13,6 +13,7 @@ describe("Redirect to login when accessing quiz page", () => {
     cy.get(".login-button").click();
     // Användaren skickas till home
     cy.url().should("include", "/");
+    cy.wait(2000);
 
     // Kolla efter element som endast visas om man är innloggad
     cy.contains("Min profil");
@@ -35,7 +36,7 @@ describe("Taking the quiz as a logged in user", () => {
       cy.get(".login-button").click();
       // Användaren skickas till home
       cy.url().should("include", "/");
-
+      cy.wait(2000);
       // Kolla efter element som endast visas om man är innloggad
       cy.contains("Min profil");
       cy.contains("Logga ut");
@@ -45,22 +46,25 @@ describe("Taking the quiz as a logged in user", () => {
   it("should give you a result based on your choices", () => {
     cy.visit("http://localhost:3000/quiz");
     // introduction
-    cy.contains("Quiz");
+    cy.contains("Quiz").should("exist");
     cy.get("button").click();
 
     //Question and different answers
     for (let i = 0; i < 15; i++) {
-      cy.get("button").should("have.length", 7);
+      cy.get("button").should("have.length", 7); //Kollar så att alla 6 svarsalternativ + nästa knapparna genereras
 
       cy.get(".quiz-cont-questions > :nth-child(7)").click(); // Klickar på den sista knappen
       cy.get(".counter-and-btn > button").click(); // Klickar på knappen "nästa"
     }
 
     //Result
-    cy.contains(" skulle passa dig perfekt!");
+    cy.contains(" skulle passa dig perfekt!").should("exist");
+    cy.wait(2000);
     cy.get("button").click();
-    cy.url().should("include", "/profile");
+    cy.wait(2000);
 
-    //Borde lägga till koll för att se om resultatet syns på profilsidan som ett märke
+    //Koll så att man skickats till rätt profilsida och att märket har lagts till
+    cy.url().should("include", "/profile/user1");
+    cy.get(".animal-badge").should("exist");
   });
 });
