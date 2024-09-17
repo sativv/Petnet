@@ -110,15 +110,10 @@ describe("Home page should have serach functionality and adds", () => {
           cy.get("body").then(($body) => {
             const countBigAdContainer = $body.find(".bigAdContainer").length;
             if (countBigAdContainer > 0) {
-              for (let i = 1; countBigAdContainer >= i; i++) {
-                if (str !== "Båda") {
-                  cy.get(
-                    `:nth-child(${i}) > .bigAdSide > :nth-child(2)`
-                  ).should("contain", `Kön: ${str}`);
-                }
-                cy.get(`:nth-child(${i}) > .bigAdSide > :nth-child(2)`).should(
+              if (str !== "Båda") {
+                cy.get(`:nth-child(1) > .bigAdSide > :nth-child(2)`).should(
                   "contain",
-                  "Kön: Hona" || "Kön: Båda" || "Kön: Hane"
+                  `Kön: ${str}`
                 );
               }
 

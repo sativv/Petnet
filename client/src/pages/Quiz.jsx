@@ -15,8 +15,6 @@ function Quiz() {
 
   const { currentUser } = useContext(userContext);
 
-  console.log("current user: " + currentUser.id);
-
   useEffect(() => {
     const getQuiz = async () => {
       try {

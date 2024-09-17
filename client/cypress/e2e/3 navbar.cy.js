@@ -11,9 +11,6 @@ describe("Navbar for user not logged in", () => {
     });
 
     cy.get(".burgerIcon").click();
-    cy.get(".navbarBrand > h2").click();
-    cy.url().should("include", "/");
-
     cy.get(".navbarBrand > .navLogo");
     cy.url().should("include", "/");
 

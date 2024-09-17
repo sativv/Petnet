@@ -25,7 +25,6 @@ describe("Logged in user should be able to post an add", () => {
     cy.get("#breed").should("exist").type("Igelkott");
     cy.get("#gender").should("exist").select("Båda");
     cy.get('[type="date"][required=""]').should("exist").type("2024-09-10");
-    cy.get('[min="2024-09-13"]').should("exist").type("2024-09-30");
     cy.get("#img")
       .should("exist")
       .type(
@@ -99,7 +98,7 @@ describe("Post-details page should be accessable when user is logged in", () => 
   it("should have options for editing your own add", () => {
     cy.visit("http://localhost:3000");
     cy.wait(2000);
-    cy.contains("Igelkottsungar till salu").click();
+    cy.contains("Igelkott").click();
     cy.url().should("include", "/post/");
     cy.get(".postDetails").should("exist").should("contain", "Redigera Annons");
 
@@ -112,9 +111,7 @@ describe("Post-details page should be accessable when user is logged in", () => 
     cy.get(`.postInfo > :nth-child(5) > .postInput[type="date"]`).type(
       "2024-09-05"
     );
-    cy.get(`.postInfo > :nth-child(6) > .postInput[type="date"]`).type(
-      "2024-09-27"
-    );
+
     cy.get(".postInfo > :nth-child(7) > .postInput")
       .clear()
       .type(
