@@ -335,9 +335,9 @@ function Profile() {
               {currentUser.quizResult && (
                 <div>
                   <img
-                    src={getImageSrc(currentUser.quizResult)}
+                    src={getImageSrc(animal)}
                     className="animal-badge"
-                    alt={`Image for ${currentUser.quizResult}`}
+                    alt={`Image for ${animal}`}
                   />
                 </div>
               )}
