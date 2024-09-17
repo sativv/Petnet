@@ -524,6 +524,9 @@ a {
    PostDetails Page
    ======================================= */
 
+.intressenter {
+  cursor: pointer;
+}
 .postCard {
   max-width: 600px;
   margin: 2rem auto;
