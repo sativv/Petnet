@@ -62,10 +62,12 @@ function PostDetails() {
         { method: "GET", credentials: "include" }
       );
       if (response.ok) {
+        const interests = await response.json();
         const isInterested = interests.includes(parseInt(postId));
         setIsInterested(isInterested);
+        console.log(isInterested);
       } else {
-        console.error("Failed to fetch interests");
+        console.error("Unauthorized user or failed request");
       }
     } catch (error) {
       console.error("Error checking interests", error);
@@ -305,9 +307,7 @@ function PostDetails() {
           </div>
         )}
 
-
         {currentUser && currentUser.id !== post.applicationUserId && (
-
           <div className="favoriteIcon favoriteDiv" onClick={toggleFavorite}>
             <p>Spara Annons</p>
             <FontAwesomeIcon
