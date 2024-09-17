@@ -12,8 +12,8 @@ using WebApi.Data;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240911154312_initial")]
-    partial class initial
+    [Migration("20240913084058_start")]
+    partial class start
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -272,7 +272,7 @@ namespace WebApi.Migrations
                         {
                             Id = "user1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "03084cc3-2811-4485-b460-dd52a6a3333e",
+                            ConcurrencyStamp = "6d4b2db3-c523-4bbb-a422-e703d660c33e",
                             Email = "user1@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = true,
@@ -281,10 +281,10 @@ namespace WebApi.Migrations
                             NormalizedEmail = "USER1@EXAMPLE.COM",
                             NormalizedUserName = "USER1@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ21QIFov4SpMVTCwl4QXHfMBXRtEX3ZJ7QnEABk4vFYsS3pCMn7OMdpJZqe20dCfw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEObtAVADjvC1CAGLKsv03El52sU7aSkZ5AaqrZU9yxC25EV83bUGkrKQKcWgFECijw==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "e95796da-9ee5-45d5-b08a-fa106476ee92",
+                            SecurityStamp = "ef3fef6d-5bcc-4fb3-95fb-6f12b4f04673",
                             TwoFactorEnabled = false,
                             UserName = "user1@example.com"
                         },
@@ -292,7 +292,7 @@ namespace WebApi.Migrations
                         {
                             Id = "user2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bdb8c411-190d-4f86-8341-86d7aa4257b3",
+                            ConcurrencyStamp = "310ad273-e03f-4014-9939-a80d08192e07",
                             Email = "user2@example.com",
                             EmailConfirmed = false,
                             IsPrivateSeller = false,
@@ -301,10 +301,10 @@ namespace WebApi.Migrations
                             NormalizedEmail = "USER2@EXAMPLE.COM",
                             NormalizedUserName = "USER2@EXAMPLE.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEBy5e2zSGw3LY0XbJKTtUJue0bhaCMlP9GVRQRee3JNzggg5r3+Y41d/4cgsVSojAw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBnha0LofMZZRd4n2ZNQ/mp9/p/DJWf/bHA0TFtm7ZbvYpoka9nLY9hmW5tqrrrIrA==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "0f6a013a-afa8-45ef-a64f-c852baa34f38",
+                            SecurityStamp = "bed8b563-46cb-4b92-be78-574c25d7ab28",
                             TwoFactorEnabled = false,
                             UserName = "user2@example.com"
                         },
@@ -312,7 +312,7 @@ namespace WebApi.Migrations
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "218b5a27-93b3-4672-982a-7069388d7977",
+                            ConcurrencyStamp = "8b316631-2639-44c1-8eef-c2e7d4a0de37",
                             Email = "admin@petnet.com",
                             EmailConfirmed = true,
                             IsPrivateSeller = false,
@@ -321,10 +321,10 @@ namespace WebApi.Migrations
                             NormalizedEmail = "ADMIN@PETNET.COM",
                             NormalizedUserName = "ADMIN@PETNET.COM",
                             OrganizationNumber = 0L,
-                            PasswordHash = "AQAAAAIAAYagAAAAEI0pSj2yQ7esrgqrhmE+5SSZothPUl8bF+rHkhGLSWPgyUDuMzB5Uq8ohdWfERjSjQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEJW5lZiElAdq+FUbDhExQUTdqpQCfIyX5SRsFwK75MEYaGH6wk0aufS+QCA+7Xkgw==",
                             PhoneNumberConfirmed = false,
                             Postcode = 0,
-                            SecurityStamp = "ef7ed391-ef7e-444f-8056-8f27356b87e9",
+                            SecurityStamp = "ab0ac68d-dc9a-4874-88de-9abce5a710bb",
                             TwoFactorEnabled = false,
                             UserName = "Admin@petnet.com"
                         });
@@ -1124,12 +1124,12 @@ namespace WebApi.Migrations
                             Id = 1,
                             Age = 2,
                             AnimalBreed = "Labrador",
-                            AnimalType = "Dog",
+                            AnimalType = "Hund",
                             ApplicationUserId = "user1",
                             DateOfBirth = new DateOnly(2020, 11, 1),
                             Description = "Description for post 1",
                             EarliestDelivery = new DateOnly(2024, 9, 1),
-                            Gender = "Male",
+                            Gender = "Hane",
                             Images = "[\"https://www.marthastewart.com/thmb/Ki1fnPkHDxYQv_kAN2HtBxwOELY=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/happy-labrador-retriever-getty-0322-2000-eb585d9e672e47da8b1b7e9d3215a5cb.jpg\"]",
                             IsAdoptionReady = true,
                             Title = "Post 1"
@@ -1139,12 +1139,12 @@ namespace WebApi.Migrations
                             Id = 2,
                             Age = 1,
                             AnimalBreed = "Siamese",
-                            AnimalType = "Cat",
+                            AnimalType = "Katt",
                             ApplicationUserId = "user2",
                             DateOfBirth = new DateOnly(2021, 11, 1),
                             Description = "Description for post 2",
                             EarliestDelivery = new DateOnly(2024, 10, 1),
-                            Gender = "Female",
+                            Gender = "Hona",
                             Images = "[\"https://www.purina.co.uk/sites/default/files/styles/square_medium_440x440/public/2022-06/Siamese-Cat_0.jpg?itok=Qy1J6ZDS\"]",
                             IsAdoptionReady = false,
                             Title = "Post 2"

@@ -15,8 +15,6 @@ function Quiz() {
 
   const { currentUser } = useContext(userContext);
 
-  console.log("current user: " + currentUser.id);
-
   useEffect(() => {
     const getQuiz = async () => {
       try {
@@ -190,7 +188,7 @@ function Quiz() {
             <button
               onClick={() => {
                 HandleResult();
-                nav(`/profile/${currentUser.Id}`);
+                nav(`/profile/${currentUser.id}`);
               }}
             >
               Lägg till i min profil

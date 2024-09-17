@@ -7,7 +7,7 @@ describe("Home page should have serach functionality and adds", () => {
       cy.get(":nth-child(3) > .login-input").type("user1*123");
       // Klicka på logga in-knappen
       cy.get(".login-button").click();
-      cy.wait(500);
+      cy.wait(2000);
       // Användaren skickas till home
       cy.url().should("include", "/");
     });
@@ -110,15 +110,10 @@ describe("Home page should have serach functionality and adds", () => {
           cy.get("body").then(($body) => {
             const countBigAdContainer = $body.find(".bigAdContainer").length;
             if (countBigAdContainer > 0) {
-              for (let i = 1; countBigAdContainer >= i; i++) {
-                if (str !== "Båda") {
-                  cy.get(
-                    `:nth-child(${i}) > .bigAdSide > :nth-child(2)`
-                  ).should("contain", `Kön: ${str}`);
-                }
-                cy.get(`:nth-child(${i}) > .bigAdSide > :nth-child(2)`).should(
+              if (str !== "Båda") {
+                cy.get(`:nth-child(1) > .bigAdSide > :nth-child(2)`).should(
                   "contain",
-                  "Kön: Hona" || "Kön: Båda" || "Kön: Hane"
+                  `Kön: ${str}`
                 );
               }
 

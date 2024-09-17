@@ -59,7 +59,7 @@ describe("User can logout if logged in desktop version", () => {
     cy.contains("Logga ut").click();
     cy.wait(800);
     cy.url().should("include", "/");
-    cy.contains("Sök");
+    cy.contains("Ta vårt quiz!");
 
     cy.get(".navbarMenu")
       .should("be.visible")

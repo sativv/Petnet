@@ -302,7 +302,8 @@ function PostDetails() {
     <div className="postCard">
       <div className="postImage">
         {post.images && <img src={post.images[0]} alt={post.title} />}
-        {currentUser &&
+
+  {currentUser &&
           currentUser.id === post.applicationUserId &&
           interests.length != 0 && (
             <div>
@@ -374,9 +375,9 @@ function PostDetails() {
                 onChange={(e) => setPost({ ...post, gender: e.target.value })}
                 className="postInput"
               >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Mixed">Mixed</option>
+                <option value="Male">Hane</option>
+                <option value="Female">Hona</option>
+                <option value="Mixed">Båda</option>
                 <option value="N/A">N/A</option>
               </select>
             </label>

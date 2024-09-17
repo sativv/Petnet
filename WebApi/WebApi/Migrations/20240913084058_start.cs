@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class start : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -385,9 +385,9 @@ namespace WebApi.Migrations
                 columns: new[] { "Id", "AboutMe", "AccessFailedCount", "Adress", "BuisnessContact", "City", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsPrivateSeller", "IsVerified", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "OrganizationName", "OrganizationNumber", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Postcode", "QuizResult", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "218b5a27-93b3-4672-982a-7069388d7977", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAEI0pSj2yQ7esrgqrhmE+5SSZothPUl8bF+rHkhGLSWPgyUDuMzB5Uq8ohdWfERjSjQ==", null, false, 0, null, "ef7ed391-ef7e-444f-8056-8f27356b87e9", false, "Admin@petnet.com" },
-                    { "user1", null, 0, null, null, null, "03084cc3-2811-4485-b460-dd52a6a3333e", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEJ21QIFov4SpMVTCwl4QXHfMBXRtEX3ZJ7QnEABk4vFYsS3pCMn7OMdpJZqe20dCfw==", null, false, 0, null, "e95796da-9ee5-45d5-b08a-fa106476ee92", false, "user1@example.com" },
-                    { "user2", null, 0, null, null, null, "bdb8c411-190d-4f86-8341-86d7aa4257b3", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEBy5e2zSGw3LY0XbJKTtUJue0bhaCMlP9GVRQRee3JNzggg5r3+Y41d/4cgsVSojAw==", null, false, 0, null, "0f6a013a-afa8-45ef-a64f-c852baa34f38", false, "user2@example.com" }
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", null, 0, null, null, null, "8b316631-2639-44c1-8eef-c2e7d4a0de37", "admin@petnet.com", true, false, true, false, null, "ADMIN@PETNET.COM", "ADMIN@PETNET.COM", null, 0L, "AQAAAAIAAYagAAAAEEJW5lZiElAdq+FUbDhExQUTdqpQCfIyX5SRsFwK75MEYaGH6wk0aufS+QCA+7Xkgw==", null, false, 0, null, "ab0ac68d-dc9a-4874-88de-9abce5a710bb", false, "Admin@petnet.com" },
+                    { "user1", null, 0, null, null, null, "6d4b2db3-c523-4bbb-a422-e703d660c33e", "user1@example.com", false, true, true, false, null, "USER1@EXAMPLE.COM", "USER1@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEObtAVADjvC1CAGLKsv03El52sU7aSkZ5AaqrZU9yxC25EV83bUGkrKQKcWgFECijw==", null, false, 0, null, "ef3fef6d-5bcc-4fb3-95fb-6f12b4f04673", false, "user1@example.com" },
+                    { "user2", null, 0, null, null, null, "310ad273-e03f-4014-9939-a80d08192e07", "user2@example.com", false, false, false, false, null, "USER2@EXAMPLE.COM", "USER2@EXAMPLE.COM", null, 0L, "AQAAAAIAAYagAAAAEBnha0LofMZZRd4n2ZNQ/mp9/p/DJWf/bHA0TFtm7ZbvYpoka9nLY9hmW5tqrrrIrA==", null, false, 0, null, "bed8b563-46cb-4b92-be78-574c25d7ab28", false, "user2@example.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -405,8 +405,8 @@ namespace WebApi.Migrations
                 columns: new[] { "Id", "Age", "AnimalBreed", "AnimalType", "ApplicationUserId", "DateOfBirth", "Description", "EarliestDelivery", "Gender", "Images", "IsAdoptionReady", "Title" },
                 values: new object[,]
                 {
-                    { 1, 2, "Labrador", "Dog", "user1", new DateOnly(2020, 11, 1), "Description for post 1", new DateOnly(2024, 9, 1), "Male", "[\"https://www.marthastewart.com/thmb/Ki1fnPkHDxYQv_kAN2HtBxwOELY=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/happy-labrador-retriever-getty-0322-2000-eb585d9e672e47da8b1b7e9d3215a5cb.jpg\"]", true, "Post 1" },
-                    { 2, 1, "Siamese", "Cat", "user2", new DateOnly(2021, 11, 1), "Description for post 2", new DateOnly(2024, 10, 1), "Female", "[\"https://www.purina.co.uk/sites/default/files/styles/square_medium_440x440/public/2022-06/Siamese-Cat_0.jpg?itok=Qy1J6ZDS\"]", false, "Post 2" }
+                    { 1, 2, "Labrador", "Hund", "user1", new DateOnly(2020, 11, 1), "Description for post 1", new DateOnly(2024, 9, 1), "Hane", "[\"https://www.marthastewart.com/thmb/Ki1fnPkHDxYQv_kAN2HtBxwOELY=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/happy-labrador-retriever-getty-0322-2000-eb585d9e672e47da8b1b7e9d3215a5cb.jpg\"]", true, "Post 1" },
+                    { 2, 1, "Siamese", "Katt", "user2", new DateOnly(2021, 11, 1), "Description for post 2", new DateOnly(2024, 10, 1), "Hona", "[\"https://www.purina.co.uk/sites/default/files/styles/square_medium_440x440/public/2022-06/Siamese-Cat_0.jpg?itok=Qy1J6ZDS\"]", false, "Post 2" }
                 });
 
             migrationBuilder.InsertData(
