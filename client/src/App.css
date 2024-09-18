@@ -176,6 +176,8 @@ a {
   align-items: center;
   text-align: center;
   min-height: 90vh;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .loginForm {
@@ -204,6 +206,7 @@ a {
   background-color: #fff;
   font-size: 24px;
   padding: 5px;
+  width: 95%;
 }
 
 .login-button {
@@ -215,6 +218,8 @@ a {
   width: 100%;
   padding: 15px;
   border: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .login-text-wrapper {
@@ -222,6 +227,16 @@ a {
   justify-content: space-between;
 }
 
+@media (min-width: 768px) {
+  .login-wrapper {
+    width: 50vw;
+    margin-left: 25vw;
+  }
+
+  .login-button {
+    width: 55%;
+  }
+}
 /* =======================================
    ForgetPasswordModal
    ======================================= */
@@ -772,9 +787,23 @@ a {
 
 #preview embed {
   width: 100%;
-  height: 80vh; /* Justera höjd baserat på skärmens höjd */
+  height: 80vh;
   max-width: 100%;
-  max-height: 80vh; /* Se till att inte överstiga skärmens höjd */
+  max-height: 80vh;
+}
+
+@media (min-width: 768px) {
+  .register-cont {
+    width: 50vw;
+  }
+
+  .register-input form input {
+    width: 40vw;
+  }
+
+  #register-btn {
+    width: 20vw;
+  }
 }
 
 /* =======================================
@@ -1257,7 +1286,6 @@ h2 {
 /* =======================================
    Quiz page 
    ======================================= */
-
 .quiz {
   display: flex;
   justify-content: center;
@@ -1346,6 +1374,8 @@ h2 {
   color: #e7f0dc;
   font-size: 0.9rem;
   font-weight: 400;
+  text-align: center;
+  padding: 5px;
   cursor: pointer;
 }
 
@@ -1430,6 +1460,7 @@ h2 {
   height: 40px;
   margin-top: 30px;
   margin-bottom: 30px;
+  padding: 5px;
   border-radius: 10px;
   border: none;
   background-color: #1c5c00;
@@ -1437,6 +1468,32 @@ h2 {
   font-size: 1rem;
   font-weight: 400;
   cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .quiz-cont-start {
+    width: 50vw;
+  }
+
+  .quiz-cont-questions {
+    width: 50vw;
+  }
+
+  .quiz-cont-result {
+    width: 50vw;
+  }
+
+  .counter-and-btn {
+    width: 45vw;
+  }
+
+  .quiz-cont-result p {
+    width: 35vw;
+  }
+
+  .quiz-cont-start h5 {
+    width: 35vw;
+  }
 }
 
 /* =======================================
